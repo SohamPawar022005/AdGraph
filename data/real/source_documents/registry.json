@@ -1,0 +1,53 @@
+{
+  "description": "Registry of source documents for PermitGraph's real regulatory corpus. 'content_hash' is the sha256 of the corresponding extracted_text/<id>/sections.json file (our structured transcription), computed and recorded so any future edit to the transcription is detectable. It is NOT a hash of the original Gazette PDF bytes (see 'original_upload_status' per document).",
+  "documents": [
+    {
+      "id": "maitri-act-2023",
+      "title": "The Maharashtra Industry, Trade and Investment Facilitation Act, 2023",
+      "original_filename_referenced_in_brief": "maitri-act-2023_english.pdf",
+      "original_upload_status": "NOT PRESENT in this build environment; the brief states this PDF is text-extractable. Text below was sourced directly from the official India Code bitstream of the same Act (identical statutory text), not from the uploaded file.",
+      "jurisdiction": "Maharashtra",
+      "authority": "Maharashtra State Legislature / Government of Maharashtra, Law and Judiciary Department",
+      "document_type": "Act",
+      "version_label": "Text as on 11 December 2024",
+      "source_url": "https://www.indiacode.nic.in/bitstream/123456789/20544/1/the_maharashtra_industry,_trade_and_investment_facilitation_act,_2023.pdf",
+      "extraction_method": "official_text_mirror",
+      "retrieved_at": "2026-10-04",
+      "content_hash_sha256": "b2208f665784985ca0c8ac8435b588b9c83953bb4374222a827763557cde8fd2",
+      "section_coverage": "complete (29 of 29 sections transcribed)",
+      "verification_status": "CANDIDATE"
+    },
+    {
+      "id": "maharashtra-industrial-development-act-1961",
+      "title": "The Maharashtra Industrial Development Act, 1961",
+      "original_filename_referenced_in_brief": "maharashtra-industrial-development-act-1962.pdf",
+      "original_upload_status": "NOT PRESENT in this build environment; the brief states this PDF is scanned/image-based and requires OCR. packages/document-engine implements and unit-tests a Tesseract-based OCR pipeline ready to ingest it once supplied. In the interim, representative sections were transcribed from the official India Code text-bitstream of the same Act.",
+      "jurisdiction": "Maharashtra",
+      "authority": "Maharashtra State Legislature / Government of Maharashtra, Law and Judiciary Department",
+      "document_type": "Act",
+      "version_label": "as modified up to 12 December 2012 (per brief); India Code mirror consulted for this release",
+      "source_url": "https://www.indiacode.nic.in/bitstream/123456789/19820/1/the_maharashtra_industrial_development_act,_1961..pdf",
+      "extraction_method": "official_text_mirror",
+      "retrieved_at": "2026-10-04",
+      "content_hash_sha256": "99d6ea379b879835ef453244f88acef22833297381b1364f7e6ae36c81785bd2",
+      "section_coverage": "partial (9 of 69 sections transcribed; see section_index_not_yet_transcribed in the extracted text file)",
+      "verification_status": "CANDIDATE"
+    },
+    {
+      "id": "maharashtra-khadi-and-village-industries-act-1960",
+      "title": "The Maharashtra Khadi and Village Industries Act, 1960 (formerly the Bombay Khadi and Village Industries Act, 1960)",
+      "original_filename_referenced_in_brief": "the-bombay-khadi-and-village-industries-act-1960.pdf",
+      "original_upload_status": "NOT PRESENT in this build environment; the brief states this PDF is scanned/image-based and requires OCR. packages/document-engine's OCR pipeline is ready to ingest it once supplied. In the interim, representative sections were transcribed from the official consolidated text mirror hosted at cdnbbsr.s3waas.gov.in.",
+      "jurisdiction": "Maharashtra",
+      "authority": "Maharashtra State Legislature / Government of Maharashtra, Law and Judiciary Department",
+      "document_type": "Act",
+      "version_label": "Text as on 4 September 2025",
+      "source_url": "https://cdnbbsr.s3waas.gov.in/s36a4cbdaedcbda0fa8ddc7ea32073c475/uploads/2025/11/20251107623670327.pdf",
+      "extraction_method": "official_text_mirror",
+      "retrieved_at": "2026-10-04",
+      "content_hash_sha256": "0c9a2b334bb4f3322ad513e6cce0ef957292759430ef31e338e1b83f92e92aa6",
+      "section_coverage": "partial (5 of 36 sections transcribed; see section_index_not_yet_transcribed in the extracted text file)",
+      "verification_status": "CANDIDATE"
+    }
+  ]
+}

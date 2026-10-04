@@ -1,0 +1,29 @@
+id: RULE-MAITRI-016
+name: 'Inspections should be rationalised: conducted jointly, based on random selection'
+source:
+  document: maitri-act-2023
+  section: Section 16
+  url: https://www.indiacode.nic.in/bitstream/123456789/20544/1/the_maharashtra_industry,_trade_and_investment_facilitation_act,_2023.pdf
+effective:
+  from: '2023-07-03'
+applies_when:
+  all:
+  - field: jurisdiction
+    operator: equals
+    value: Maharashtra
+requires:
+- approval: joint-inspection-scheduling
+actions:
+- type: inform
+  metadata:
+    message: According to Section 16 of the MAITRI Act 2023, inspections under relevant
+      law by concerned authorities shall, as far as practicable, be conducted jointly
+      and based on random selection.
+confidence: 0.9
+notes: Direct transcription of Section 16.
+tags:
+- maitri
+- inspection
+jurisdiction: Maharashtra
+status: candidate
+version: v1

@@ -1,0 +1,32 @@
+id: RULE-MID-048
+name: Corporation officers have statutory powers of entry for inspection
+source:
+  document: maharashtra-industrial-development-act-1961
+  section: Section 48
+  url: https://www.indiacode.nic.in/bitstream/123456789/19820/1/the_maharashtra_industrial_development_act,_1961..pdf
+effective:
+  from: '1962-01-01'
+applies_when:
+  all:
+  - field: jurisdiction
+    operator: equals
+    value: Maharashtra
+  - field: land_type
+    operator: equals
+    value: midc_industrial_area
+actions:
+- type: inform
+  metadata:
+    message: According to Section 48 of the Maharashtra Industrial Development Act,
+      1961, an officer of the State Government, a member of the Corporation, or a
+      person authorised by the Corporation, may enter upon any land or building for
+      purposes specified in the Act (e.g. inspection).
+confidence: 0.75
+notes: Direct transcription (partial) of Section 48; full enumerated purposes beyond
+  the fetched excerpt are not fabricated.
+tags:
+- midc
+- inspection
+jurisdiction: Maharashtra
+status: candidate
+version: v1

@@ -1,0 +1,33 @@
+id: RULE-MID-042A
+name: Unutilised surplus land in MIDC industrial areas may be reacquired and reallotted
+source:
+  document: maharashtra-industrial-development-act-1961
+  section: Section 42A
+  url: https://www.indiacode.nic.in/bitstream/123456789/19820/1/the_maharashtra_industrial_development_act,_1961..pdf
+effective:
+  from: '1962-01-01'
+applies_when:
+  all:
+  - field: jurisdiction
+    operator: equals
+    value: Maharashtra
+  - field: land_type
+    operator: equals
+    value: midc_industrial_area
+actions:
+- type: inform
+  metadata:
+    message: According to Section 42A of the Maharashtra Industrial Development Act,
+      1961, the State Government may direct the Corporation to ascertain whether land
+      in an industrial area has been fully utilised for industrial purposes, as a
+      basis for potential reacquisition of unutilised surplus land.
+confidence: 0.7
+notes: Direct transcription (partial) of Section 42A(1); exact reacquisition procedure
+  beyond this excerpt was not in the fetched source text and is not fabricated.
+tags:
+- midc
+- land
+- compliance-risk
+jurisdiction: Maharashtra
+status: candidate
+version: v1

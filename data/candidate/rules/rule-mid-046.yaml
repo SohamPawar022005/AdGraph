@@ -1,0 +1,38 @@
+id: RULE-MID-046
+name: Using MIDC land/buildings contrary to terms of holding is punishable (fine up
+  to Rs. 5,000)
+source:
+  document: maharashtra-industrial-development-act-1961
+  section: Section 46
+  url: https://www.indiacode.nic.in/bitstream/123456789/19820/1/the_maharashtra_industrial_development_act,_1961..pdf
+effective:
+  from: '1962-01-01'
+applies_when:
+  all:
+  - field: jurisdiction
+    operator: equals
+    value: Maharashtra
+  - field: land_type
+    operator: equals
+    value: midc_industrial_area
+actions:
+- type: inform
+  metadata:
+    message: According to Section 46 of the Maharashtra Industrial Development Act,
+      1961, any person who uses land or a building in an industrial estate or industrial
+      area contrary to the terms under which they hold it, or in contravention of
+      applicable regulations, is on conviction punishable with a fine which may extend
+      to five thousand rupees.
+confidence: 0.9
+notes: 'This is a DIRECT QUOTE from the fetched Section 46 text: ''punished with fine
+  which may extend to five thousand rupees.'' Included because it is an exact statutory
+  figure, not an inference -- demonstrates PermitGraph correctly distinguishing a
+  quoted fact from a fabricated one. Note the amount may have been amended since the
+  1961 Act''s original enactment; verify against the current Gazette text before relying
+  on it.'
+tags:
+- midc
+- penalty
+jurisdiction: Maharashtra
+status: candidate
+version: v1

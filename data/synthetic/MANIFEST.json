@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-10-04T07:33:15.873087+00:00",
+  "rng_seed": 42,
+  "license": "CC0-1.0 (see docs/research/data-licensing.md)",
+  "counts": {
+    "businesses": 5200,
+    "applications": 5341,
+    "workflow_events": 14357,
+    "documents": 1300,
+    "regulatory_change_scenarios": 120,
+    "approval_graphs": 520
+  },
+  "notes": "Entirely synthetic. Not derived from, or representative statistics of, any real business, applicant, or government dataset. Do not cite these counts/distributions as real-world figures."
+}

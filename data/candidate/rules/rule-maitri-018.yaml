@@ -1,0 +1,30 @@
+id: RULE-MAITRI-018
+name: Time limits for Committees and query responses are fixed by prescribed rules
+source:
+  document: maitri-act-2023
+  section: Section 18
+  url: https://www.indiacode.nic.in/bitstream/123456789/20544/1/the_maharashtra_industry,_trade_and_investment_facilitation_act,_2023.pdf
+effective:
+  from: '2023-07-03'
+applies_when:
+  all:
+  - field: jurisdiction
+    operator: equals
+    value: Maharashtra
+actions:
+- type: inform
+  metadata:
+    message: According to Section 18 of the MAITRI Act 2023, the Supervisory Committee,
+      Empowered Committee, Nodal Agency and Competent Authorities must exercise their
+      powers, discharge their functions, and respond to entrepreneur/investor queries
+      within time limits fixed by rules made under the Act. PermitGraph does not fabricate
+      the specific day-counts because the implementing rules were not part of the
+      supplied source corpus.
+confidence: 0.85
+notes: Direct transcription of Section 18(1)-(2); no day-count invented.
+tags:
+- maitri
+- sla
+jurisdiction: Maharashtra
+status: candidate
+version: v1

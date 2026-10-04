@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "permitgraph-graph-engine"
+version = "0.1.0"
+description = "Approval dependency graph + regulatory knowledge graph traversal for PermitGraph"
+requires-python = ">=3.10"
+dependencies = [
+    "networkx>=3.1",
+    "permitgraph-shared",
+]
+
+[tool.setuptools]
+packages = ["graph_engine", "graph_engine.adapters"]

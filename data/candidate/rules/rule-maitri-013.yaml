@@ -1,0 +1,27 @@
+id: RULE-MAITRI-013
+name: Supervisory Committee decisions bind all parties
+source:
+  document: maitri-act-2023
+  section: Section 13
+  url: https://www.indiacode.nic.in/bitstream/123456789/20544/1/the_maharashtra_industry,_trade_and_investment_facilitation_act,_2023.pdf
+effective:
+  from: '2023-07-03'
+applies_when:
+  all:
+  - field: jurisdiction
+    operator: equals
+    value: Maharashtra
+actions:
+- type: inform
+  metadata:
+    message: According to Section 13 of the MAITRI Act 2023, decisions of the Supervisory
+      Committee are binding on applicants, authorities and all other concerned persons.
+confidence: 0.95
+notes: Direct transcription of Section 13.
+tags:
+- maitri
+- supervisory-committee
+- binding
+jurisdiction: Maharashtra
+status: candidate
+version: v1

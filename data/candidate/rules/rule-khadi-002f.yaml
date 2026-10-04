@@ -1,0 +1,36 @@
+id: RULE-KHADI-002F
+name: A 'village industry' includes Schedule industries, cottage/small-scale/handicraft
+  industries, or State-notified industries
+source:
+  document: maharashtra-khadi-and-village-industries-act-1960
+  section: Section 2(f)
+  url: https://cdnbbsr.s3waas.gov.in/s36a4cbdaedcbda0fa8ddc7ea32073c475/uploads/2025/11/20251107623670327.pdf
+effective:
+  from: '1960-04-11'
+applies_when:
+  all:
+  - field: jurisdiction
+    operator: equals
+    value: Maharashtra
+  - field: is_village_industry
+    operator: equals
+    value: true
+requires:
+- approval: khadi-village-industry-registration
+actions:
+- type: inform
+  metadata:
+    message: According to Section 2(f) of the Maharashtra Khadi and Village Industries
+      Act, a 'village industry' means an industry specified in the Schedule to the
+      Khadi and Village Industries Commission Act, 1956, any cottage/small-scale/handicraft
+      industry, or any other industry the State Government specifies by notification
+      in consultation with the Commission and Board.
+confidence: 0.85
+notes: Direct transcription of Section 2(f) (as amended).
+tags:
+- khadi
+- definition
+- classification
+jurisdiction: Maharashtra
+status: candidate
+version: v1

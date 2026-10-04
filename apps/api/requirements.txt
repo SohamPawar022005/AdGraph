@@ -1,0 +1,23 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+SQLAlchemy>=2.0
+pydantic>=2.4
+pydantic-settings>=2.2
+python-jose[cryptography]>=3.3
+passlib[bcrypt]>=1.7
+python-multipart>=0.0.9
+psycopg2-binary>=2.9
+PyYAML>=6.0
+boto3>=1.34
+redis>=5.0
+rq>=1.16
+
+# PermitGraph internal packages (editable installs; see repo root pyproject/setup notes)
+-e ../../packages/shared
+-e ../../packages/rules-engine
+-e ../../packages/graph-engine
+-e ../../packages/change-detection
+-e ../../packages/impact-analysis
+-e ../../packages/document-engine
+-e ../../packages/regulatory-parser
+-e ../../packages/workflow-engine
