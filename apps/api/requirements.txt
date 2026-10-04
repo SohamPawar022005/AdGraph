@@ -5,6 +5,10 @@ pydantic>=2.4
 pydantic-settings>=2.2
 python-jose[cryptography]>=3.3
 passlib[bcrypt]>=1.7
+# passlib 1.7.x probes bcrypt.__about__.__version__, which bcrypt>=4.1 removed;
+# pin to the last compatible 4.0.x release to avoid a broken password backend on a
+# fresh install (see https://github.com/pyca/bcrypt/issues/684).
+bcrypt==4.0.1
 python-multipart>=0.0.9
 psycopg2-binary>=2.9
 PyYAML>=6.0

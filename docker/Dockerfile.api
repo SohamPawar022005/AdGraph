@@ -1,0 +1,32 @@
+# PermitGraph API image.
+#
+# Note on OCR system deps: tesseract-ocr + poppler-utils are required for the real
+# OCR pipeline in packages/document-engine (TesseractOcrBackend, pdf2image). They are
+# installed here at build time; development/CI sandboxes without outbound apt access
+# fall back to InMemoryOcrBackend / graceful-degradation paths (see
+# packages/document-engine tests) -- this image is where real OCR actually runs.
+FROM python:3.11-slim AS base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tesseract-ocr \
+    poppler-utils \
+    libpq-dev \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY packages packages
+COPY apps/api apps/api
+COPY scripts scripts
+COPY data data
+
+# apps/api/requirements.txt's `-e ../../packages/*` lines are relative to apps/api/,
+# which is exactly where we run pip install from.
+WORKDIR /app/apps/api
+RUN pip install --no-cache-dir -r requirements.txt
+
+ENV PYTHONUNBUFFERED=1
+EXPOSE 8000
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

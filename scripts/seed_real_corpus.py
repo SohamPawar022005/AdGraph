@@ -150,18 +150,24 @@ FACTORY_ACT_INDUSTRIES = [
 ]
 
 SYNTHETIC_APPROVALS = [
-    # (id, name, category, is_synthetic, applicable_industries)
-    ("single-window-application", "Single Window System Application", "process", False, None),  # real, MAITRI s.3
-    ("empowered-committee-escalation", "Empowered Committee Escalation", "process", False, None),  # real, MAITRI s.5
-    ("joint-inspection-scheduling", "Joint/Rationalised Inspection Scheduling", "process", False, None),  # real, MAITRI s.16
-    ("midc-plot-allotment", "MIDC Industrial Plot Allotment", "process", False, None),  # real, MID Act s.14
+    # (id, name, category, is_synthetic, applicable_industries, source_document_id, source_section)
+    ("single-window-application", "Single Window System Application", "process", False, None,
+     "maitri-act-2023", "Section 3"),
+    ("empowered-committee-escalation", "Empowered Committee Escalation", "process", False, None,
+     "maitri-act-2023", "Section 5"),
+    ("joint-inspection-scheduling", "Joint/Rationalised Inspection Scheduling", "process", False, None,
+     "maitri-act-2023", "Section 16"),
+    ("midc-plot-allotment", "MIDC Industrial Plot Allotment", "process", False, None,
+     "maharashtra-industrial-development-act-1961", "Section 14"),
     ("khadi-village-industry-registration", "Khadi & Village Industry Board Registration", "registration", False,
-     ["agro_based_village_industry"]),  # real, Khadi Act s.2(f)
-    ("consent-to-establish", "Consent to Establish (Pollution Control Board)", "consent", True, POLLUTION_PRONE_INDUSTRIES),
-    ("consent-to-operate", "Consent to Operate (Pollution Control Board)", "consent", True, POLLUTION_PRONE_INDUSTRIES),
-    ("factory-license", "Factory License", "license", True, FACTORY_ACT_INDUSTRIES),
-    ("fire-noc", "Fire No-Objection Certificate", "consent", True, None),
-    ("labour-registration", "Labour Department Registration", "registration", True, None),
+     ["agro_based_village_industry"], "maharashtra-khadi-and-village-industries-act-1960", "Section 2(f)"),
+    ("consent-to-establish", "Consent to Establish (Pollution Control Board)", "consent", True, POLLUTION_PRONE_INDUSTRIES,
+     None, None),
+    ("consent-to-operate", "Consent to Operate (Pollution Control Board)", "consent", True, POLLUTION_PRONE_INDUSTRIES,
+     None, None),
+    ("factory-license", "Factory License", "license", True, FACTORY_ACT_INDUSTRIES, None, None),
+    ("fire-noc", "Fire No-Objection Certificate", "consent", True, None, None, None),
+    ("labour-registration", "Labour Department Registration", "registration", True, None, None, None),
 ]
 
 SYNTHETIC_DEPENDENCIES = [
@@ -177,7 +183,7 @@ SYNTHETIC_DEPENDENCIES = [
 
 
 def seed_synthetic_approval_catalogue(db):
-    for approval_id, name, category, is_synthetic, applicable_industries in SYNTHETIC_APPROVALS:
+    for approval_id, name, category, is_synthetic, applicable_industries, source_document_id, source_section in SYNTHETIC_APPROVALS:
         if db.get(Approval, approval_id):
             continue
         db.add(
@@ -189,6 +195,8 @@ def seed_synthetic_approval_catalogue(db):
                 status="candidate" if not is_synthetic else "candidate",
                 verification_status="SYNTHETIC" if is_synthetic else "CANDIDATE",
                 applicable_industries=applicable_industries,
+                source_document_id=source_document_id,
+                source_section=source_section,
                 notes=(
                     "Illustrative/synthetic placeholder approval for demo purposes; not sourced "
                     "from the three real Acts in this corpus."
