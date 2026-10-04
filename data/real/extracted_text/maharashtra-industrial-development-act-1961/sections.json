@@ -1,0 +1,40 @@
+{
+  "document_id": "maharashtra-industrial-development-act-1961",
+  "title": "The Maharashtra Industrial Development Act, 1961",
+  "act_number": "Bombay/Maharashtra Act No. 3 of 1962 (enacted 1961, commenced 1962)",
+  "source_url": "https://www.indiacode.nic.in/bitstream/123456789/19820/1/the_maharashtra_industrial_development_act,_1961..pdf",
+  "cross_checked_urls": [
+    "https://www.latestlaws.com/bare-acts/state-acts-rules/maharashtra-state-laws/maharashtra-industrial-development-act-1961",
+    "https://maharashtrahousingandbuildinglaws.com/the-maharashtra-industrial-development-act-1961/"
+  ],
+  "extraction_method": "official_text_mirror",
+  "retrieved_at": "2026-10-04",
+  "verification_status": "CANDIDATE",
+  "notes": "IMPORTANT: the brief describes this Act's source PDF as a scanned/image-based document requiring OCR. That exact binary file was NOT present in this build environment (see docs/PROJECT-RESEARCH.md Limitations). The excerpts below are representative sections only (not the full Act), transcribed from the official India Code text-bitstream of the same Act and cross-checked against two independent bare-acts mirrors, rather than invented. They are explicitly NOT a complete digitisation of the Act, and extraction_method is 'official_text_mirror', not 'ocr' -- packages/document-engine's OCR pipeline is ready to (re)process the actual scanned PDF, with page-level provenance, once it is supplied to this project.",
+  "sections": [
+    {"number": "1", "heading": "Short title, extent and commencement", "text": "(1) This Act may be called the Maharashtra Industrial Development Act, 1961. (2) It extends to the whole of the State of Maharashtra. (3) This Act, except Chapter VI, shall come into force at once; Chapter VI shall take effect in such area, from such date as the State Government may, from time to time, by notification in the Official Gazette, appoint in that behalf."},
+    {"number": "3", "heading": "Establishment and incorporation", "text": "(1) For the purposes of securing and assisting in the rapid and orderly establishment and organisation of industries in industrial areas and industrial estates in the State of Maharashtra, there shall be established by the State Government by notification in the Official Gazette, a Corporation by the name of the Maharashtra Industrial Development Corporation. (2) The said Corporation shall be a body corporate with perpetual succession and a common seal, and may sue and be sued in its corporate name."},
+    {"number": "14", "heading": "Functions", "text": "The functions of the Corporation shall be— (i) generally to promote and assist in the rapid and orderly establishment, growth and development of industries in the State of Maharashtra, and (ii) in particular, and without prejudice to the generality of clause (i), to— (a) establish and manage industrial estates at places selected by the State Government; (b) develop industrial area selected by the State Government for the purpose and make them available for undertakings to establish themselves."},
+    {"number": "42A", "heading": "Acquisition of unutilised surplus lands in industrial areas and allotment to other industries", "text": "(1) With a view to ascertaining whether any industrial area developed by the Corporation has been fully utilised for industrial purposes or not, the State Government may direct the Corporation to submit to it a six-monthly report on utilisation of such industrial area."},
+    {"number": "46", "heading": "Penalty for construction or use of land and buildings contrary to terms of holding", "text": "(2) Any person who uses any land or building in an industrial estate or industrial area contrary to the terms under which he holds such land or building under this Act or in contravention of the provisions of any regulations made in this behalf shall, on conviction, be punished with fine which may extend to five thousand rupees."},
+    {"number": "48", "heading": "Powers of entry", "text": "Any officer of the State Government, any member of the Corporation, and any person either generally or specially authorised by the Corporation in this behalf, may enter into or upon any land or building with or without assistants or workmen for the purpose of [specified purposes under the Act, e.g. survey, execution of works, inspection]."},
+    {"number": "50A", "heading": "Power to Collector to reject applications for conversion of use of land for industrial purpose in adjoining areas in certain cases", "text": "[Heading transcribed from the official India Code section index; full clause text was not part of the fetched excerpt and is therefore not reproduced here to avoid incomplete/misleading quotation.]"},
+    {"number": "66", "heading": "Members, officers and staff of Corporation to be public servants", "text": "All members, officers and servants of the Corporation shall, when acting or purporting to act in pursuance of any of the provisions of this Act, be deemed to be public servants within the meaning of section 21 of the Indian Penal Code."},
+    {"number": "67", "heading": "Effect of provisions inconsistent with other laws", "text": "The provisions of this Act shall have effect notwithstanding anything inconsistent therewith contained in any other law."}
+  ],
+  "section_index_not_yet_transcribed": [
+    "2 Definitions", "4 Constitution", "5 Disqualification for membership", "6 Terms of office and conditions of service of members",
+    "7 Meetings of Corporation", "8 Cessation of membership", "9 Vacancies how to be filled", "10 Temporary absence of members",
+    "11 Proceedings presumed to be good and valid", "12 Officers and servants of the Corporation",
+    "13 Corporation to absorb certain staff", "15 General powers of the Corporation", "16 Authentication of orders and documents",
+    "17 Power to levy service charges", "18 Directions by the State Government", "19 Application of Corporation's assets",
+    "20 Corporation's fund", "21-28 Finance, accounts and audit", "29-30 Rent control exemptions",
+    "31-39 Land acquisition, compensation and disposal (Chapter VI)", "40-41 (Deleted)", "42 Delegation of powers",
+    "43-1A Government lands", "43 Powers of Corporation on default by land owner", "44 Order of demolition of building",
+    "45 Power to stop building operations", "47 Power to lay pipelines etc.", "49 Officers may be vested with other powers",
+    "50 Overriding powers of Government to issue directions to local authorities", "51 Recovery of sums due as arrears of land revenue",
+    "52-57 Notices, returns, withdrawal of area, default in performance of duty", "58 Dissolution of Corporation",
+    "59-62 Offences and penalties", "63-64 Power to make rules and regulations", "65 Protection of action taken in good faith",
+    "68 Power to remove doubts and difficulties", "69 Amendment of Schedule I to Bom. LII of 1956"
+  ]
+}

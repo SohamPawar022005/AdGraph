@@ -1,0 +1,37 @@
+{
+  "document_id": "maharashtra-khadi-and-village-industries-act-1960",
+  "title": "The Maharashtra Khadi and Village Industries Act, 1960 (originally enacted as the Bombay Khadi and Village Industries Act, 1960, Bombay Act No. XIX of 1960; renamed by Mah. 24 of 2012)",
+  "source_url": "https://cdnbbsr.s3waas.gov.in/s36a4cbdaedcbda0fa8ddc7ea32073c475/uploads/2025/11/20251107623670327.pdf",
+  "cross_checked_urls": [
+    "https://www.bareactslive.com/MAH/mh119.htm",
+    "https://mskvib.org/en/about-us/"
+  ],
+  "extraction_method": "official_text_mirror",
+  "retrieved_at": "2026-10-04",
+  "verification_status": "CANDIDATE",
+  "notes": "IMPORTANT: the brief describes this Act's source PDF as scanned/image-based requiring OCR. That exact binary file was NOT present in this build environment (see docs/PROJECT-RESEARCH.md Limitations). The excerpts below are representative sections only, transcribed from the official 'Text as on 4 September 2025' consolidated text published at cdnbbsr.s3waas.gov.in (Government of India hosting infrastructure) and cross-checked against bareactslive.com. extraction_method is 'official_text_mirror', not 'ocr'.",
+  "sections": [
+    {"number": "1", "heading": "Short title, extent and commencement", "text": "(1) This Act may be called the Maharashtra Khadi and Village Industries Act. (2) It extends to the whole of the State of Maharashtra. (3) It shall come into force at once."},
+    {"number": "2", "heading": "Definitions", "text": "In this Act, unless the context otherwise requires,— (a) \"Board\" means the Maharashtra State Khadi and Village Industries Board constituted under this Act; (aa) \"Chairman\" means the Chairman of the Board; (ab) \"Commission\" means the Khadi and Village Industries Commission established under the Khadi and Village Industries Commission Act, 1956 (LXI of 1956); (ac) \"Council\" means the Maharashtra State Khadi and Village Industries Council constituted under this Act; (ad) \"cottage industry\" means an industry, which is a cottage industry as defined in clause (b) of section 2 of the Maharashtra State-aid to Industries Act, 1960 (Mah. XVII of 1960); (ae) \"District Committee\" means a Committee constituted for a District under section 7A; (b) \"Khadi\" means any cloth woven on handlooms in India from cotton, silk or woollen yarn handspun in India or from a mixture of any two or all of such yarns and certified as Khadi by the Commission, and includes ready-made garments made out of such cloth; (c) \"member\" means a member of the Board and includes the Chairman, the Vice-Chairman and a member-secretary or member-secretaries of the Board; (d) \"prescribed\" means prescribed by rules made or deemed to be made under this Act; (e) \"regulation\" means regulations made or deemed to be made under this Act; (ea) \"small scale industry\" means an industry, which is a small scale industry as defined in clause (e) of section 2 of the Maharashtra State-aid to Industries Act, 1960; (ee) \"Vice-Chairman\" means the Vice-Chairman of the Board; (f) \"village industry\" means— (i) all or any of the industries specified in schedule to the Khadi and Village Industries Commission Act, 1956 (LXI of 1956), and includes any other industry deemed to be specified in the said Schedule by reason of a notification issued under section 3 of that Act; or (ia) any cottage industry, small scale industry or handicraft industry; or (ii) any other industry, specified in this behalf by the State Government by notification in the Official Gazette, in consultation with the Commission and Board."},
+    {"number": "3", "heading": "Establishment and incorporation of Board", "text": "(1) The State Government may, by notification in the Official Gazette, establish a Board to be called the Maharashtra State Khadi and Village Industries Board for carrying out the purposes of this Act. [Further sub-sections on term of office, conditions of service, residence allowances for the Chairman, and audit of Board accounts were present in the source but are outside the fetched excerpt and are not reproduced to avoid incomplete quotation.]"},
+    {"number": "9", "heading": "Meetings of Board and Council", "text": "The Board and Council shall meet at such times and places, and shall observe such rules of procedure in regard to transaction of business at their meetings (including the laying down of a quorum at meetings) as may be provided by regulations made by the Board under this Act: Provided that, the Board shall ordinarily meet at least once in a month, and the Council ordinarily at least once in every three months."},
+    {"number": "10", "heading": "Power to make contracts", "text": "(1) The Board may enter into and perform all such contracts as may be necessary for the discharge of its functions under this Act. [Remaining sub-sections on commercial accounting and audit were present in the source but outside the fetched excerpt.]"}
+  ],
+  "section_index_not_yet_transcribed": [
+    "4 Constitution of Board", "4A Term of office and terms and conditions of service of member",
+    "4B Resignation of office by member", "5 Vacancy to be filled as early as possible",
+    "6 Proceedings presumed to be good and valid", "6A Temporary association of persons with Board",
+    "6B Constitution of Council", "7 Chief Executive Officer, Financial Adviser and other officers",
+    "7A Constitution of District Committees and their powers and functions", "8 Appointment of Committees",
+    "11 Functions of Board", "12 General Powers of Board", "13 Preparation and submission of annual programme",
+    "14 Sanction of programme", "15 Supplementary programmes", "16 Transfer of property", "17 Funds of Board",
+    "17A Reserve Fund of Board", "18 Application of fund and property", "19 Subventions and loans to Board",
+    "19A Expenditure for research and experiments", "20-22 Budget", "23 Annual report",
+    "24 Further report, statistics and returns", "25 Accounts and audit", "26 Direction by State Government",
+    "26A Recovery of moneys due to Board as arrears of land revenue", "26B Power of Board to write off loans",
+    "27 Members/officers/servants of Board to be public servants", "28 Protection of action taken under this Act",
+    "29 Rules", "30 Regulations", "31 Dissolution of Board", "31A Transfer of rights and liabilities of State Government to Board",
+    "32 Repeal and saving", "33 Dissolution of existing Board and transfer of its assets and liabilities to the new Board",
+    "34 Power to remove difficulties", "35 Removal of doubt", "36 Repeal of Bom. Ord. No. III of 1960"
+  ]
+}

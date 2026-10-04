@@ -1,0 +1,34 @@
+id: RULE-MID-014
+name: MIDC's statutory function includes developing industrial areas/estates and allotting
+  them to undertakings
+source:
+  document: maharashtra-industrial-development-act-1961
+  section: Section 14
+  url: https://www.indiacode.nic.in/bitstream/123456789/19820/1/the_maharashtra_industrial_development_act,_1961..pdf
+effective:
+  from: '1962-01-01'
+applies_when:
+  all:
+  - field: jurisdiction
+    operator: equals
+    value: Maharashtra
+requires:
+- approval: midc-plot-allotment
+actions:
+- type: inform
+  metadata:
+    message: According to Section 14 of the Maharashtra Industrial Development Act,
+      1961, the Corporation's functions include establishing and managing industrial
+      estates, and developing industrial areas selected by the State Government and
+      making them available for undertakings to establish themselves.
+confidence: 0.85
+notes: Direct transcription of Section 14(i)-(ii)(a)-(b), extracted from the official
+  India Code text mirror; original scanned PDF not present in this build environment
+  (see docs/PROJECT-RESEARCH.md Limitations).
+tags:
+- midc
+- land
+- industrial-area
+jurisdiction: Maharashtra
+status: candidate
+version: v1

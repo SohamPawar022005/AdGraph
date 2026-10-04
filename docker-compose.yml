@@ -1,0 +1,76 @@
+name: permitgraph
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: permitgraph
+      POSTGRES_USER: permitgraph
+      POSTGRES_PASSWORD: permitgraph-dev-only
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U permitgraph"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://permitgraph:permitgraph-dev-only@postgres:5432/permitgraph
+      PERMITGRAPH_SECRET_KEY: dev-only-insecure-secret-change-me
+      PERMITGRAPH_ENV: development
+      LOCAL_STORAGE_DIR: /app/apps/api/var/uploads
+    volumes:
+      - api-uploads:/app/apps/api/var/uploads
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.web
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+
+  # One-off seeding job -- NOT part of the default `docker compose up`. Run explicitly:
+  #   docker compose --profile seed run --rm seed
+  # (loads the real/candidate corpus, applies the demo reviewer-approval promotions,
+  # and loads the synthetic benchmark dataset -- see scripts/*.py for exactly what each
+  # step does and why none of it silently promotes anything to VERIFIED on its own).
+  seed:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    profiles: ["seed"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://permitgraph:permitgraph-dev-only@postgres:5432/permitgraph
+      PERMITGRAPH_SECRET_KEY: dev-only-insecure-secret-change-me
+    entrypoint: ["sh", "-c"]
+    command:
+      - >
+        python ../../scripts/seed_real_corpus.py &&
+        python ../../scripts/demo_apply_reviewer_approvals.py &&
+        python ../../scripts/load_synthetic_dataset.py
+
+volumes:
+  postgres-data:
+  api-uploads:

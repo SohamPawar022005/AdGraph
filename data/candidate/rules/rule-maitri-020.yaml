@@ -1,0 +1,31 @@
+id: RULE-MAITRI-020
+name: An Online Wizard Module must exist to help identify required permissions
+source:
+  document: maitri-act-2023
+  section: Section 20
+  url: https://www.indiacode.nic.in/bitstream/123456789/20544/1/the_maharashtra_industry,_trade_and_investment_facilitation_act,_2023.pdf
+effective:
+  from: '2023-07-03'
+applies_when:
+  all:
+  - field: jurisdiction
+    operator: equals
+    value: Maharashtra
+actions:
+- type: inform
+  metadata:
+    message: According to Section 20 of the MAITRI Act 2023, the Nodal Agency must
+      design and develop a comprehensive Online Wizard Module that accepts inputs
+      such as type of industrial undertaking, number of employees and location, and
+      provides links to relevant application forms and notifications. PermitGraph's
+      Permission Discovery feature is explicitly NOT a replacement for this statutory
+      Wizard; it is a complementary, source-cited rules layer (see README 'What PermitGraph
+      is NOT').
+confidence: 1.0
+notes: Direct transcription of Section 20(1)-(3).
+tags:
+- maitri
+- wizard
+jurisdiction: Maharashtra
+status: candidate
+version: v1

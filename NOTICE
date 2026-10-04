@@ -1,0 +1,45 @@
+PermitGraph
+Copyright 2026 The PermitGraph Contributors
+
+This product includes software developed as part of the PermitGraph project
+(originating from Smart India Hackathon Problem Statement 26130, Government of
+Maharashtra / Maharashtra State Innovation Society -- PermitGraph is an independent
+open-source prototype and is NOT an official government deliverable, is NOT
+government-approved, and does NOT replace NSWS, MAITRI, or MIDC's own systems).
+
+------------------------------------------------------------------------------
+IMPORTANT: this repository intentionally mixes FOUR different license regimes.
+The LICENSE file at the repository root (Apache-2.0) covers source code ONLY.
+See docs/research/data-licensing.md for the full rationale and boundaries.
+------------------------------------------------------------------------------
+
+1. Source code (apps/, packages/, cli/, scripts/, docker/, infra/, tests)
+   License: Apache License, Version 2.0 -- see /LICENSE.
+
+2. Government source-document text (data/real/)
+   The three source Acts (Maharashtra Industrial Development Act 1961, Maharashtra
+   Industry Trade and Investment Facilitation Act 2023, Maharashtra Khadi and Village
+   Industries Act 1960) are reproduced under Section 52(1)(q) of the Copyright Act,
+   1957, which exempts reproduction of an Act of a Legislature from copyright
+   infringement. This is NOT an Apache-2.0 grant and NOT an original PermitGraph
+   work -- it is reproduced statute text, retrieved from official/primary text
+   mirrors (indiacode.nic.in) and cross-checked against PRS Legislative Research.
+   It is NOT a substitute for the Official Gazette; see docs/PROJECT-RESEARCH.md.
+
+3. Candidate (AI-extracted, unverified) regulatory data (data/candidate/)
+   The *structuring artifact* (YAML/JSON schema, field names, rule-engine encoding)
+   is Apache-2.0 licensed as code. The *content* is explicitly non-authoritative,
+   machine/AI-derived, and marked CANDIDATE pending human verification
+   (see docs/architecture/human-verification.md) -- it carries no independent
+   license claim of legal correctness and must not be relied upon as such.
+
+4. Synthetic data (data/synthetic/, data/benchmarks/)
+   Entirely generated for this project (no real businesses, applicants, or
+   regulatory events are represented). Released under CC0-1.0 (public domain
+   dedication) -- use freely, no attribution required.
+
+5. Documentation (docs/, this NOTICE, README, etc.)
+   Released under CC-BY-4.0 unless a file states otherwise.
+
+Full detail, including why each choice was made and what it does NOT cover:
+docs/research/data-licensing.md

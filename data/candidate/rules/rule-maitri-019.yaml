@@ -1,0 +1,28 @@
+id: RULE-MAITRI-019
+name: Nodal Agency may levy prescribed fees for Single Window services
+source:
+  document: maitri-act-2023
+  section: Section 19
+  url: https://www.indiacode.nic.in/bitstream/123456789/20544/1/the_maharashtra_industry,_trade_and_investment_facilitation_act,_2023.pdf
+effective:
+  from: '2023-07-03'
+applies_when:
+  all:
+  - field: jurisdiction
+    operator: equals
+    value: Maharashtra
+actions:
+- type: inform
+  metadata:
+    message: According to Section 19 of the MAITRI Act 2023, the Nodal Agency may
+      levy such fees as may be prescribed for services availed through the Single
+      Window System. The fee amount is not fixed in the Act itself and is therefore
+      not fabricated here.
+confidence: 0.9
+notes: Direct transcription of Section 19 ('Power to levy fees').
+tags:
+- maitri
+- fees
+jurisdiction: Maharashtra
+status: candidate
+version: v1

@@ -1,0 +1,35 @@
+id: RULE-MAITRI-003
+name: Permission applications must be filed through the Single Window System
+source:
+  document: maitri-act-2023
+  document_version: Text as on 11 December 2024
+  section: Section 3
+  url: https://www.indiacode.nic.in/bitstream/123456789/20544/1/the_maharashtra_industry,_trade_and_investment_facilitation_act,_2023.pdf
+effective:
+  from: '2023-07-03'
+applies_when:
+  all:
+  - field: jurisdiction
+    operator: equals
+    value: Maharashtra
+requires:
+- approval: single-window-application
+  documents:
+  - processing_fee_receipt
+actions:
+- type: inform
+  metadata:
+    message: According to the configured source rule (Section 3, MAITRI Act 2023),
+      an entrepreneur or investor setting up a new industrial undertaking, or continuing
+      an existing one in Maharashtra, applies for the required permissions in electronic
+      form through the Single Window System, with prescribed processing fees.
+confidence: 0.95
+notes: Direct transcription of Section 3(1)-(2). Fee AMOUNT is 'as may be prescribed'
+  in the Act and is NOT fabricated here.
+tags:
+- maitri
+- single-window
+- filing
+jurisdiction: Maharashtra
+status: candidate
+version: v1

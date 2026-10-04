@@ -1,0 +1,28 @@
+id: RULE-MAITRI-022
+name: Officials owe a confidentiality duty over applicants' intellectual property
+source:
+  document: maitri-act-2023
+  section: Section 22
+  url: https://www.indiacode.nic.in/bitstream/123456789/20544/1/the_maharashtra_industry,_trade_and_investment_facilitation_act,_2023.pdf
+effective:
+  from: '2023-07-03'
+applies_when:
+  all:
+  - field: jurisdiction
+    operator: equals
+    value: Maharashtra
+actions:
+- type: inform
+  metadata:
+    message: According to Section 22 of the MAITRI Act 2023, no government agency
+      or authority, or functionary thereunder, may disclose to any unauthorised person
+      any information forming the intellectual property of an entrepreneur or investor,
+      without their consent.
+confidence: 0.95
+notes: Direct transcription of Section 22.
+tags:
+- maitri
+- confidentiality
+jurisdiction: Maharashtra
+status: candidate
+version: v1

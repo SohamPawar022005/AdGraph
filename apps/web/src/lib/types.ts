@@ -1,0 +1,149 @@
+export interface SourceRef {
+  document: string;
+  document_version?: string | null;
+  section?: string | null;
+  page?: number | null;
+  url?: string | null;
+}
+
+export interface PermissionResult {
+  approval_id: string;
+  rule_id: string;
+  rule_name: string;
+  reason: string;
+  why: string;
+  source: SourceRef;
+  confidence: number;
+  verification_status: string;
+}
+
+export interface InsufficientInputItem {
+  rule_id: string;
+  rule_name: string;
+  reasons: string[];
+}
+
+export interface DiscoveryResponse {
+  permissions: PermissionResult[];
+  documents: string[];
+  dependencies: { approval_id: string; depends_on: string[] }[];
+  sources: (SourceRef & { rule_id: string; verification_status: string })[];
+  verification_status: { rule_id: string; status: string }[];
+  insufficient_input: InsufficientInputItem[];
+  disclaimer: string;
+}
+
+export interface RegulationSummary {
+  id: string;
+  name: string;
+  short_code: string;
+  jurisdiction: string;
+}
+
+export interface RuleSummary {
+  id: string;
+  name: string;
+  jurisdiction: string;
+  latest_version: string;
+  status: string;
+  verification_status: string;
+  source_document_id: string;
+  source_section: string;
+  version_count: number;
+}
+
+export interface Approval {
+  id: string;
+  name: string;
+  description?: string | null;
+  category: string;
+  authority_id?: string | null;
+  is_synthetic: boolean;
+  status: string;
+  verification_status: string;
+  source_document_id?: string | null;
+  source_section?: string | null;
+  applicable_industries?: string[] | null;
+}
+
+export interface BusinessProfile {
+  id: string;
+  name: string;
+  industry: string;
+  district?: string | null;
+  location?: string | null;
+  jurisdiction: string;
+  investment?: number | null;
+  employees?: number | null;
+  project_stage?: string | null;
+  land_type?: string | null;
+  hazardous_material?: boolean | null;
+  is_village_industry?: boolean | null;
+  environmental_attributes?: string[] | null;
+  is_synthetic: boolean;
+}
+
+export interface Application {
+  id: string;
+  business_profile_id: string;
+  approval_id: string;
+  state: string;
+  is_synthetic: boolean;
+}
+
+export interface RegulatoryChange {
+  id: string;
+  old_source_document_id?: string | null;
+  new_source_document_id?: string | null;
+  detected_at: string;
+  change_type: string;
+  section_label?: string | null;
+  old_text?: string | null;
+  new_text?: string | null;
+  affected_rule_ids: string[];
+  affected_approval_ids: string[];
+  affected_business_types: string[];
+  summary?: string | null;
+  confidence: number;
+  verification_status: string;
+  reviewer?: string | null;
+  approved_at?: string | null;
+  is_synthetic: boolean;
+}
+
+export interface ImpactAssessment {
+  id: string;
+  regulatory_change_id: string;
+  directly_affected_approvals: string[];
+  downstream_affected_approvals: string[];
+  affected_business_types: string[];
+  affected_application_ids: string[];
+  impact_score: number;
+  methodology: string;
+  explanation: string;
+  disclaimer: string;
+}
+
+export interface AuditEvent {
+  id: string;
+  event_type: string;
+  entity_type: string;
+  entity_id: string;
+  actor: string;
+  old_value?: unknown;
+  new_value?: unknown;
+  reason?: string | null;
+  created_at: string;
+}
+
+export interface DocumentSummary {
+  id: string;
+  document_type: string;
+  original_filename: string;
+  size_bytes: number;
+  validation_status: string;
+  is_synthetic: boolean;
+  business_profile_id?: string | null;
+  application_id?: string | null;
+  created_at: string;
+}

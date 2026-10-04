@@ -1,0 +1,45 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+**/*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+*.db
+*.sqlite3
+
+# --- API runtime artifacts (dev-only, never commit real uploads or local DBs) ---
+apps/api/var/
+apps/api/.pytest_uploads/
+apps/api/.pytest_test.db
+apps/api/*.db
+apps/api/uploads/
+
+# --- Node / frontend ---
+node_modules/
+dist/
+build/
+.next/
+.vite/
+coverage/
+*.local
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+.DS_Store
+
+# --- Env / secrets ---
+.env
+.env.*
+!.env.example
+
+# --- Docker ---
+*.log
+
+# --- Large generated datasets (tracked via scripts, not git, unless explicitly small) ---
+data/synthetic/**/*.db
