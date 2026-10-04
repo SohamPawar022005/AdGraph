@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from ..db import get_db
-from ..models.regulatory import RegulationVersion, Regulation, Section, SourceDocument
+from ..models.regulatory import RegulationVersion, Regulation, SourceDocument
 
 router = APIRouter(prefix="/api/v1/regulations", tags=["regulations"])
 

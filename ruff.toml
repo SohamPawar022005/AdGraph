@@ -1,0 +1,8 @@
+# Deliberately narrow rule set for this stage of the project: pyflakes (F) and
+# syntax-error-class pycodestyle (E9) only -- i.e. "this code has no undefined names,
+# unused imports, or syntax errors", not a full style guide. Broaden over time.
+exclude = [".venv", "node_modules", "data"]
+line-length = 110
+
+[lint]
+select = ["F", "E9"]

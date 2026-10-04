@@ -7,7 +7,6 @@ from typing import Optional
 from sqlalchemy import DateTime, Float, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
-from ..db import Base
 
 
 def new_id() -> str:

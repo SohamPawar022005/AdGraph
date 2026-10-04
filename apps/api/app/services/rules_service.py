@@ -9,7 +9,7 @@ from rules_engine import Rule as EngineRule
 from rules_engine.engine import EvaluationResult, Verdict, evaluate_all
 from sqlalchemy.orm import Session
 
-from ..models.regulatory import Rule, RuleVersion
+from ..models.regulatory import RuleVersion
 
 
 def load_engine_rules(db: Session, include_candidate: bool = True) -> List[EngineRule]:

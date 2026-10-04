@@ -8,7 +8,7 @@ addition/deletion, never silently dropped.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from difflib import SequenceMatcher
 from typing import Dict, List, Optional
 

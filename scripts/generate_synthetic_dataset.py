@@ -22,7 +22,6 @@ as real API traffic).
 ALL data produced here is synthetic (CC0-1.0, see docs/research/data-licensing.md): no
 real businesses, applicants, documents, or regulatory amendments are represented.
 """
-import hashlib
 import json
 import pathlib
 import random

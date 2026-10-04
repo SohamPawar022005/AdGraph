@@ -1,6 +1,5 @@
 import pathlib
 
-import pytest
 from document_engine import ingest_pdf, sha256_bytes, sha256_file
 from document_engine.ocr import InMemoryOcrBackend, PageResult
 from reportlab.pdfgen import canvas

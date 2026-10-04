@@ -11,7 +11,7 @@ synthetic/test data otherwise) -- this module has no built-in default statutory 
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from typing import List, Optional, Tuple
 

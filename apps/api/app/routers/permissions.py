@@ -1,4 +1,3 @@
-from datetime import date
 from typing import Any, Dict, Optional
 
 from fastapi import APIRouter, Depends

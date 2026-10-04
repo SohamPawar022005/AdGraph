@@ -1,13 +1,9 @@
 from __future__ import annotations
 
-from typing import Iterable
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from sqlalchemy.orm import Session
 
-from ..db import get_db
-from ..models.users import User
 from .security import decode_access_token
 
 bearer_scheme = HTTPBearer(auto_error=False)

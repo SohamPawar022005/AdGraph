@@ -1,4 +1,3 @@
-import pytest
 from graph_engine import ApprovalGraph, GraphEdge, GraphNode
 
 

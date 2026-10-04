@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from ..db import get_db
-from ..models.regulatory import Rule, RuleVersion
+from ..models.regulatory import Rule
 from ..services import rules_service
 
 router = APIRouter(prefix="/api/v1/rules", tags=["rules"])

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useFetch } from "../lib/useFetch";
 import Disclaimer from "../components/Disclaimer";
-import { Loading } from "../components/Loading";
 
 interface ReadyResponse {
   status: string;

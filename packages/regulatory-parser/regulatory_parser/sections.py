@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List
 
 _SECTION_HEADING_RE = re.compile(
     r"(?m)^\s*(?:Section\s*-?\s*)?(\d+[A-Z]{0,2})\.\s*([^.\n]{1,140}?)\.\s*[—\-]"
