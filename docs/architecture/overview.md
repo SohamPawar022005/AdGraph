@@ -62,6 +62,16 @@ docker/         Dockerfiles; docker-compose.yml at repo root
 .github/        CI workflows, issue/PR templates
 ```
 
+**As-built note (see `CHANGELOG.md` / the final acceptance report for the full
+list):** the layout above was the original plan. In the actual build, `apps/worker`
+(a queued OCR/change-detection worker) was not implemented — all processing in this
+release is synchronous/request-time, though `redis`/`rq` are already declared as
+`apps/api` dependencies for forward compatibility. Package-level tests live under
+each package's own `tests/` directory plus `apps/api/tests/` rather than a single
+top-level `tests/`. `infra/` and a separate `sources/` directory were not created;
+deployment notes live in `docker/` + `docker-compose.yml`, and source-document
+provenance lives in `data/real/source_documents/registry.json` instead.
+
 ## Why relational-graph over a dedicated graph database
 See `docs/research/technical-landscape.md` — the dependency/knowledge graph is small
 enough (tens of approvals, hundreds of dependencies in the real+synthetic combined
