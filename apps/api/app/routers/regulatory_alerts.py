@@ -133,6 +133,12 @@ def delete_subscription(subscription_id: str, db: Session = Depends(get_db)):
     return {"ok": True}
 
 
+@router.get("/dashboard-stats")
+def get_dashboard_stats(db: Session = Depends(get_db)):
+    """Provides consolidated statistics for the Regulatory Change Alerts Dashboard."""
+    return regulatory_alerts_service.get_dashboard_analytics(db)
+
+
 @router.get("")
 def list_alerts(
     business_id: Optional[str] = None,

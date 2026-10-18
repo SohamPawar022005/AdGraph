@@ -305,6 +305,7 @@ export interface RegulatoryAlert {
   affected_task_id?: string | null;
   impact_summary?: {
     regulation_title?: string;
+    category?: string;
     change_summary?: string;
     affected_business?: string;
     affected_application?: string;
@@ -317,4 +318,32 @@ export interface RegulatoryAlert {
   } | null;
   created_at?: string | null;
 }
+
+export interface DashboardAnalytics {
+  summary: {
+    active_alerts: number;
+    awaiting_review: number;
+    compliant: number;
+    non_compliant: number;
+    not_assessed: number;
+  };
+  rating_distribution: Array<{
+    rating: string;
+    count: number;
+    percentage: number;
+    color: string;
+  }>;
+  status_by_rating: Array<{
+    status: string;
+    high: number;
+    medium: number;
+    low: number;
+    total: number;
+  }>;
+  category_distribution: Array<{
+    category: string;
+    count: number;
+  }>;
+}
+
 

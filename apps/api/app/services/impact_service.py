@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 
+# pyrefly: ignore[missing-import]
 from impact_analysis import analyze_impact
 from sqlalchemy.orm import Session
 

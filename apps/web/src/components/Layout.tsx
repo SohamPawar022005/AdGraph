@@ -98,6 +98,7 @@ export default function Layout() {
               ) : (
                 <div className="h-2 w-full my-1 border-b border-slate-100" />
               )}
+
               <div className="space-y-0.5">
                 {group.items
                   .filter((item) => item.to !== "/review" || canReview)
