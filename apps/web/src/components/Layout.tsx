@@ -4,12 +4,16 @@ import { useAuth, REVIEWER_ROLES } from "../context/AuthContext";
 
 const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = [
   {
-    label: "Discover",
-    items: [{ to: "/discover", label: "Permission Discovery" }],
+    label: "Compliance & Tasks",
+    items: [
+      { to: "/discover", label: "Permission Discovery" },
+      { to: "/checklist", label: "Smart Checklist" },
+    ],
   },
   {
     label: "Regulatory Intelligence",
     items: [
+      { to: "/alerts", label: "Regulatory Alerts" },
       { to: "/regulations", label: "Regulations" },
       { to: "/rules", label: "Rules" },
       { to: "/approvals", label: "Approvals" },
@@ -34,6 +38,7 @@ const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = 
     ],
   },
 ];
+
 
 export default function Layout() {
   const { role, email, logout } = useAuth();
