@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json as _json
 import pathlib
+from typing import Optional
 
 import typer
 from rich.console import Console
@@ -76,4 +77,24 @@ def impact(change_id: str, json_out: bool = typer.Option(False, "--json")):
         return
     console.print(f"Impact score: {result['impact_score']:.2f} (bounded [0,1] prioritisation signal, not a legal risk score)")
     console.print(result["explanation"])
+    if result.get("evidence_paths"):
+        console.print(f"\n[bold]Evidence Paths ({len(result['evidence_paths'])}):[/bold]")
+        for p in result["evidence_paths"][:5]:
+            console.print(f"  [{p['tier']}] {p['impact_type'].upper()}: {' -> '.join(p['path'])}")
     console.print(f"[yellow]{result['disclaimer']}[/yellow]")
+
+
+@app.command("export")
+def export_change(
+    change_id: str = typer.Argument(..., help="Regulatory change ID"),
+    output_file: Optional[pathlib.Path] = typer.Option(None, "--out", "-o", help="Path to write JSON export"),
+):
+    """Export complete structured impact analysis and change provenance report as JSON."""
+    result = get_client().get(f"/api/v1/impact/{change_id}/export")
+    formatted = _json.dumps(result, indent=2)
+    if output_file:
+        output_file.write_text(formatted, encoding="utf-8")
+        console.print(f"[green]Report exported successfully to {output_file}[/green]")
+    else:
+        typer.echo(formatted)
+

@@ -31,6 +31,11 @@ class ClassificationResult:
     change_type: ChangeType
     confidence: float
     explanation: str
+    evidence_tokens: dict = None
+
+    def __post_init__(self):
+        if self.evidence_tokens is None:
+            self.evidence_tokens = {}
 
 
 def _tokens_with_hints(text: str, hints) -> set[str]:
@@ -52,6 +57,7 @@ def classify_change(old_text: str, new_text: str) -> ClassificationResult:
             ChangeType.DEADLINE_CHANGE,
             0.85,
             f"Time-period/date tokens changed: {old_days + old_dates!r} -> {new_days + new_dates!r}",
+            evidence_tokens={"old": old_days + old_dates, "new": new_days + new_dates, "kind": "deadline"},
         )
 
     if old_numbers != new_numbers:
@@ -59,6 +65,7 @@ def classify_change(old_text: str, new_text: str) -> ClassificationResult:
             ChangeType.THRESHOLD_CHANGE,
             0.8,
             f"Numeric tokens changed: {old_numbers!r} -> {new_numbers!r}",
+            evidence_tokens={"old": old_numbers, "new": new_numbers, "kind": "threshold"},
         )
 
     old_auth = _tokens_with_hints(old_text, _AUTHORITY_HINTS)
@@ -68,6 +75,7 @@ def classify_change(old_text: str, new_text: str) -> ClassificationResult:
             ChangeType.AUTHORITY_CHANGE,
             0.6,
             f"Authority-related terms changed: {sorted(old_auth)} -> {sorted(new_auth)}",
+            evidence_tokens={"old": sorted(old_auth), "new": sorted(new_auth), "kind": "authority"},
         )
 
     old_docs = _tokens_with_hints(old_text, _DOCUMENT_HINTS)
@@ -77,6 +85,7 @@ def classify_change(old_text: str, new_text: str) -> ClassificationResult:
             ChangeType.DOCUMENT_REQUIREMENT_CHANGE,
             0.55,
             f"Document/filing-related terms changed: {sorted(old_docs)} -> {sorted(new_docs)}",
+            evidence_tokens={"old": sorted(old_docs), "new": sorted(new_docs), "kind": "document"},
         )
 
     if any(h in old_text.lower() or h in new_text.lower() for h in _DEFINITION_HINTS[:1]):
@@ -84,6 +93,7 @@ def classify_change(old_text: str, new_text: str) -> ClassificationResult:
             ChangeType.DEFINITION_CHANGE,
             0.5,
             "Clause contains a definition pattern ('means ...') and text differs.",
+            evidence_tokens={"pattern": "definition", "kind": "definition"},
         )
 
     old_appl = _tokens_with_hints(old_text, _APPLICABILITY_HINTS)
@@ -93,6 +103,7 @@ def classify_change(old_text: str, new_text: str) -> ClassificationResult:
             ChangeType.APPLICABILITY_CHANGE,
             0.5,
             f"Applicability-scope terms changed: {sorted(old_appl)} -> {sorted(new_appl)}",
+            evidence_tokens={"old": sorted(old_appl), "new": sorted(new_appl), "kind": "applicability"},
         )
 
     return ClassificationResult(
@@ -101,4 +112,49 @@ def classify_change(old_text: str, new_text: str) -> ClassificationResult:
         "Text differs but no specific pattern (threshold/deadline/authority/document/"
         "applicability/definition) was matched; flagged as a generic modification for "
         "human review.",
+        evidence_tokens={"kind": "generic_text"},
     )
+
+
+def generate_plain_language_explanation(
+    change_type: ChangeType,
+    old_text: str | None,
+    new_text: str | None,
+    section_label: str | None = None,
+    evidence_tokens: dict | None = None,
+) -> str:
+    """Produce an evidence-grounded plain-language explanation of a detected change."""
+    sec = f"in {section_label}" if section_label else "in clause"
+    if change_type == ChangeType.ADDITION:
+        return f"New regulatory provision added {sec}. Adds new requirements or authorities not present in the previous version."
+    if change_type == ChangeType.DELETION:
+        return f"Regulatory provision removed {sec}. Previous requirements under this clause have been repealed or omitted."
+    if change_type == ChangeType.RENUMBERED:
+        return f"Provision renumbered or reorganized {sec}. The core text has been carried over under a different section reference."
+    if change_type == ChangeType.MOVED:
+        return f"Provision moved {sec}. Clause content relocated to another section structure."
+    if change_type == ChangeType.UNCERTAIN:
+        return f"Candidate match with uncertainty {sec}. Requires human verification to determine whether this represents an amendment or separate requirement."
+    if change_type == ChangeType.DEADLINE_CHANGE:
+        tokens = evidence_tokens or {}
+        old_val = ", ".join(tokens.get("old", [])) or "previous timeframe"
+        new_val = ", ".join(tokens.get("new", [])) or "updated timeframe"
+        return f"Compliance timeline updated {sec}: statutory period modified from '{old_val}' to '{new_val}'."
+    if change_type == ChangeType.THRESHOLD_CHANGE:
+        tokens = evidence_tokens or {}
+        old_val = ", ".join(tokens.get("old", [])) or "previous threshold"
+        new_val = ", ".join(tokens.get("new", [])) or "updated threshold"
+        return f"Eligibility or quantitative threshold modified {sec}: values changed from '{old_val}' to '{new_val}'."
+    if change_type == ChangeType.AUTHORITY_CHANGE:
+        tokens = evidence_tokens or {}
+        old_val = ", ".join(tokens.get("old", [])) or "previous authority"
+        new_val = ", ".join(tokens.get("new", [])) or "new authority"
+        return f"Designated regulatory authority or officer modified {sec}: jurisdiction/authority references updated from '{old_val}' to '{new_val}'."
+    if change_type == ChangeType.DOCUMENT_REQUIREMENT_CHANGE:
+        return f"Filing, certification, or documentation requirements modified {sec}."
+    if change_type == ChangeType.APPLICABILITY_CHANGE:
+        return f"Scope of industrial applicability or eligible business categories amended {sec}."
+    if change_type == ChangeType.DEFINITION_CHANGE:
+        return f"Statutory definition updated {sec}. May affect downstream interpretations of key terms."
+    return f"Wording amended {sec}. Please review the old and new text comparison."
+

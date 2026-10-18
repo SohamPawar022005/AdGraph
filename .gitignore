@@ -43,3 +43,8 @@ coverage/
 
 # --- Large generated datasets (tracked via scripts, not git, unless explicitly small) ---
 data/synthetic/**/*.db
+data/uploads/
+apps/api/data/
+var/
+
+

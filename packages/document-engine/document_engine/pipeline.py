@@ -37,6 +37,11 @@ class IngestResult:
         return "\n\n".join(p.text for p in self.pages)
 
 
+class DocumentProcessingError(Exception):
+    """Raised when a document cannot be processed due to corruption, unreadable format, or unsupported type."""
+    pass
+
+
 def ingest_pdf(file_path: str, ocr_backend: Optional[OcrBackend] = None, dpi: int = 200) -> IngestResult:
     """Ingest a PDF: extract any native text layer; OCR pages that lack one.
 
@@ -44,14 +49,29 @@ def ingest_pdf(file_path: str, ocr_backend: Optional[OcrBackend] = None, dpi: in
     `engine="ocr_not_configured"` with empty text and low_confidence=True, rather than
     silently fabricating or skipping them.
     """
-    content_hash = sha256_file(file_path)
-    reader = PdfReader(file_path)
+    try:
+        content_hash = sha256_file(file_path)
+    except Exception as exc:
+        raise DocumentProcessingError(f"Unable to read file for hashing: {exc}") from exc
+
+    try:
+        reader = PdfReader(file_path)
+        if len(reader.pages) == 0:
+            raise DocumentProcessingError("PDF document contains 0 pages or is empty.")
+    except DocumentProcessingError:
+        raise
+    except Exception as exc:
+        raise DocumentProcessingError(f"Malformed or unreadable PDF document: {exc}") from exc
+
     pages: List[PageResult] = []
     used_ocr = False
 
     needs_ocr_page_numbers: List[int] = []
     for i, page in enumerate(reader.pages, start=1):
-        text = (page.extract_text() or "").strip()
+        try:
+            text = (page.extract_text() or "").strip()
+        except Exception:
+            text = ""
         if len(text) >= MIN_TEXT_LAYER_CHARS:
             pages.append(
                 PageResult(page_number=i, text=text, confidence=1.0, engine="pdf_text_layer")
@@ -119,3 +139,64 @@ def ingest_pdf(file_path: str, ocr_backend: Optional[OcrBackend] = None, dpi: in
         used_ocr=used_ocr,
         low_confidence_pages=low_confidence_pages,
     )
+
+
+def ingest_text_file(file_path: str) -> IngestResult:
+    """Ingest a plain text, markdown, or JSON document."""
+    try:
+        content_hash = sha256_file(file_path)
+        with open(file_path, "r", encoding="utf-8", errors="replace") as f:
+            content = f.read()
+    except Exception as exc:
+        raise DocumentProcessingError(f"Failed to read text document: {exc}") from exc
+
+    lines = content.splitlines()
+    # Chunk into pages roughly every 50 lines or form-feed characters
+    page_texts: List[str] = []
+    if "\x0c" in content:
+        page_texts = [p.strip() for p in content.split("\x0c") if p.strip()]
+    if not page_texts:
+        chunk_size = 50
+        page_texts = [
+            "\n".join(lines[i : i + chunk_size]).strip()
+            for i in range(0, max(len(lines), 1), chunk_size)
+            if "\n".join(lines[i : i + chunk_size]).strip()
+        ]
+    if not page_texts:
+        page_texts = [content.strip() or ""]
+
+    pages = [
+        PageResult(
+            page_number=idx,
+            text=pt,
+            confidence=1.0,
+            engine="text_file_layer",
+            low_confidence=False,
+        )
+        for idx, pt in enumerate(page_texts, start=1)
+    ]
+
+    return IngestResult(
+        file_path=file_path,
+        content_hash=content_hash,
+        page_count=len(pages),
+        pages=pages,
+        used_ocr=False,
+        low_confidence_pages=[],
+    )
+
+
+def ingest_document_file(
+    file_path: str, ocr_backend: Optional[OcrBackend] = None, dpi: int = 200
+) -> IngestResult:
+    """Ingest any supported document (.pdf, .txt, .md, .json) with error reporting."""
+    p = str(file_path).lower()
+    if p.endswith(".pdf"):
+        return ingest_pdf(file_path, ocr_backend=ocr_backend, dpi=dpi)
+    elif p.endswith((".txt", ".md", ".json")):
+        return ingest_text_file(file_path)
+    else:
+        raise DocumentProcessingError(
+            f"Unsupported document format for '{file_path}'. Supported extensions: .pdf, .txt, .md, .json"
+        )
+

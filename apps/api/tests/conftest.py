@@ -53,7 +53,16 @@ def _seed_database():
 
     yield
 
-    TEST_DB_PATH.unlink(missing_ok=True)
+    try:
+        from app.db import engine
+        engine.dispose()
+    except Exception:
+        pass
+
+    try:
+        TEST_DB_PATH.unlink(missing_ok=True)
+    except PermissionError:
+        pass
 
 
 @pytest.fixture(scope="session")

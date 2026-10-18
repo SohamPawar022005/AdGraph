@@ -46,3 +46,28 @@ def test_generic_modification_fallback():
     changes = compare_sections(old, new)
     assert changes[0].change_type in (ChangeType.MODIFICATION, ChangeType.DOCUMENT_REQUIREMENT_CHANGE, ChangeType.APPLICABILITY_CHANGE)
     assert 0.0 <= changes[0].similarity_ratio <= 1.0
+
+
+def test_renumbered_clause_detected():
+    old = {"Section 14": "Every industrial unit in an industrial area shall pay the prescribed service charges annually."}
+    new = {"Section 16": "Every industrial unit in an industrial area shall pay the prescribed service charges annually."}
+    changes = compare_sections(old, new)
+    assert len(changes) == 1
+    assert changes[0].change_type == ChangeType.RENUMBERED
+    assert changes[0].old_section_label == "Section 14"
+    assert changes[0].new_section_label == "Section 16"
+    assert changes[0].similarity_ratio == 1.0
+    assert not changes[0].is_uncertain
+
+
+def test_uncertain_match_detected_for_partial_similarity():
+    old = {"Section 10": "The Authority may conduct environmental audits of manufacturing units twice a year."}
+    new = {"Section 22": "The Authority may inspect and audit industrial units for compliance with standards."}
+    changes = compare_sections(old, new)
+    assert len(changes) == 1
+    assert changes[0].change_type == ChangeType.UNCERTAIN
+    assert changes[0].is_uncertain
+    assert changes[0].old_section_label == "Section 10"
+    assert changes[0].new_section_label == "Section 22"
+    assert 0.40 <= changes[0].similarity_ratio < 0.70
+

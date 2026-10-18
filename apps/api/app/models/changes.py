@@ -33,6 +33,10 @@ class RegulatoryChange(Base, TimestampMixin):
     reviewer: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     approved_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
     is_synthetic: Mapped[bool] = mapped_column(Boolean, default=False)
+    source_references: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
+    matching_rationale: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    is_uncertain: Mapped[bool] = mapped_column(Boolean, default=False)
+    evidence_tokens: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
 
 
 class ImpactAssessment(Base, TimestampMixin):
@@ -47,3 +51,7 @@ class ImpactAssessment(Base, TimestampMixin):
     methodology: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     explanation: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     disclaimer: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    evidence_paths: Mapped[Optional[list]] = mapped_column(JSON, nullable=True)
+    has_uncertain_coverage: Mapped[bool] = mapped_column(Boolean, default=False)
+    relationship_tiers: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
+

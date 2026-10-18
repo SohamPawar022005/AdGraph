@@ -58,6 +58,9 @@ class ChangeType(str, Enum):
     DOCUMENT_REQUIREMENT_CHANGE = "document_requirement_change"
     APPLICABILITY_CHANGE = "applicability_change"
     DEFINITION_CHANGE = "definition_change"
+    MOVED = "moved"
+    RENUMBERED = "renumbered"
+    UNCERTAIN = "uncertain"
 
 
 class WorkflowState(str, Enum):

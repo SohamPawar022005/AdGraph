@@ -39,4 +39,5 @@ export function useAuth(): AuthState {
   return ctx;
 }
 
-export const REVIEWER_ROLES = ["REGULATORY_REVIEWER", "ADMIN"];
+export { REVIEWER_ROLES } from "../lib/types";
+

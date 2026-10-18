@@ -38,7 +38,12 @@ def _payload(c: RegulatoryChange) -> dict:
         "reviewer": c.reviewer,
         "approved_at": c.approved_at,
         "is_synthetic": c.is_synthetic,
+        "source_references": c.source_references,
+        "matching_rationale": c.matching_rationale,
+        "is_uncertain": c.is_uncertain,
+        "evidence_tokens": c.evidence_tokens,
     }
+
 
 
 @router.post("/analyze")

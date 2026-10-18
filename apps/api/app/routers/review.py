@@ -14,6 +14,7 @@ router = APIRouter(prefix="/api/v1/review", tags=["human-verification"])
 class ReviewRequest(BaseModel):
     action: str  # approve | reject | edit | flag | deprecate | supersede
     reason: Optional[str] = None
+    updates: Optional[dict] = None
 
 
 @router.get("/queue/{entity_type}")
@@ -30,6 +31,12 @@ def review_queue(entity_type: str, db: Session = Depends(get_db)):
             "source_section": getattr(i, "source_section", None),
             "confidence": getattr(i, "confidence", None),
             "notes": getattr(i, "notes", None),
+            "summary": getattr(i, "summary", None),
+            "change_type": getattr(i, "change_type", None),
+            "old_text": getattr(i, "old_text", None),
+            "new_text": getattr(i, "new_text", None),
+            "rule_body": getattr(i, "rule_body", None),
+            "name": getattr(i, "name", None),
         }
         for i in items
     ]
@@ -52,7 +59,9 @@ def review_action(
             reviewer=user.email,
             reviewer_role=user.role,
             reason=payload.reason,
+            updates=payload.updates,
         )
     except verification_service.VerificationError as exc:
         raise HTTPException(400, str(exc)) from exc
     return result
+

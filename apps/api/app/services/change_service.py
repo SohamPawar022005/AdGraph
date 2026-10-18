@@ -28,7 +28,11 @@ def analyze_and_persist(
         affected_rule_ids = [
             rv.rule_id
             for rv in rule_versions
-            if rv.source_section and rv.source_section == cc.section_label
+            if rv.source_section and (
+                rv.source_section == cc.section_label
+                or rv.source_section == getattr(cc, "old_section_label", None)
+                or rv.source_section == getattr(cc, "new_section_label", None)
+            )
         ]
         affected_approval_ids: List[str] = []
         for rv in rule_versions:
@@ -53,8 +57,18 @@ def analyze_and_persist(
             confidence=cc.confidence,
             verification_status="CANDIDATE",
             is_synthetic=is_synthetic,
+            source_references={
+                "old_section": getattr(cc, "old_section_label", None),
+                "new_section": getattr(cc, "new_section_label", None),
+                "old_doc_id": old_source_document_id,
+                "new_doc_id": new_source_document_id,
+            },
+            matching_rationale=getattr(cc, "matching_rationale", None),
+            is_uncertain=getattr(cc, "is_uncertain", False),
+            evidence_tokens=getattr(cc, "evidence_tokens", None),
         )
         db.add(change)
+
         db.flush()
         db.add(
             AuditEvent(
