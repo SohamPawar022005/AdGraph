@@ -292,16 +292,21 @@ export default function ChecklistPage() {
             {/* Readiness Details Accordion / Highlights */}
             {checklist.readiness_summary && (
               <div className="mt-4 space-y-2 border-t border-slate-200/80 pt-3 text-xs">
-                {checklist.readiness_summary.failed_checks?.map((fc, i) => (
-                  <div key={i} className="rounded-md bg-rose-50/70 p-2.5 text-rose-900 border border-rose-200">
-                    <p className="font-semibold text-rose-800">⚠️ {fc.title}:</p>
-                    <ul className="mt-1 list-disc pl-4 space-y-0.5">
-                      {fc.items?.map((it, j) => (
-                        <li key={j}>{it.reason || JSON.stringify(it)}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+                {checklist.readiness_summary.failed_checks?.map((fc, i) => {
+                  const uniqueReasons = Array.from(
+                    new Set(fc.items?.map((it) => it.reason || JSON.stringify(it)) || [])
+                  );
+                  return (
+                    <div key={i} className="rounded-md bg-rose-50/70 p-2.5 text-rose-900 border border-rose-200">
+                      <p className="font-semibold text-rose-800">⚠️ {fc.title}:</p>
+                      <ul className="mt-1 list-disc pl-4 space-y-0.5">
+                        {uniqueReasons.map((reason, j) => (
+                          <li key={j}>{reason}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
 
                 {checklist.readiness_summary.verification_needed?.map((vn, i) => (
                   <div key={i} className="rounded-md bg-amber-50/70 p-2.5 text-amber-900 border border-amber-200">

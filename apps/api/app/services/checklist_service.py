@@ -443,19 +443,23 @@ def validate_readiness(db: Session, checklist_id: str) -> Dict[str, Any]:
     else:
         passed_checks.append("All known prerequisite approvals and sequences satisfied")
 
-    # Check 2: Mandatory documents present (grouped by task to avoid repetitive complaints)
-    missing_docs = []
+    # Check 2: Mandatory documents present (grouped by distinct document name to eliminate repetitive complaints)
+    doc_to_tasks: Dict[str, List[str]] = {}
     for t in tasks:
-        task_missing = [
-            d.name for d in t.documents if d.is_mandatory and d.status not in ["collected", "uploaded", "verified"]
-        ]
-        if task_missing:
-            missing_docs.append({
-                "task_id": t.id,
-                "task_title": t.title,
-                "missing_documents": task_missing,
-                "reason": f"'{t.title}' missing mandatory document(s): {', '.join(task_missing)}",
-            })
+        for d in t.documents:
+            if d.is_mandatory and d.status not in ["collected", "uploaded", "verified"]:
+                doc_to_tasks.setdefault(d.name, []).append(t.title)
+
+    missing_docs = []
+    for doc_name, task_titles in sorted(doc_to_tasks.items()):
+        task_count = len(task_titles)
+        sample_tasks = ", ".join(f"'{title}'" for title in task_titles[:2])
+        more_suffix = f" and {task_count - 2} other approval(s)" if task_count > 2 else ""
+        missing_docs.append({
+            "document_name": doc_name,
+            "required_for_tasks": task_titles,
+            "reason": f"Mandatory document '{doc_name}' is missing (required for {sample_tasks}{more_suffix})",
+        })
 
     for d in docs:
         if d.verification_status == "needs_verification":
