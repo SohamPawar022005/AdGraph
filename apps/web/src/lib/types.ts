@@ -192,3 +192,35 @@ export interface DocumentSummary {
   application_id?: string | null;
   created_at: string;
 }
+
+export type VerificationState = 'MISSING' | 'INVALID' | 'VALID' | 'WARNING';
+export type TaskState = 'BLOCKED' | 'NOT_STARTED' | 'IN_PROGRESS' | 'READY_TO_APPLY';
+
+export interface RequiredDocumentItem {
+  docId: string;
+  name: string;
+  description: string;
+  isRequired: boolean;
+  uploadedFileId?: string;
+  validationStatus: VerificationState;
+  extractedFields?: Record<string, unknown>;
+  validationIssues?: string[];
+}
+
+export interface ComplianceTask {
+  approvalId: string;
+  title: string;
+  authority: string;
+  actsOrRulesRef: string;
+  prerequisiteApprovalIds: string[];
+  status: TaskState;
+  targetDate?: string;
+  requiredDocuments: RequiredDocumentItem[];
+}
+
+export interface ComplianceChecklist {
+  businessProfileId: string;
+  tasks: ComplianceTask[];
+  overallReadinessScore: number;
+}
+

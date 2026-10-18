@@ -21,6 +21,7 @@ const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = 
   {
     label: "Operations",
     items: [
+      { to: "/checklist", label: "Smart Checklist" },
       { to: "/businesses", label: "Businesses" },
       { to: "/applications", label: "Applications" },
       { to: "/documents", label: "Documents" },
