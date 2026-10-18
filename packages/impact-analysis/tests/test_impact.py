@@ -46,3 +46,23 @@ def test_no_impact_when_rule_maps_to_nothing():
     )
     assert report.impact_score == 0
     assert report.directly_affected_approvals == []
+    assert report.has_uncertain_coverage is True
+    assert "incomplete graph coverage" in report.explanation.lower()
+
+
+def test_evidence_paths_include_direct_and_downstream_traversals():
+    graph = build_graph()
+    report = analyze_impact(
+        changed_rule_ids=["RULE-1"],
+        rule_to_approvals={"RULE-1": ["consent-to-establish"]},
+        approval_graph=graph,
+        approval_to_business_types={"consent-to-establish": ["food_processing"]},
+    )
+    assert len(report.evidence_paths) >= 2
+    types = {p["impact_type"] for p in report.evidence_paths}
+    assert "direct" in types
+    assert "downstream" in types
+    direct_p = next(p for p in report.evidence_paths if p["impact_type"] == "direct")
+    assert direct_p["trigger_rule"] == "RULE-1"
+    assert direct_p["target_approval"] == "consent-to-establish"
+

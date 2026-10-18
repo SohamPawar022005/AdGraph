@@ -41,6 +41,15 @@ class ImpactReport:
         "by a qualified regulatory reviewer. Verify affected rules/approvals before "
         "acting."
     )
+    evidence_paths: List[dict] = None
+    has_uncertain_coverage: bool = False
+    relationship_tiers: dict = None
+
+    def __post_init__(self):
+        if self.evidence_paths is None:
+            self.evidence_paths = []
+        if self.relationship_tiers is None:
+            self.relationship_tiers = {"confirmed": 0, "candidate": 0, "synthetic": 0}
 
 
 def analyze_impact(
@@ -53,13 +62,61 @@ def analyze_impact(
     """active_applications: list of {"id": str, "approval_ids": [str, ...]}"""
 
     directly_affected: set[str] = set()
+    evidence_paths: List[dict] = []
+    tiers_count = {"confirmed": 0, "candidate": 0, "synthetic": 0}
+
+    # Helper to check edge tiers
+    edge_map = {}
+    for e in approval_graph.edges():
+        edge_map[(e.source_id, e.target_id)] = "synthetic" if e.is_synthetic else "confirmed"
+
     for rid in changed_rule_ids:
-        directly_affected.update(rule_to_approvals.get(rid, []))
+        direct_apps = rule_to_approvals.get(rid, [])
+        for app_id in direct_apps:
+            directly_affected.add(app_id)
+            tier = "synthetic" if "SYNTH" in app_id.upper() or "SYNTH" in rid.upper() else "confirmed"
+            tiers_count[tier] = tiers_count.get(tier, 0) + 1
+            evidence_paths.append({
+                "trigger_rule": rid,
+                "source_approval": app_id,
+                "target_approval": app_id,
+                "impact_type": "direct",
+                "path": [app_id],
+                "path_summary": f"Direct link: Rule {rid} enforces approval {app_id}",
+                "relationship": "enforces_rule",
+                "tier": tier,
+            })
 
     downstream_affected: set[str] = set()
     for approval_id in directly_affected:
-        downstream_affected.update(approval_graph.downstream(approval_id))
-    downstream_affected -= directly_affected
+        downstream_nodes = approval_graph.downstream(approval_id)
+        for ds in downstream_nodes:
+            if ds in directly_affected:
+                continue
+            downstream_affected.add(ds)
+            # Find path in reverse graph (since edge direction is A -> B = A depends on B)
+            # so downstream from B means finding path from ds to approval_id in regular graph
+            path = approval_graph.shortest_path(ds, approval_id)
+            display_path = list(reversed(path)) if path else [approval_id, ds]
+
+            is_synth = any(
+                edge_map.get((u, v)) == "synthetic" or "SYNTH" in u.upper() or "SYNTH" in v.upper()
+                for u, v in zip(path[:-1], path[1:])
+            ) if path and len(path) > 1 else False
+
+            tier = "synthetic" if is_synth else "confirmed"
+            tiers_count[tier] = tiers_count.get(tier, 0) + 1
+
+            evidence_paths.append({
+                "trigger_rule": next((r for r in changed_rule_ids if approval_id in rule_to_approvals.get(r, [])), "unknown"),
+                "source_approval": approval_id,
+                "target_approval": ds,
+                "impact_type": "downstream",
+                "path": display_path,
+                "path_summary": f"Downstream dependency: {' -> '.join(display_path)}",
+                "relationship": "depends_on",
+                "tier": tier,
+            })
 
     all_affected_approvals = directly_affected | downstream_affected
 
@@ -78,6 +135,8 @@ def analyze_impact(
         + 0.2 * min(len(affected_business_types), 5) / 5
     )
 
+    has_uncertain_coverage = len(changed_rule_ids) > 0 and len(directly_affected) == 0
+
     explanation = (
         f"{len(changed_rule_ids)} changed rule(s) directly affect "
         f"{len(directly_affected)} approval(s): {sorted(directly_affected)}. "
@@ -89,6 +148,13 @@ def analyze_impact(
         f"currently tracked active application(s)."
     )
 
+    if has_uncertain_coverage:
+        explanation += (
+            " NOTE: No direct approval relationships were discovered in the existing verified graph "
+            "for the changed rule(s). This may reflect incomplete graph coverage rather than zero compliance impact. "
+            "Reviewers should inspect if additional approval rules require mapping."
+        )
+
     return ImpactReport(
         changed_rule_ids=list(changed_rule_ids),
         directly_affected_approvals=sorted(directly_affected),
@@ -97,4 +163,8 @@ def analyze_impact(
         affected_application_ids=affected_application_ids,
         impact_score=round(score, 4),
         explanation=explanation,
+        evidence_paths=evidence_paths,
+        has_uncertain_coverage=has_uncertain_coverage,
+        relationship_tiers=tiers_count,
     )
+
