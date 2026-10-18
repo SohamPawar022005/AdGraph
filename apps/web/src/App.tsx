@@ -17,6 +17,7 @@ import ApplicationsPage from "./pages/ApplicationsPage";
 import ApplicationDetailPage from "./pages/ApplicationDetailPage";
 import RegulatoryChangesPage from "./pages/RegulatoryChangesPage";
 import RegulatoryChangeDetailPage from "./pages/RegulatoryChangeDetailPage";
+import TextComparisonPage from "./pages/TextComparisonPage";
 import DocumentsPage from "./pages/DocumentsPage";
 import AuditLogPage from "./pages/AuditLogPage";
 import ReviewQueuePage from "./pages/ReviewQueuePage";
@@ -43,6 +44,7 @@ export default function App() {
             <Route path="/applications/:id" element={<ApplicationDetailPage />} />
             <Route path="/regulatory-changes" element={<RegulatoryChangesPage />} />
             <Route path="/regulatory-changes/:id" element={<RegulatoryChangeDetailPage />} />
+            <Route path="/compare" element={<TextComparisonPage />} />
             <Route path="/documents" element={<DocumentsPage />} />
             <Route path="/audit" element={<AuditLogPage />} />
             <Route path="/review" element={<ReviewQueuePage />} />

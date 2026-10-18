@@ -33,7 +33,10 @@ export interface DiscoveryResponse {
   disclaimer: string;
 }
 
+export const REVIEWER_ROLES = ["REGULATORY_REVIEWER", "ADMIN"];
+
 export interface RegulationSummary {
+
   id: string;
   name: string;
   short_code: string;
@@ -109,6 +112,26 @@ export interface RegulatoryChange {
   reviewer?: string | null;
   approved_at?: string | null;
   is_synthetic: boolean;
+  source_references?: {
+    old_section?: string | null;
+    new_section?: string | null;
+    old_doc_id?: string | null;
+    new_doc_id?: string | null;
+  } | null;
+  matching_rationale?: string | null;
+  is_uncertain?: boolean;
+  evidence_tokens?: Record<string, any> | null;
+}
+
+export interface EvidencePath {
+  trigger_rule: string;
+  source_approval: string;
+  target_approval: string;
+  impact_type: "direct" | "downstream";
+  path: string[];
+  path_summary: string;
+  relationship: string;
+  tier: "confirmed" | "candidate" | "synthetic";
 }
 
 export interface ImpactAssessment {
@@ -122,7 +145,29 @@ export interface ImpactAssessment {
   methodology: string;
   explanation: string;
   disclaimer: string;
+  evidence_paths?: EvidencePath[];
+  has_uncertain_coverage?: boolean;
+  relationship_tiers?: { confirmed: number; candidate: number; synthetic: number };
 }
+
+export interface SourceDocument {
+  id: string;
+  title: string;
+  jurisdiction: string;
+  authority?: string | null;
+  document_type: string;
+  version_label: string;
+  content_hash?: string | null;
+  source_url?: string | null;
+  file_type?: string;
+  ocr_status: string;
+  page_count: number;
+  notes?: string | null;
+  created_at?: string;
+  raw_text_preview?: string | null;
+  sections?: Array<{ id: string; number: string; heading?: string; text: string; preview: string }>;
+}
+
 
 export interface AuditEvent {
   id: string;

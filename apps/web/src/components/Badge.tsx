@@ -14,7 +14,7 @@ const STYLES: Record<string, string> = {
   pending: "bg-amber-100 text-amber-800",
 };
 
-export default function Badge({ children }: { children: string }) {
-  const style = STYLES[children] ?? "bg-slate-200 text-slate-700";
+export default function Badge({ children, tone }: { children: string; tone?: string }) {
+  const style = (tone ? STYLES[tone] : undefined) ?? STYLES[children] ?? "bg-slate-200 text-slate-700";
   return <span className={`badge ${style}`}>{children}</span>;
 }
