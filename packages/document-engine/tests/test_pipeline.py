@@ -64,3 +64,32 @@ def test_in_memory_ocr_backend_flags_low_confidence_fake_fallback():
     result = backend.ocr_image_bytes(b"not-really-an-image", page_number=1)
     assert result.low_confidence is True
     assert result.text == ""
+
+
+def test_ingest_text_file(tmp_path):
+    from document_engine import ingest_text_file, ingest_document_file
+
+    txt_path = tmp_path / "act.txt"
+    txt_path.write_text("Section 1. Short title.\nSection 2. Definitions.\n\x0cSection 3. Single Window System.")
+    res = ingest_text_file(str(txt_path))
+    assert res.page_count == 2
+    assert "Section 1" in res.pages[0].text
+    assert "Section 3" in res.pages[1].text
+    assert res.used_ocr is False
+
+    # Also via document routing
+    res2 = ingest_document_file(str(txt_path))
+    assert res2.page_count == 2
+
+
+def test_corrupted_pdf_reports_error(tmp_path):
+    import pytest
+    from document_engine import ingest_document_file, DocumentProcessingError
+
+    bad_pdf = tmp_path / "corrupt.pdf"
+    bad_pdf.write_bytes(b"Not a valid PDF header or body")
+
+    with pytest.raises(DocumentProcessingError) as exc_info:
+        ingest_document_file(str(bad_pdf))
+    assert "Malformed or unreadable PDF" in str(exc_info.value)
+
