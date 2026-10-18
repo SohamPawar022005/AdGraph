@@ -135,10 +135,24 @@ export default function DiscoverPage() {
             />
           )}
 
+          <div className="flex items-center justify-between rounded-lg bg-brand-50 p-3.5 border border-brand-200">
+            <div>
+              <p className="text-xs font-bold text-brand-900">Need to track required approvals & statutory documents?</p>
+              <p className="text-xs text-brand-700">Track deadlines, prerequisite sequence, and document uploads in the Smart Checklist.</p>
+            </div>
+            <Link
+              to="/checklist"
+              className="rounded-md bg-brand-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-brand-700 shrink-0"
+            >
+              Open Smart Checklist →
+            </Link>
+          </div>
+
           <div>
             <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500">
               Applicable permissions ({result.permissions.length})
             </h2>
+
             <div className="space-y-2">
               {result.permissions.map((p) => (
                 <div key={p.rule_id} className="rounded-lg border border-slate-200 bg-white p-3">
