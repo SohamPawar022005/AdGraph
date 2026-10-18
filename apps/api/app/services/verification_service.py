@@ -47,6 +47,7 @@ def review_entity(
     reviewer: str,
     reviewer_role: str,
     reason: Optional[str] = None,
+    updates: Optional[dict] = None,
 ) -> dict:
     if entity_type not in _ENTITY_MODELS:
         raise VerificationError(f"Unknown entity_type '{entity_type}'")
@@ -70,15 +71,18 @@ def review_entity(
         entity.notes = f"{entity.notes}\n{note}" if getattr(entity, "notes", None) else note
         new_status = previous_status
     elif action == "edit":
-        # 'edit' here records that a human materially edited the candidate text/body
-        # elsewhere (e.g. via a dedicated PATCH endpoint) -- this call re-queues it as
-        # CANDIDATE so it is reviewed again rather than silently staying verified.
+        # Apply authorized edits to entity fields
+        if updates:
+            for k, v in updates.items():
+                if hasattr(entity, k) and k not in {"id", "created_at", "updated_at"}:
+                    setattr(entity, k, v)
         if hasattr(entity, "verification_status"):
             entity.verification_status = "CANDIDATE"
         if hasattr(entity, "status"):
             entity.status = "candidate"
         new_status = "CANDIDATE"
     else:
+
         status_value, verification_value = _ACTION_TO_STATUS[action]
         if hasattr(entity, "status"):
             entity.status = status_value

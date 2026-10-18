@@ -42,8 +42,12 @@ def run_impact_analysis(db: Session, change_id: str) -> ImpactAssessment:
         methodology=report.methodology,
         explanation=report.explanation,
         disclaimer=report.disclaimer,
+        evidence_paths=report.evidence_paths,
+        has_uncertain_coverage=report.has_uncertain_coverage,
+        relationship_tiers=report.relationship_tiers,
     )
     db.add(assessment)
+
     db.add(
         AuditEvent(
             event_type="IMPACT_ANALYSIS_CREATED",

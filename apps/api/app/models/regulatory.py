@@ -40,6 +40,10 @@ class SourceDocument(Base, TimestampMixin):
     file_type: Mapped[str] = mapped_column(String, default="pdf")
     ocr_status: Mapped[str] = mapped_column(String, default="not_required")
     notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    raw_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    page_count: Mapped[int] = mapped_column(default=1)
+    pages_metadata: Mapped[Optional[list]] = mapped_column(JSON, nullable=True)
+    file_path: Mapped[Optional[str]] = mapped_column(String, nullable=True)
 
     regulations: Mapped[List["RegulationVersion"]] = relationship(back_populates="source_document")
 
