@@ -22,6 +22,8 @@ import DocumentsPage from "./pages/DocumentsPage";
 import SearchRegulationsPage from "./pages/SearchRegulationsPage";
 import AuditLogPage from "./pages/AuditLogPage";
 import ReviewQueuePage from "./pages/ReviewQueuePage";
+import ChecklistPage from "./pages/ChecklistPage";
+import RegulatoryAlertsPage from "./pages/RegulatoryAlertsPage";
 
 export default function App() {
   return (
@@ -33,6 +35,8 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/discover" element={<DiscoverPage />} />
             <Route path="/search" element={<SearchRegulationsPage />} />
+            <Route path="/checklist" element={<ChecklistPage />} />
+            <Route path="/alerts" element={<RegulatoryAlertsPage />} />
             <Route path="/regulations" element={<RegulationsPage />} />
             <Route path="/regulations/:id" element={<RegulationDetailPage />} />
             <Route path="/rules" element={<RulesPage />} />
@@ -56,3 +60,4 @@ export default function App() {
     </AuthProvider>
   );
 }
+

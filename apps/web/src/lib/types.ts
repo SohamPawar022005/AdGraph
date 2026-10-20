@@ -241,3 +241,155 @@ export interface RegulatorySearchResponse {
   execution_time_ms: number;
 }
 
+export interface ChecklistDocument {
+  id: string;
+  checklist_id: string;
+  task_id: string;
+  document_type: string;
+  name: string;
+  purpose?: string | null;
+  is_mandatory: boolean;
+  status: "missing" | "collected" | "uploaded" | "verified" | "unknown";
+  source_reference?: string | null;
+  verification_status: string;
+  document_id?: string | null;
+  file_url?: string | null;
+  notes?: string | null;
+}
+
+export interface ChecklistTask {
+  id: string;
+  checklist_id: string;
+  approval_id?: string | null;
+  application_id?: string | null;
+  title: string;
+  description?: string | null;
+  authority_name: string;
+  category: string;
+  status: "not_started" | "in_progress" | "blocked" | "completed" | "needs_review";
+  is_manual: boolean;
+  legal_deadline?: string | null;
+  legal_deadline_note?: string | null;
+  due_date?: string | null;
+  reminder_days: number;
+  prerequisite_approval_ids: string[];
+  blocking_reasons: string[];
+  supporting_rule_id?: string | null;
+  source_reference?: SourceRef | null;
+  notes?: string | null;
+  completed_at?: string | null;
+  completed_by?: string | null;
+  flagged_for_review: boolean;
+  flag_reason?: string | null;
+  flag_change_id?: string | null;
+  documents: ChecklistDocument[];
+}
+
+export interface ComplianceChecklist {
+  id: string;
+  business_profile_id: string;
+  project_name: string;
+  status: string;
+  readiness_status: "ready_for_review" | "action_required" | "needs_verification";
+  readiness_summary?: {
+    checklist_id: string;
+    readiness_status: string;
+    evaluated_at: string;
+    passed_checks: string[];
+    failed_checks: Array<{ check: string; title: string; items: any[] }>;
+    verification_needed: Array<{ check: string; title: string; items: any[]; reason?: string }>;
+    disclaimer: string;
+  } | null;
+  last_evaluated_at?: string | null;
+  notes?: string | null;
+  created_at?: string | null;
+  tasks: ChecklistTask[];
+  documents: ChecklistDocument[];
+}
+
+export interface RegulatorySource {
+  id: string;
+  name: string;
+  jurisdiction: string;
+  authority: string;
+  source_url: string;
+  source_type: string;
+  last_checked_at?: string | null;
+  last_check_status: "success" | "failed" | "pending";
+  last_error?: string | null;
+  version_fingerprint?: string | null;
+  check_interval_hours: number;
+  is_active: boolean;
+  description?: string | null;
+}
+
+export interface RegulatorySubscription {
+  id: string;
+  user_id?: string | null;
+  subscription_type: "act" | "rule" | "regulation" | "approval" | "authority" | "business";
+  target_id: string;
+  target_label: string;
+  notification_channels?: string[];
+  is_active: boolean;
+  created_at?: string | null;
+}
+
+export interface RegulatoryAlert {
+  id: string;
+  subscription_id?: string | null;
+  user_id?: string | null;
+  regulatory_change_id: string;
+  title: string;
+  message: string;
+  priority: "urgent" | "medium" | "informational";
+  is_read: boolean;
+  read_at?: string | null;
+  is_dismissed: boolean;
+  is_false_positive: boolean;
+  resolution_notes?: string | null;
+  affected_business_id?: string | null;
+  affected_business_name?: string | null;
+  affected_application_id?: string | null;
+  affected_task_id?: string | null;
+  impact_summary?: {
+    regulation_title?: string;
+    category?: string;
+    change_summary?: string;
+    affected_business?: string;
+    affected_application?: string;
+    potential_impact?: string;
+    recommended_action?: string;
+    effective_date?: string;
+    confidence?: number;
+    official_source?: string | null;
+    is_direct?: boolean;
+  } | null;
+  created_at?: string | null;
+}
+
+export interface DashboardAnalytics {
+  summary: {
+    active_alerts: number;
+    awaiting_review: number;
+    compliant: number;
+    non_compliant: number;
+    not_assessed: number;
+  };
+  rating_distribution: Array<{
+    rating: string;
+    count: number;
+    percentage: number;
+    color: string;
+  }>;
+  status_by_rating: Array<{
+    status: string;
+    high: number;
+    medium: number;
+    low: number;
+    total: number;
+  }>;
+  category_distribution: Array<{
+    category: string;
+    count: number;
+  }>;
+}

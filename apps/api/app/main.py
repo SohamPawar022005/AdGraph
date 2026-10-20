@@ -10,11 +10,13 @@ from .routers import (
     audit,
     auth,
     businesses,
+    checklists,
     documents,
     health,
     impact,
     permissions,
     regulations,
+    regulatory_alerts,
     regulatory_changes,
     review,
     rules,
@@ -63,7 +65,10 @@ for router in (
     impact.router,
     businesses.router,
     applications.router,
+    checklists.router,
+    regulatory_alerts.router,
     audit.router,
     review.router,
 ):
     app.include_router(router)
+
