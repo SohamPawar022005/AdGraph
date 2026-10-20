@@ -19,7 +19,7 @@ import RegulatoryChangesPage from "./pages/RegulatoryChangesPage";
 import RegulatoryChangeDetailPage from "./pages/RegulatoryChangeDetailPage";
 import TextComparisonPage from "./pages/TextComparisonPage";
 import DocumentsPage from "./pages/DocumentsPage";
-import ComplianceChecklistPage from "./pages/ComplianceChecklistPage";
+import SearchRegulationsPage from "./pages/SearchRegulationsPage";
 import AuditLogPage from "./pages/AuditLogPage";
 import ReviewQueuePage from "./pages/ReviewQueuePage";
 
@@ -32,8 +32,7 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/discover" element={<DiscoverPage />} />
-            <Route path="/checklist" element={<ComplianceChecklistPage />} />
-            <Route path="/checklist/:businessId" element={<ComplianceChecklistPage />} />
+            <Route path="/search" element={<SearchRegulationsPage />} />
             <Route path="/regulations" element={<RegulationsPage />} />
             <Route path="/regulations/:id" element={<RegulationDetailPage />} />
             <Route path="/rules" element={<RulesPage />} />

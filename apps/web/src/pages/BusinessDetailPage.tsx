@@ -44,10 +44,10 @@ export default function BusinessDetailPage() {
           </p>
         </div>
         <Link
-          to={`/checklist?businessId=${biz.id}`}
+          to={`/search?q=${encodeURIComponent(biz.industry || biz.name)}`}
           className="inline-flex items-center rounded-md bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-brand-700 transition"
         >
-          <span className="mr-1.5">📋</span> Smart Compliance Checklist
+          <span className="mr-1.5">🔍</span> Search Applicable Regulations
         </Link>
       </div>
 

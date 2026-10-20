@@ -18,6 +18,7 @@ from .routers import (
     regulatory_changes,
     review,
     rules,
+    search,
 )
 
 settings = get_settings()
@@ -52,6 +53,7 @@ def on_startup():
 for router in (
     health.router,
     auth.router,
+    search.router,
     regulations.router,
     rules.router,
     permissions.router,

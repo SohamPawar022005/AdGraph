@@ -193,34 +193,51 @@ export interface DocumentSummary {
   created_at: string;
 }
 
-export type VerificationState = 'MISSING' | 'INVALID' | 'VALID' | 'WARNING';
-export type TaskState = 'BLOCKED' | 'NOT_STARTED' | 'IN_PROGRESS' | 'READY_TO_APPLY';
+export type SearchEntityType = 'act' | 'section' | 'rule' | 'approval' | 'source_document';
 
-export interface RequiredDocumentItem {
-  docId: string;
-  name: string;
-  description: string;
-  isRequired: boolean;
-  uploadedFileId?: string;
-  validationStatus: VerificationState;
-  extractedFields?: Record<string, unknown>;
-  validationIssues?: string[];
+export interface CitationInfo {
+  act_title: string;
+  act_short_code: string;
+  section_number?: string | null;
+  official_reference: string;
+  jurisdiction: string;
+  authority?: string | null;
+  source_url?: string | null;
+  source_document_id?: string | null;
 }
 
-export interface ComplianceTask {
-  approvalId: string;
+export interface VerificationInfo {
+  status: 'VERIFIED' | 'CANDIDATE' | 'SYNTHETIC' | 'PROPOSED' | 'UNVERIFIED';
+  extraction_method?: string | null;
+  confidence?: number | null;
+  badge_label: string;
+  provenance_summary?: string | null;
+}
+
+export interface RegulatorySearchResult {
+  id: string;
+  entity_type: SearchEntityType;
   title: string;
-  authority: string;
-  actsOrRulesRef: string;
-  prerequisiteApprovalIds: string[];
-  status: TaskState;
-  targetDate?: string;
-  requiredDocuments: RequiredDocumentItem[];
+  title_mr?: string | null;
+  subtitle?: string | null;
+  matched_text: string;
+  matched_field: string;
+  language_detected: 'en' | 'mr' | 'mixed';
+  relevance_score: number;
+  citation: CitationInfo;
+  verification: VerificationInfo;
+  navigation_link: string;
+  tags?: string[];
 }
 
-export interface ComplianceChecklist {
-  businessProfileId: string;
-  tasks: ComplianceTask[];
-  overallReadinessScore: number;
+export interface RegulatorySearchResponse {
+  query: string;
+  detected_language: string;
+  translated_query?: string | null;
+  total_matches: number;
+  counts_by_type: Record<SearchEntityType, number>;
+  counts_by_status: Record<string, number>;
+  items: RegulatorySearchResult[];
+  execution_time_ms: number;
 }
 

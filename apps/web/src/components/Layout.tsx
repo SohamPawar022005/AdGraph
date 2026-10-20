@@ -5,7 +5,10 @@ import { useAuth, REVIEWER_ROLES } from "../context/AuthContext";
 const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = [
   {
     label: "Discover",
-    items: [{ to: "/discover", label: "Permission Discovery" }],
+    items: [
+      { to: "/discover", label: "Permission Discovery" },
+      { to: "/search", label: "Search Regulations" },
+    ],
   },
   {
     label: "Regulatory Intelligence",
@@ -21,7 +24,6 @@ const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = 
   {
     label: "Operations",
     items: [
-      { to: "/checklist", label: "Smart Checklist" },
       { to: "/businesses", label: "Businesses" },
       { to: "/applications", label: "Applications" },
       { to: "/documents", label: "Documents" },

@@ -135,24 +135,24 @@ export default function DiscoverPage() {
             />
           )}
 
-          {/* Smart Compliance Checklist Banner */}
-          <div className="rounded-xl border border-brand-200 bg-linear-to-r from-brand-50/80 via-white to-brand-50/40 p-4 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          {/* Search Across Regulations Spotlight */}
+          <div className="rounded-xl border border-brand-200 bg-gradient-to-r from-brand-50/80 via-white to-brand-50/40 p-4 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
               <div className="flex items-center space-x-2">
                 <span className="inline-flex items-center rounded-md bg-brand-100 px-2 py-0.5 text-xs font-bold text-brand-800">
-                  Feature Spotlight
+                  Search Feature
                 </span>
-                <span className="text-xs font-semibold text-slate-800">Automated "Ready to Apply" Verification</span>
+                <span className="text-xs font-semibold text-slate-800">Bilingual Statutory Intelligence (English & मराठी)</span>
               </div>
               <p className="mt-1 text-xs text-slate-600">
-                Transform these {result.permissions.length} discovered approval requirements into an actionable, state-tracked execution task list.
+                Explore full-text statutory sections, rules-as-code, and verified citations across all {result.permissions.length} discovered permissions.
               </p>
             </div>
             <Link
-              to="/checklist"
+              to="/search"
               className="inline-flex items-center justify-center rounded-md bg-brand-600 px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-brand-700 transition shrink-0"
             >
-              📋 Open Smart Compliance Checklist →
+              🔍 Search Across Regulations →
             </Link>
           </div>
 
