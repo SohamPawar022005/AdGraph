@@ -35,24 +35,13 @@ export default function BusinessDetailPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-xl font-bold text-slate-900">{biz.name}</h1>
-          <p className="mt-1 text-sm text-slate-500">
-            {biz.industry} · {biz.district} · {biz.employees ?? "?"} employees
-            {biz.is_synthetic && <> · <Badge>SYNTHETIC</Badge></>}
-          </p>
-        </div>
-        <div>
-          <Link
-            to={`/checklist?business_id=${biz.id}`}
-            className="inline-flex items-center gap-1.5 rounded-md bg-brand-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-brand-700"
-          >
-            📋 View Smart Compliance Checklist →
-          </Link>
-        </div>
+      <div>
+        <h1 className="text-xl font-bold text-slate-900">{biz.name}</h1>
+        <p className="mt-1 text-sm text-slate-500">
+          {biz.industry} · {biz.district} · {biz.employees ?? "?"} employees
+          {biz.is_synthetic && <> · <Badge>SYNTHETIC</Badge></>}
+        </p>
       </div>
-
 
       <div className="grid grid-cols-2 gap-4 rounded-lg border border-slate-200 bg-white p-4 text-sm sm:grid-cols-4">
         <div><p className="text-xs text-slate-400">Investment</p><p className="font-medium">₹{biz.investment?.toLocaleString()}</p></div>

@@ -4,10 +4,10 @@ import { useAuth, REVIEWER_ROLES } from "../context/AuthContext";
 
 const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = [
   {
-    label: "Compliance & Tasks",
+    label: "Discover",
     items: [
       { to: "/discover", label: "Permission Discovery" },
-      { to: "/checklist", label: "Smart Checklist" },
+      { to: "/search", label: "Search Regulations" },
     ],
   },
   {
@@ -59,9 +59,8 @@ export default function Layout() {
     <div className="flex min-h-screen bg-slate-50">
       {/* Collapsible App Navigation Sidebar */}
       <aside
-        className={`flex flex-col border-r border-slate-200 bg-white transition-all duration-200 shrink-0 z-30 ${
-          sidebarCollapsed ? "w-14" : "w-64"
-        }`}
+        className={`flex flex-col border-r border-slate-200 bg-white transition-all duration-200 shrink-0 z-30 ${sidebarCollapsed ? "w-14" : "w-64"
+          }`}
       >
         <div className="border-b border-slate-200 px-3 py-3 flex items-center justify-between">
           {!sidebarCollapsed ? (
@@ -108,10 +107,9 @@ export default function Layout() {
                       to={item.to}
                       title={sidebarCollapsed ? item.label : undefined}
                       className={({ isActive }) =>
-                        `block rounded-md px-2.5 py-1.5 text-xs transition truncate ${
-                          isActive
-                            ? "bg-brand-600 text-white font-semibold"
-                            : "text-slate-600 hover:bg-slate-100"
+                        `block rounded-md px-2.5 py-1.5 text-xs transition truncate ${isActive
+                          ? "bg-brand-600 text-white font-semibold"
+                          : "text-slate-600 hover:bg-slate-100"
                         } ${sidebarCollapsed ? "text-center text-[11px]" : ""}`
                       }
                     >
