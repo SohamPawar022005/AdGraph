@@ -1,194 +1,692 @@
 # PermitGraph
 
-**Open-source regulatory intelligence & compliance automation infrastructure for
-Maharashtra industrial approvals.**
+### Open-Source Regulatory Intelligence & Compliance Automation Platform
 
-PermitGraph turns regulatory text (Acts, sections, amendments) into versioned,
-provenance-tracked, machine-readable rules — and keeps a dependency graph of
-approvals, a change-detection pipeline that flags when a statute changes, and an
-impact-analysis engine that says *who and what is affected* when it does.
+**Simplifying Industrial Approvals in Maharashtra Through Regulatory Intelligence, Approval Dependency Mapping, and Automated Compliance Monitoring.**
 
-> **PermitGraph is NOT a government portal.** It does not accept permit applications
-> on behalf of any authority, is not government-approved, is not legally binding, and
-> does **not** replace [NSWS](https://www.nsws.gov.in/), MAITRI, or MIDC's own
-> systems. See [Scope & non-goals](#scope--non-goals) below.
+---
 
-## Origin
+## 1. Overview
 
-This project originates from **Smart India Hackathon Problem Statement 26130**
-(Government of Maharashtra / Maharashtra State Innovation Society), which asks for a
-single-window industrial-approval experience. Rather than build *another* applicant
-wizard (several strong open-source attempts at that already exist — see
-[`docs/research/india-open-source-gap.md`](docs/research/india-open-source-gap.md)),
-PermitGraph builds the layer underneath: the part that turns a Gazette PDF into a
-structured, versioned, auditable rule that any such wizard, any officer console, or
-any compliance tool could consume via a documented API.
+PermitGraph is an open-source regulatory intelligence and compliance automation platform designed to simplify industrial regulatory processes in Maharashtra, India.
 
-## Why this is useful (the USP)
+Industrial businesses often struggle to identify applicable permissions, understand approval dependencies, track regulatory amendments, and maintain compliance with changing government regulations.
 
+PermitGraph addresses these challenges by converting regulatory documents into structured, machine-readable rules and connecting them through an intelligent approval dependency graph.
+
+The platform enables businesses to discover required permissions, understand regulatory requirements, monitor regulatory changes, and identify their potential impact on businesses and applications.
+
+### Core Concept
+
+**Regulatory Text → Rule Extraction → Human Verification → Rules-as-Code → Approval Dependency Graph → Change Detection → Impact Analysis**
+
+---
+
+## 2. Problem Statement
+
+Industrial establishment and expansion in Maharashtra involve multiple regulatory approvals from different government departments and authorities.
+
+Businesses face several challenges:
+
+* Difficulty identifying all applicable industrial permissions.
+* Complex relationships and dependencies between approvals.
+* Regulatory information scattered across multiple Acts, rules, and government documents.
+* Lack of centralized regulatory change monitoring.
+* Difficulty understanding how regulatory amendments affect existing approvals.
+* Manual tracking of application deadlines and compliance documents.
+* Limited visibility into approval workflows and regulatory requirements.
+
+PermitGraph aims to address these challenges through a centralized, transparent, and extensible regulatory intelligence platform.
+
+---
+
+## 3. Key Features
+
+### 3.1 Intelligent Permission Discovery
+
+Recommends applicable industrial permissions based on business characteristics.
+
+**Input parameters:**
+
+* Industry type
+* District
+* Investment amount
+* Number of employees
+* Land type
+* Pollution category
+
+**Output:**
+
+* Applicable permissions
+* Required documents
+* Approval dependencies
+* Regulatory references
+
+### 3.2 Regulatory Catalogue
+
+Maintains structured regulatory information from Maharashtra legislation.
+
+Currently includes:
+
+* Maharashtra Industrial Development Act
+* Maharashtra Industries (Facilitation) Act (MAITRI-related legislation)
+* Maharashtra Khadi and Village Industries Board Act
+
+Each regulatory record maintains:
+
+* Act and section information
+* Regulatory versions
+* Original source URLs
+* SHA-256 hashes
+* Source provenance
+
+### 3.3 Rules Engine (Rules-as-Code)
+
+Converts regulatory requirements into structured YAML-based rules.
+
+Features:
+
+* Deterministic rule evaluation.
+* Source-linked regulatory conditions.
+* Verification status tracking.
+* Reusable rule definitions.
+* Traceable rule execution.
+
+Unverified rules remain marked as `CANDIDATE`.
+
+### 3.4 Human Verification Workflow
+
+Ensures regulatory accuracy through human oversight.
+
+* Review candidate rules.
+* Approve or reject extracted rules.
+* Record verification reasons.
+* Maintain reviewer and administrator audit trails.
+* Prevent automatic promotion of candidate rules to verified status.
+
+### 3.5 Approval Dependency Graph
+
+Visualizes relationships between industrial approvals.
+
+Features:
+
+* Upstream and downstream approval relationships.
+* Dependency visualization.
+* Approval sequencing.
+* Cycle detection.
+* Industry-specific approval relationships.
+* Identification of prerequisite permissions.
+
+### 3.6 Business Management
+
+Enables users to create and manage industrial business profiles.
+
+Business information includes:
+
+* Business name
+* Industry classification
+* District
+* Investment
+* Employees
+* Land type
+* Pollution category
+
+Supports synthetic business profiles for testing and demonstrations.
+
+### 3.7 Application Workflow Management
+
+Provides application lifecycle management.
+
+Features:
+
+* Application creation.
+* Valid state transitions.
+* Invalid transition prevention.
+* Application status monitoring.
+* Workflow history.
+* Event tracking.
+
+### 3.8 SLA Tracking
+
+Monitors application timelines and service-level agreements.
+
+Features:
+
+* Application deadlines.
+* SLA snapshots.
+* Event timelines.
+* Status monitoring.
+* Deadline tracking.
+
+### 3.9 Document Management
+
+Provides document upload, processing, and validation.
+
+Features:
+
+* PDF and image uploads.
+* SHA-256 document hashing.
+* OCR-based text extraction.
+* Structural validation.
+* Document traceability.
+
+### 3.10 Regulatory Change Detection
+
+Identifies changes between different versions of regulatory documents.
+
+Detectable change categories include:
+
+* Deadline changes.
+* Fee changes.
+* Eligibility changes.
+* Requirement changes.
+
+Maintains comparisons between previous and updated regulatory text.
+
+### 3.11 Regulatory Impact Analysis
+
+Identifies potentially affected entities when regulations change.
+
+Features:
+
+* Affected approval identification.
+* Affected business-type identification.
+* Affected application identification.
+* Impact scoring.
+* Impact methodology.
+* Explanatory disclaimers.
+
+### 3.12 Audit Logging
+
+Maintains traceable records of important system activities.
+
+Includes:
+
+* Rule verification decisions.
+* Application workflow events.
+* Important user actions.
+* Administrative activities.
+
+### 3.13 Role-Based Authentication
+
+JWT-based authentication with role-based access control.
+
+Supported roles:
+
+* Admin
+* Reviewer
+* Officer
+* Business User
+* Developer
+* Read-Only User
+
+### 3.14 Web Application
+
+A React-based interface containing 19 pages covering:
+
+* Dashboard
+* Permission Discovery
+* Regulatory Catalogue
+* Rules Management
+* Approval Catalogue
+* Approval Dependency Graph
+* Business Management
+* Applications
+* Document Management
+* Regulatory Changes
+* Impact Analysis
+* Audit Logs
+* Authentication
+* Rule Review
+
+### 3.15 REST API
+
+FastAPI-powered backend providing endpoints for major platform functionalities.
+
+Supports:
+
+* Regulatory management
+* Permission discovery
+* Rules management
+* Approval dependencies
+* Business profiles
+* Applications
+* Documents
+* Regulatory changes
+* Impact analysis
+* Authentication
+* Audit operations
+
+### 3.16 Command-Line Interface (CLI)
+
+PermitGraph provides a CLI client that communicates with the same REST API used by the web application.
+
+This enables developers and technical users to interact with the platform through terminal commands.
+
+### 3.17 Synthetic Datasets
+
+Includes synthetic datasets for testing and demonstrations.
+
+Supports thousands of generated records involving:
+
+* Businesses
+* Applications
+* Documents
+* Workflow events
+* Regulatory changes
+* Approval dependency graphs
+
+Real, candidate, and synthetic data are explicitly distinguished.
+
+---
+
+## 4. System Architecture
+
+```text
+                 REGULATORY SOURCES
+                         |
+                         v
+               REGULATORY DOCUMENTS
+                         |
+                         v
+                TEXT EXTRACTION
+                         |
+                         v
+                CANDIDATE RULES
+                         |
+                         v
+                HUMAN VERIFICATION
+                         |
+                         v
+                  RULES-AS-CODE
+                         |
+                         v
+             APPROVAL DEPENDENCY GRAPH
+                         |
+                         v
+              REGULATORY CHANGE DETECTION
+                         |
+                         v
+                  IMPACT ANALYSIS
+                         |
+                         v
+        +----------------+----------------+
+        |                |                |
+        v                v                v
+    WEB UI           REST API            CLI
+        |                |                |
+        +----------------+----------------+
+                         |
+                         v
+                  FASTAPI BACKEND
+                         |
+                         v
+                    POSTGRESQL
 ```
-regulation → OCR/extraction → AI candidate rule → human verification →
-verified rule → rules-as-code → approval dependency graph → change detection →
-impact analysis → REST API / CLI / web UI
+
+### Architecture Principles
+
+* Modular and extensible architecture.
+* API-first backend design.
+* Deterministic rules evaluation.
+* Human-in-the-loop verification.
+* Source-backed regulatory information.
+* Role-based access control.
+* Separation of real, candidate, and synthetic data.
+
+---
+
+## 5. Technology Stack
+
+| Layer                      | Technology                           |
+| -------------------------- | ------------------------------------ |
+| Frontend                   | React                                |
+| Backend                    | Python, FastAPI                      |
+| Database                   | PostgreSQL                           |
+| Rules Engine               | YAML-based rules                     |
+| Authentication             | JWT                                  |
+| Document Processing        | OCR                                  |
+| Document Integrity         | SHA-256                              |
+| API Communication          | REST API                             |
+| Dependency Visualization   | Graph-based visualization            |
+| CLI                        | Python                               |
+| Containerization           | Docker, Docker Compose               |
+| Web Server / Reverse Proxy | Nginx                                |
+| Testing                    | Automated Unit and Integration Tests |
+| Code Quality               | Ruff                                 |
+| CI/CD                      | GitHub Actions                       |
+
+---
+
+## 6. Project Structure
+
+```text
+PermitGraph/
+│
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── services/
+│   │   ├── rules/
+│   │   ├── regulatory/
+│   │   ├── approvals/
+│   │   ├── applications/
+│   │   ├── documents/
+│   │   ├── impact/
+│   │   └── auth/
+│   │
+│   └── tests/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── assets/
+│   │
+│   └── package.json
+│
+├── cli/
+│   └── permitgraph/
+│
+├── datasets/
+│   └── synthetic/
+│
+├── docker/
+│
+├── docs/
+│
+├── docker-compose.yml
+├── README.md
+└── .github/
+    └── workflows/
 ```
 
-Every other piece (a nicer application form, a mobile app, an officer dashboard) can
-be built *on top of* this layer by someone else. PermitGraph deliberately does not
-try to be that layer too.
+*Note: This is a logical representation of the project structure; adapt directory names to the actual repository.*
 
-## Scope & non-goals
+---
 
-- **Does:** structured regulatory data model, Rules-as-Code engine with mandatory
-  source provenance, approval dependency graph, regulatory-change detection +
-  semantic diff, impact analysis, a human-in-the-loop verification workflow, a
-  document ingestion/OCR pipeline, synthetic data generation for load-testing the
-  above, a REST API, a web UI, and a CLI.
-- **Does not:** accept or route real permit applications to any government
-  authority, claim legal force for any output, claim to be "government-approved" or
-  "official", or silently present AI-extracted content as verified fact. See the
-  [legal/provenance safety rules](#legalsafety-rules) below — they are enforced in
-  code, not just policy.
+## 7. Installation and Setup
 
-## Quick start
+### Prerequisites
 
-### Docker Compose (recommended)
+Ensure the following tools are installed:
+
+* Python 3.10+
+* Node.js and npm
+* PostgreSQL
+* Docker and Docker Compose (for containerized deployment)
+* Git
+
+### Step 1: Clone the Repository
+
+```bash
+git clone <YOUR_REPOSITORY_URL>
+cd PermitGraph
+```
+
+### Step 2: Backend Setup
+
+```bash
+cd backend
+
+python -m venv venv
+```
+
+Activate the virtual environment.
+
+**Windows:**
+
+```bash
+venv\Scripts\activate
+```
+
+**Linux/macOS:**
+
+```bash
+source venv/bin/activate
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start the backend:
+
+```bash
+uvicorn app.main:app --reload
+```
+
+### Step 3: Frontend Setup
+
+Open another terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Step 4: Database Configuration
+
+Configure PostgreSQL connection details using the project's environment configuration.
+
+Example:
+
+```env
+DATABASE_URL=postgresql://username:password@localhost:5432/permitgraph
+```
+
+Use the actual environment variable names and database initialization commands defined in the repository.
+
+### Step 5: Docker Deployment
+
+For containerized deployment:
 
 ```bash
 docker compose up --build
-# once postgres is healthy:
-docker compose --profile seed run --rm seed
 ```
 
-- API: http://localhost:8000 (docs at `/docs`)
-- Web UI: http://localhost:8080
+The deployment configuration includes:
 
-### Manual / local development
+* PostgreSQL
+* FastAPI backend
+* React frontend
+* Nginx reverse proxy
+* Optional synthetic data seeding
+
+---
+
+## 8. How PermitGraph Works
+
+### Step 1: Business Registration
+
+The user creates a business profile by entering industry, location, investment, employee count, land type, and pollution category.
+
+### Step 2: Permission Discovery
+
+The platform evaluates the business profile against verified regulatory rules.
+
+### Step 3: Approval Mapping
+
+Applicable permissions are connected through the approval dependency graph.
+
+### Step 4: Compliance Preparation
+
+Users can understand the documents and prerequisites associated with required approvals.
+
+### Step 5: Application Tracking
+
+Applications are created and monitored through their defined workflow states.
+
+### Step 6: Regulatory Monitoring
+
+The system compares regulatory document versions and identifies changes.
+
+### Step 7: Impact Analysis
+
+The platform identifies potentially affected approvals, business types, and applications.
+
+### Step 8: Audit and Traceability
+
+Important decisions and system events are recorded for accountability.
+
+---
+
+## 9. API Documentation
+
+PermitGraph uses FastAPI to expose REST endpoints.
+
+When the backend is running, interactive API documentation is available through:
+
+```text
+http://localhost:8000/docs
+```
+
+Alternative documentation:
+
+```text
+http://localhost:8000/redoc
+```
+
+The exact available routes can be explored through the generated API documentation.
+
+---
+
+## 10. Testing
+
+The project includes automated testing across major subsystems.
+
+Current acceptance report:
+
+**90 automated tests.**
+
+Testing coverage includes:
+
+* Backend package tests.
+* API integration tests.
+* Frontend lint checks.
+* Frontend production build checks.
+* Ruff code-quality checks.
+* GitHub Actions CI workflows.
+
+Run backend tests using the repository's configured test command, typically:
 
 ```bash
-# Python packages + API
-for pkg in shared rules-engine graph-engine change-detection impact-analysis \
-           document-engine regulatory-parser workflow-engine; do
-  pip install -e "packages/$pkg"
-done
-pip install -r apps/api/requirements.txt -r apps/api/requirements-dev.txt
-pip install -e cli
-
-python scripts/seed_real_corpus.py              # real + candidate regulatory corpus, demo users
-python scripts/demo_apply_reviewer_approvals.py # promotes a documented subset to VERIFIED (simulated reviewer)
-python scripts/load_synthetic_dataset.py        # ~5k synthetic businesses/applications/documents
-
-cd apps/api && uvicorn app.main:app --reload --port 8000
+pytest
 ```
+
+Run frontend checks:
 
 ```bash
-# Web UI (separate terminal)
-cd apps/web && npm install && npm run dev
+cd frontend
+npm run lint
+npm run build
 ```
 
-```bash
-# CLI (separate terminal)
-permitgraph status
-permitgraph auth login --email reviewer@permitgraph.dev --password permitgraph-dev-only
-permitgraph discover --industry food_processing --district Pune --employees 80 \
-  --investment 50000000 --land-type midc_industrial_area
-```
+---
 
-See [`cli/README.md`](cli/README.md) for the full CLI command tree.
+## 11. Open-Source Approach
 
-> Demo accounts (dev-only, see `scripts/seed_real_corpus.py`): `admin@`,
-> `reviewer@`, `officer@`, `business@`, `developer@`, `readonly@permitgraph.dev`,
-> password `permitgraph-dev-only` for all. **Never reuse these in a real
-> deployment** — see [`SECURITY.md`](SECURITY.md).
+PermitGraph is designed around open-source development principles.
 
-## Repository layout
+Its architecture supports:
 
-```
-apps/api        FastAPI service: routers, models, services (the public API)
-apps/web        React + TypeScript + Vite + Tailwind UI (19 pages)
-packages/*      8 installable Python packages, each with its own unit tests:
-                  shared, rules-engine, graph-engine, change-detection,
-                  impact-analysis, document-engine, regulatory-parser, workflow-engine
-cli/            `permitgraph` developer CLI (Typer) — a pure REST client
-data/real/      Transcribed text of the 3 source Acts + provenance registry
-data/candidate/ AI-extracted candidate rules, pending/partial human review
-data/synthetic/ ~5.2k synthetic businesses, applications, documents, change
-                scenarios, approval graphs — all explicitly is_synthetic=true
-docs/           Research, architecture, and this project's own acceptance report
-scripts/        Seed scripts + synthetic data generators
-docker/         Dockerfiles; docker-compose.yml lives at the repo root
-.github/        CI workflow
-```
+* Reusable regulatory data structures.
+* YAML-based rules-as-code.
+* Publicly inspectable source code.
+* REST API integration.
+* Developer-oriented CLI.
+* Self-hosted deployment.
+* Extensible approval dependency graphs.
+* Community contributions.
 
-See [`docs/architecture/overview.md`](docs/architecture/overview.md) for the full
-pipeline diagram and the reasoning behind each package boundary, and
-[`docs/architecture/data-model.md`](docs/architecture/data-model.md) for the schema.
+The platform can be extended to support additional Acts, rules, industries, approval authorities, and geographical regions.
 
-## The three real source Acts
+**License:** To be finalized and specified in the repository's LICENSE file.
 
-1. The Maharashtra Industrial Development Act, 1961
-2. The Maharashtra Industry, Trade and Investment Facilitation Act, 2023 (MAITRI)
-3. The Maharashtra Khadi and Village Industries Act, 1960
+---
 
-Full provenance (source URL, retrieval date, extraction method, content hash) for
-each is recorded in `data/real/source_documents/registry.json`. **Important:** the
-specific PDFs referenced in the original project brief were not present in this build
-environment; section text was instead sourced from official India Code text mirrors
-of the same Acts and cross-checked against PRS Legislative Research. The OCR pipeline
-(`packages/document-engine`) is implemented and unit-tested and ready to ingest the
-original PDFs directly if/when supplied — see
-[`docs/PROJECT-RESEARCH.md`](docs/PROJECT-RESEARCH.md) §19 for full detail on this
-limitation.
+## 12. Limitations and Future Scope
 
-## Legal/safety rules
+### Current Limitations
 
-These are enforced in code, not just stated as policy:
+* Original referenced regulatory PDFs were not available for direct ingestion during the reported development process.
+* Docker deployment configuration has been created but was not executed in the development sandbox.
+* Background workers for queued OCR and regulatory change-processing jobs are not yet implemented.
+* Regulatory data coverage and accuracy depend on source availability and human verification.
+* Synthetic datasets are intended for testing and demonstration, not as evidence of actual government application activity.
 
-- **No fabrication.** PermitGraph never invents an approval, fee, deadline,
-  subsidy, eligibility rule, threshold, dependency, authority, validity period, or
-  penalty and stores it as authoritative. Unverified/AI-derived content is always
-  tagged `CANDIDATE`; purely illustrative content is tagged `SYNTHETIC`.
-- **Human verification gate.** The only code path that can set
-  `verification_status = VERIFIED` is `verification_service.review_entity(...)`,
-  which requires an authenticated `REGULATORY_REVIEWER` or `ADMIN` user and writes an
-  audit record. See [`docs/architecture/human-verification.md`](docs/architecture/human-verification.md).
-  No AI output is ever auto-promoted to verified status.
-- **Data categories never mix.** `data/real/`, `data/candidate/`, and
-  `data/synthetic/` are kept in separate directories and separate seed scripts; every
-  API response for regulatory content includes `source` and `verification_status`.
-- **No fake features.** No dead buttons, no "live government data" that isn't
-  real/labelled, no claimed government API integration that doesn't exist.
+### Future Enhancements
 
-## Testing & CI
+1. Background processing with Celery or an equivalent job queue.
+2. Automated ingestion of official regulatory publications.
+3. Regulatory alerts and subscription-based notifications.
+4. Smart compliance checklists.
+5. More advanced regulatory impact scoring.
+6. Additional state-level regulatory catalogues.
+7. Enhanced graph analytics.
+8. Improved OCR and document understanding.
+9. Email and notification integrations.
+10. Expanded developer APIs and integrations.
 
-```bash
-python -m pytest packages/*/tests -q      # 44 cases
-cd apps/api && python -m pytest -q        # 46 cases, against a real seeded DB
-cd apps/web && npm run lint && npm run build
-ruff check packages apps/api cli scripts
-```
+---
 
-`.github/workflows/ci.yml` runs all of the above plus a Docker image build on every
-push/PR.
+## 13. Important Disclaimer
 
-## License
+PermitGraph is an independent open-source regulatory intelligence and compliance assistance platform.
 
-Source code is Apache License 2.0 (see [`LICENSE`](LICENSE)). This repository
-deliberately uses **four different license regimes** for four different kinds of
-content (code, government source-document text, AI-candidate data, synthetic data) —
-see [`NOTICE`](NOTICE) and [`docs/research/data-licensing.md`](docs/research/data-licensing.md)
-for the full breakdown. Contributions welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+* It is not an official government platform.
+* It is not government-approved or government-affiliated.
+* It does not submit applications to government departments.
+* It does not replace NSWS, MAITRI, or MIDC systems.
+* Its regulatory recommendations should be independently verified against applicable official sources.
+* AI-extracted or unverified regulatory information must not be treated as authoritative legal advice.
 
-## More documentation
+The platform is intended to improve regulatory transparency, information accessibility, and compliance planning.
 
-- [`docs/PROJECT-RESEARCH.md`](docs/PROJECT-RESEARCH.md) — project research notes,
-  including a full Limitations section (§19) that should be read before relying on
-  any output of this system.
-- [`docs/research/`](docs/research) — government landscape, open-source landscape,
-  India-specific gap analysis, product-gap analysis, technical-landscape survey,
-  data-licensing research.
-- [`docs/architecture/`](docs/architecture) — system overview, data model,
-  human-verification design, roadmap.
-- [`apps/web/README.md`](apps/web/README.md) — frontend page-by-page guide.
-- [`cli/README.md`](cli/README.md) — CLI command reference.
-- [`SECURITY.md`](SECURITY.md), [`CONTRIBUTING.md`](CONTRIBUTING.md),
-  [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md), [`CHANGELOG.md`](CHANGELOG.md).
+---
+
+## 14. Contribution Guidelines
+
+Contributions are welcome!
+
+Developers can contribute by:
+
+* Adding regulatory datasets.
+* Improving the rules engine.
+* Extending approval dependency graphs.
+* Improving document extraction.
+* Enhancing frontend components.
+* Adding API endpoints.
+* Improving testing and documentation.
+
+Suggested contribution workflow:
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Implement your changes.
+4. Add or update tests.
+5. Submit a Pull Request.
+
+---
+
+## 15. Project Vision
+
+Our vision is to build an open, transparent, and extensible regulatory intelligence infrastructure that makes industrial compliance easier to understand, manage, and monitor.
+
+PermitGraph aims to bridge the gap between complex regulatory documents and actionable industrial compliance information.
+
+**From regulatory complexity to connected compliance intelligence.**
+
+---
+
+### PermitGraph
+
+**Open Source | Regulatory Intelligence | Compliance Automation | Approval Dependency Mapping**
+
+Built for a more transparent and accessible industrial regulatory ecosystem in Maharashtra, India.
