@@ -45,11 +45,20 @@ export default function Layout() {
   const canReview = role && REVIEWER_ROLES.includes(role);
   const location = useLocation();
   const isComparePage = location.pathname.startsWith("/compare");
+  const isLoginPage = location.pathname === "/login";
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
 
   if (isComparePage) {
     return (
       <div className="w-screen h-screen overflow-hidden bg-[#e5e7eb]">
+        <Outlet />
+      </div>
+    );
+  }
+
+  if (isLoginPage) {
+    return (
+      <div className="min-h-screen bg-slate-50">
         <Outlet />
       </div>
     );

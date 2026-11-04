@@ -5,7 +5,7 @@ interface AuthState {
   token: string | null;
   role: string | null;
   email: string | null;
-  login: (token: string, role: string, email: string) => void;
+  login: (token: string, role: string, email: string, remember?: boolean) => void;
   logout: () => void;
 }
 
@@ -16,8 +16,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [role, setRole] = useState(getRole());
   const [email, setEmail] = useState(getEmail());
 
-  function login(t: string, r: string, e: string) {
-    setSession(t, r, e);
+  function login(t: string, r: string, e: string, remember: boolean = true) {
+    setSession(t, r, e, remember);
     setToken(t);
     setRole(r);
     setEmail(e);
