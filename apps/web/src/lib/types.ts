@@ -286,6 +286,7 @@ export interface DocumentAuditResponse {
   findings: AuditFinding[];
   audited_at: string;
   governing_statute: string;
+}
 
 export type SearchEntityType = 'act' | 'section' | 'rule' | 'approval' | 'source_document';
 
