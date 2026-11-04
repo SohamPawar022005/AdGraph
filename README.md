@@ -577,18 +577,57 @@ Testing coverage includes:
 Run backend tests using the repository's configured test command, typically:
 
 ```bash
-pytest
+# Python packages + API dependencies
+for pkg in shared rules-engine graph-engine change-detection impact-analysis \
+           document-engine regulatory-parser workflow-engine; do
+  pip install -e "packages/$pkg"
+done
+pip install -r apps/api/requirements.txt -r apps/api/requirements-dev.txt
+pip install -e cli
+
+# Seed database: real + candidate corpus, demo users, and initial regulatory alerts
+python scripts/seed_real_corpus.py
+python scripts/demo_apply_reviewer_approvals.py # promotes a documented subset to VERIFIED
+python scripts/load_synthetic_dataset.py        # ~5k synthetic businesses/applications (optional)
 ```
 
-Run frontend checks:
+#### Run Backend API (FastAPI)
+* **Linux / macOS**:
+  ```bash
+  cd apps/api && python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+  ```
+* **Windows PowerShell (from repo root)**:
+  ```powershell
+  python -m uvicorn app.main:app --app-dir apps/api --host 127.0.0.1 --port 8000 --reload
+  ```
+* API available at `http://127.0.0.1:8000` (interactive OpenAPI docs at `/docs`).
 
+#### Run Frontend Web UI (Vite + React)
 ```bash
-cd frontend
-npm run lint
-npm run build
+# In a separate terminal
+cd apps/web && npm install && npm run dev
 ```
+* Web application available at `http://localhost:5173`.
+* Proxies `/api`, `/health`, `/ready` to backend port `8000` via `vite.config.ts`.
 
----
+#### Demo Credentials & Roles
+
+| Role | Email | Dev Password | Dashboard / Access Level |
+|---|---|---|---|
+| **Admin** | `admin@permitgraph.dev` | `permitgraph-dev-only` | System configuration, user administration & review queue |
+| **Reviewer** | `reviewer@permitgraph.dev` | `permitgraph-dev-only` | Human verification gate, review candidate rules & changes |
+| **Compliance Officer** | `officer@permitgraph.dev` | `permitgraph-dev-only` | Regulatory alerts dashboard, inspection schedules & audit log |
+| **Applicant / Business** | `applicant@permitgraph.dev` | `permitgraph-dev-only` | Permission discovery, smart checklists & applications |
+
+> **Security Note:** Demo accounts and passwords are for development/evaluation only. **Never reuse these in a production deployment** — see [`SECURITY.md`](SECURITY.md).
+
+#### CLI (separate terminal)
+```bash
+permitgraph status
+permitgraph auth login --email reviewer@permitgraph.dev --password permitgraph-dev-only
+permitgraph discover --industry food_processing --district Pune --employees 80 \
+  --investment 50000000 --land-type midc_industrial_area
+```
 
 ## 11. Open-Source Approach
 
@@ -604,6 +643,25 @@ Its architecture supports:
 * Self-hosted deployment.
 * Extensible approval dependency graphs.
 * Community contributions.
+
+### Repository layout
+
+```
+apps/api        FastAPI service: routers, models, services (the public API)
+apps/web        React + TypeScript + Vite + Tailwind UI (22 pages)
+packages/*      8 installable Python packages, each with its own unit tests:
+                  shared, rules-engine, graph-engine, change-detection,
+                  impact-analysis, document-engine, regulatory-parser, workflow-engine
+cli/            `permitgraph` developer CLI (Typer) — a pure REST client
+data/real/      Transcribed text of the 3 source Acts + provenance registry
+data/candidate/ AI-extracted candidate rules, pending/partial human review
+data/synthetic/ ~5.2k synthetic businesses, applications, documents, change
+                scenarios, approval graphs — all explicitly is_synthetic=true
+docs/           Research, architecture, and this project's own acceptance report
+scripts/        Seed scripts + synthetic data generators
+docker/         Dockerfiles; docker-compose.yml lives at the repo root
+.github/        CI workflow
+```
 
 The platform can be extended to support additional Acts, rules, industries, approval authorities, and geographical regions.
 

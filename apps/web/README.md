@@ -19,13 +19,15 @@ The Vite dev server proxies `/api`, `/health`, `/ready` to `http://127.0.0.1:800
 never to `localhost:8000` directly. This matters for any proxied/sandboxed preview
 environment where the browser and the Node process are not the same network context.
 
-## Pages (19)
+## Pages (22)
 
 | Route | Page | Notes |
 |---|---|---|
 | `/` | Home | USP explanation, non-fabrication disclaimer, live API health check, quick links |
-| `/login` | Login | JWT auth against `/api/v1/auth/login`; demo account picker |
+| `/login` | Login | Modern branded authentication page, role-based demo accounts, JWT token management |
 | `/discover` | Permission Discovery | The core applicant-facing feature: business profile → source-cited permissions/documents/dependencies |
+| `/checklist` | Compliance Checklist | Dynamic business compliance checklist, readiness status, review flags & resolutions |
+| `/alerts` | Regulatory Alerts | Real-time regulatory change alerts dashboard, severity distribution charts, category breakdowns |
 | `/regulations` | Regulations list | The 3 source Acts |
 | `/regulations/:id` | Regulation detail | Versions + sections (collapsible) |
 | `/rules` | Rules list | Filterable by status (verified/candidate/deprecated/…) |
@@ -39,6 +41,7 @@ environment where the browser and the Node process are not the same network cont
 | `/applications/:id` | Application detail | SLA clock, workflow timeline, valid-transition buttons |
 | `/regulatory-changes` | Regulatory changes list | Run the change-detection engine on an old/new text pair |
 | `/regulatory-changes/:id` | Regulatory change detail | Old vs. new text diff view, affected rules/approvals, on-demand impact analysis |
+| `/compare` | Text Comparison | Side-by-side text comparison viewer with synchronized scrolling and evidence tracing |
 | `/documents` | Documents list | Paginated; real file upload + deterministic structural validation |
 | `/audit` | Audit log | Filterable by entity type — the system's single source of truth for "what happened" |
 | `/review` | Human review queue | REGULATORY_REVIEWER/ADMIN-gated: approve/reject CANDIDATE rules, approvals, dependencies, regulatory changes |
