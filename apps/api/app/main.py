@@ -11,14 +11,17 @@ from .routers import (
     auth,
     businesses,
     chat,
+    checklists,
     documents,
     health,
     impact,
     permissions,
     regulations,
+    regulatory_alerts,
     regulatory_changes,
     review,
     rules,
+    search,
 )
 
 settings = get_settings()
@@ -53,6 +56,7 @@ def on_startup():
 for router in (
     health.router,
     auth.router,
+    search.router,
     regulations.router,
     rules.router,
     permissions.router,
@@ -62,8 +66,11 @@ for router in (
     impact.router,
     businesses.router,
     applications.router,
+    checklists.router,
+    regulatory_alerts.router,
     audit.router,
     review.router,
     chat.router,
 ):
     app.include_router(router)
+

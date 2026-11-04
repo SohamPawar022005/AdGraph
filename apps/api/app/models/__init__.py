@@ -16,6 +16,8 @@ from .workflow import Application, Document, Inspection, Notification, SLA, Work
 from .changes import ImpactAssessment, RegulatoryChange
 from .audit import AuditEvent, VerificationRecord
 from .users import User
+from .checklist import ChecklistDocument, ChecklistTask, ComplianceChecklist
+from .subscriptions import RegulatoryAlert, RegulatorySource, RegulatorySubscription
 
 __all__ = [
     "ProvenanceMixin",
@@ -46,4 +48,11 @@ __all__ = [
     "AuditEvent",
     "VerificationRecord",
     "User",
+    "ComplianceChecklist",
+    "ChecklistTask",
+    "ChecklistDocument",
+    "RegulatorySource",
+    "RegulatorySubscription",
+    "RegulatoryAlert",
 ]
+

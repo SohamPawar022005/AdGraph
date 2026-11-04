@@ -7,11 +7,15 @@ import LanguageSelector from "./LanguageSelector";
 const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = [
   {
     label: "Discover",
-    items: [{ to: "/discover", label: "Permission Discovery" }],
+    items: [
+      { to: "/discover", label: "Permission Discovery" },
+      { to: "/search", label: "Search Regulations" },
+    ],
   },
   {
     label: "Regulatory Intelligence",
     items: [
+      { to: "/alerts", label: "Regulatory Alerts" },
       { to: "/regulations", label: "Regulations" },
       { to: "/rules", label: "Rules" },
       { to: "/approvals", label: "Approvals" },
@@ -39,12 +43,14 @@ const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = 
   },
 ];
 
+
 export default function Layout() {
   const { role, email, logout } = useAuth();
   const canReview = role && REVIEWER_ROLES.includes(role);
   const location = useLocation();
   const isComparePage = location.pathname.startsWith("/compare");
   const isChatPage = location.pathname.startsWith("/chat");
+  const isLoginPage = location.pathname === "/login";
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
 
   if (isComparePage || isChatPage) {
@@ -55,13 +61,20 @@ export default function Layout() {
     );
   }
 
+  if (isLoginPage) {
+    return (
+      <div className="min-h-screen bg-slate-50">
+        <Outlet />
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen bg-slate-50 relative">
       {/* Collapsible App Navigation Sidebar */}
       <aside
-        className={`flex flex-col border-r border-slate-200 bg-white transition-all duration-200 shrink-0 z-30 ${
-          sidebarCollapsed ? "w-14" : "w-64"
-        }`}
+        className={`flex flex-col border-r border-slate-200 bg-white transition-all duration-200 shrink-0 z-30 ${sidebarCollapsed ? "w-14" : "w-64"
+          }`}
       >
         <div className="border-b border-slate-200 px-3 py-3 flex items-center justify-between">
           {!sidebarCollapsed ? (
@@ -103,6 +116,7 @@ export default function Layout() {
               ) : (
                 <div className="h-2 w-full my-1 border-b border-slate-100" />
               )}
+
               <div className="space-y-0.5">
                 {group.items
                   .filter((item) => item.to !== "/review" || canReview)
@@ -112,10 +126,9 @@ export default function Layout() {
                       to={item.to}
                       title={sidebarCollapsed ? item.label : undefined}
                       className={({ isActive }) =>
-                        `block rounded-md px-2.5 py-1.5 text-xs transition truncate ${
-                          isActive
-                            ? "bg-brand-600 text-white font-semibold"
-                            : "text-slate-600 hover:bg-slate-100"
+                        `block rounded-md px-2.5 py-1.5 text-xs transition truncate ${isActive
+                          ? "bg-brand-600 text-white font-semibold"
+                          : "text-slate-600 hover:bg-slate-100"
                         } ${sidebarCollapsed ? "text-center text-[11px]" : ""}`
                       }
                     >

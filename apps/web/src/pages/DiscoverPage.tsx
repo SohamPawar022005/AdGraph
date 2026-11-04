@@ -139,6 +139,7 @@ export default function DiscoverPage() {
             <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500">
               Applicable permissions ({result.permissions.length})
             </h2>
+
             <div className="space-y-2">
               {result.permissions.map((p) => (
                 <div key={p.rule_id} className="rounded-lg border border-slate-200 bg-white p-3">
