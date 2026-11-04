@@ -37,7 +37,10 @@ DEMO_PASSWORD = "permitgraph-dev-only"
 @pytest.fixture(scope="session", autouse=True)
 def _seed_database():
     if TEST_DB_PATH.exists():
-        TEST_DB_PATH.unlink()
+        try:
+            TEST_DB_PATH.unlink()
+        except PermissionError:
+            pass
 
     import seed_real_corpus
     import demo_apply_reviewer_approvals

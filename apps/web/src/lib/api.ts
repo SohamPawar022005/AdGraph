@@ -71,3 +71,12 @@ export const api = {
     request<T>(path, { method: "POST", body: body !== undefined ? JSON.stringify(body) : undefined }),
   postForm: <T>(path: string, form: FormData) => request<T>(path, { method: "POST", body: form }),
 };
+
+import type { ChatResponse } from "./types";
+
+export async function sendChatMessage(
+  message: string,
+  history: Array<{ role: string; content: string }> = []
+): Promise<ChatResponse> {
+  return api.post<ChatResponse>("/api/v1/chat", { message, history });
+}

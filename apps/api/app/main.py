@@ -10,6 +10,7 @@ from .routers import (
     audit,
     auth,
     businesses,
+    chat,
     documents,
     health,
     impact,
@@ -63,5 +64,6 @@ for router in (
     applications.router,
     audit.router,
     review.router,
+    chat.router,
 ):
     app.include_router(router)

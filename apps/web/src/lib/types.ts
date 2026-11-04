@@ -192,3 +192,32 @@ export interface DocumentSummary {
   application_id?: string | null;
   created_at: string;
 }
+
+
+export interface ChatMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: string;
+  citations?: Array<{
+    id: string;
+    title: string;
+    type: string;
+    url: string;
+  }>;
+  provider?: string;
+  model?: string;
+}
+
+export interface ChatResponse {
+  reply: string;
+  provider: string;
+  model: string;
+  citations: Array<{
+    id: string;
+    title: string;
+    type: string;
+    url: string;
+  }>;
+  suggestions: string[];
+}
