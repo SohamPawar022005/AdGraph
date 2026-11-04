@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuth, REVIEWER_ROLES } from "../context/AuthContext";
 import ChatWidget from "./ChatWidget";
+import LanguageSelector from "./LanguageSelector";
 
 const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = [
   {
@@ -49,6 +50,9 @@ export default function Layout() {
   if (isComparePage || isChatPage) {
     return (
       <div className="w-screen h-screen overflow-hidden bg-white relative">
+        <div className="absolute top-3 right-4 z-50">
+          <LanguageSelector compact />
+        </div>
         <Outlet />
       </div>
     );
@@ -147,6 +151,23 @@ export default function Layout() {
 
       {/* Main Content Viewport */}
       <main className="flex-1 overflow-hidden flex flex-col">
+        {/* Top Header with Portal Context & Language Switcher Dropdown */}
+        <header className="h-13 border-b border-slate-200 bg-white px-6 flex items-center justify-between shrink-0 z-20">
+          <div className="flex items-center space-x-2 text-xs text-slate-500 font-medium">
+            <span className="text-brand-700 font-semibold tracking-tight">Maharashtra Regulatory Intelligence</span>
+            <span className="text-slate-300">|</span>
+            <span className="text-slate-600 capitalize">
+              {location.pathname === "/"
+                ? "Home"
+                : location.pathname.slice(1).replace(/-/g, " ")}
+            </span>
+          </div>
+
+          <div className="flex items-center space-x-3">
+            <LanguageSelector />
+          </div>
+        </header>
+
         <div className="flex-1 overflow-y-auto">
           <div className="mx-auto max-w-6xl px-6 py-8">
             <Outlet />

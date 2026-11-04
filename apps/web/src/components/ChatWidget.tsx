@@ -32,7 +32,6 @@ export default function ChatWidget() {
   const [activeProvider, setActiveProvider] = useState<string | null>(null);
   const [activeModel, setActiveModel] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [feedbackGiven, setFeedbackGiven] = useState<{ [id: string]: "up" | "down" }>({});
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -258,11 +257,13 @@ export default function ChatWidget() {
                               {msg.citations.map((c) => (
                                 <Link
                                   key={c.id}
-                                  to={c.url}
+                                  to={`/approvals-graph?highlight=${c.id}`}
                                   onClick={() => setIsOpen(false)}
-                                  className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 text-slate-700 border border-slate-200 transition"
+                                  className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 text-slate-700 border border-slate-200 transition"
+                                  title={`Inspect ${c.title} on Approval DAG`}
                                 >
-                                  📄 {c.title}
+                                  <span>📄 {c.title}</span>
+                                  <span className="text-[9px] font-mono text-emerald-600 font-bold">DAG ↗</span>
                                 </Link>
                               ))}
                             </div>
@@ -279,24 +280,6 @@ export default function ChatWidget() {
                               ) : (
                                 <span>📋 Copy</span>
                               )}
-                            </button>
-                            <button
-                              onClick={() => setFeedbackGiven((p) => ({ ...p, [msg.id]: "up" }))}
-                              className={`rounded p-1 hover:bg-slate-100 transition ${
-                                feedbackGiven[msg.id] === "up" ? "text-emerald-600" : "hover:text-slate-700"
-                              }`}
-                              title="Helpful"
-                            >
-                              👍
-                            </button>
-                            <button
-                              onClick={() => setFeedbackGiven((p) => ({ ...p, [msg.id]: "down" }))}
-                              className={`rounded p-1 hover:bg-slate-100 transition ${
-                                feedbackGiven[msg.id] === "down" ? "text-rose-600" : "hover:text-slate-700"
-                              }`}
-                              title="Unhelpful"
-                            >
-                              👎
                             </button>
                           </div>
                         </div>

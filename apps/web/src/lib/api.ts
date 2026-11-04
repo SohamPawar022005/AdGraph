@@ -72,11 +72,28 @@ export const api = {
   postForm: <T>(path: string, form: FormData) => request<T>(path, { method: "POST", body: form }),
 };
 
-import type { ChatResponse } from "./types";
+import type { ChatResponse, FeeCalculationResponse, DocumentAuditResponse } from "./types";
 
 export async function sendChatMessage(
   message: string,
-  history: Array<{ role: string; content: string }> = []
+  history: Array<{ role: string; content: string }> = [],
+  language: string = "en"
 ): Promise<ChatResponse> {
-  return api.post<ChatResponse>("/api/v1/chat", { message, history });
+  return api.post<ChatResponse>("/api/v1/chat", { message, history, language });
+}
+
+export async function calculateStatutoryFees(payload: {
+  investment_cr: number;
+  category?: string;
+  location?: string;
+  workers_count?: number;
+}): Promise<FeeCalculationResponse> {
+  return api.post<FeeCalculationResponse>("/api/v1/chat/calculate-fees", payload);
+}
+
+export async function auditDocumentCompliance(payload: {
+  document_text: string;
+  document_type?: string;
+}): Promise<DocumentAuditResponse> {
+  return api.post<DocumentAuditResponse>("/api/v1/chat/audit-document", payload);
 }

@@ -221,3 +221,39 @@ export interface ChatResponse {
   }>;
   suggestions: string[];
 }
+
+export interface FeeBreakdownItem {
+  agency: string;
+  name: string;
+  amount: number;
+  notes: string;
+}
+
+export interface FeeCalculationResponse {
+  investment_crores: number;
+  pollution_category: string;
+  location: string;
+  workers_count: number;
+  total_statutory_fees: number;
+  fee_breakdown: FeeBreakdownItem[];
+  standard_timeline_days: number;
+  maitri_fasttrack_days: number;
+  days_saved: number;
+  statutory_reference: string;
+}
+
+export interface AuditFinding {
+  severity: "CRITICAL" | "WARNING" | "INFO" | "COMPLIANT";
+  clause: string;
+  finding: string;
+  amendment_ref: string;
+  recommendation: string;
+}
+
+export interface DocumentAuditResponse {
+  compliance_score: number;
+  status: "COMPLIANT" | "AMENDMENT_REQUIRED" | "NON_COMPLIANT";
+  findings: AuditFinding[];
+  audited_at: string;
+  governing_statute: string;
+}

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { useFetch } from "../lib/useFetch";
 import GraphView from "../components/GraphView";
 import { ErrorNotice, Loading } from "../components/Loading";
@@ -11,8 +11,23 @@ interface GraphResponse {
 }
 
 export default function ApprovalGraphPage() {
+  const [searchParams] = useSearchParams();
+  const highlightParam = searchParams.get("highlight") || searchParams.get("node");
   const { data, loading, error } = useFetch<GraphResponse>("/api/v1/approvals/graph");
   const [selectedNodeId, setSelectedNodeId] = useState<string>("consent-to-establish");
+
+  useEffect(() => {
+    if (highlightParam && data?.nodes) {
+      const match = data.nodes.find(
+        (n) =>
+          n.id.toLowerCase() === highlightParam.toLowerCase() ||
+          n.label.toLowerCase().includes(highlightParam.toLowerCase())
+      );
+      if (match) {
+        setSelectedNodeId(match.id);
+      }
+    }
+  }, [highlightParam, data]);
 
   const nodes = data?.nodes ?? [];
   const edges = data?.edges ?? [];
