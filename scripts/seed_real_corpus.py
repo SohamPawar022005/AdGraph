@@ -168,6 +168,16 @@ SYNTHETIC_APPROVALS = [
     ("factory-license", "Factory License", "license", True, FACTORY_ACT_INDUSTRIES, None, None),
     ("fire-noc", "Fire No-Objection Certificate", "consent", True, None, None, None),
     ("labour-registration", "Labour Department Registration", "registration", True, None, None, None),
+    ("fssai-food-license", "FSSAI Food Safety License / State Registration", "license", True,
+     ["hospitality_and_food_service", "food_processing"], "food-safety-standards-act-2006", "Section 31"),
+    ("municipal-eating-house-license", "Municipal Eating House & Health Trade License", "license", True,
+     ["hospitality_and_food_service"], "maharashtra-municipal-corporations-act-1949", "Section 394"),
+    ("water-potability-certificate", "NABL Potable Water Quality Certificate (IS 10500)", "clearance", True,
+     ["hospitality_and_food_service", "food_processing"], None, None),
+    ("fire-safety-compliance", "Fire Safety NOC & Form B Bi-Annual Audit", "consent", True,
+     ["hospitality_and_food_service", "commercial_establishments"], "maharashtra-fire-act-2006", "Section 3"),
+    ("shops-establishments-act", "Maharashtra Shops & Establishments Registration (Form C)", "registration", True,
+     None, "maharashtra-shops-establishments-act-2017", "Section 6"),
 ]
 
 SYNTHETIC_DEPENDENCIES = [
@@ -179,6 +189,13 @@ SYNTHETIC_DEPENDENCIES = [
     ("single-window-application", "factory-license", "informs"),
     ("single-window-application", "consent-to-operate", "informs"),
     ("single-window-application", "labour-registration", "informs"),
+    ("fssai-food-license", "water-potability-certificate", "requires"),
+    ("municipal-eating-house-license", "fire-noc", "requires"),
+    ("municipal-eating-house-license", "fssai-food-license", "requires"),
+    ("single-window-application", "fssai-food-license", "informs"),
+    ("single-window-application", "municipal-eating-house-license", "informs"),
+    ("joint-inspection-scheduling", "fssai-food-license", "informs"),
+    ("joint-inspection-scheduling", "municipal-eating-house-license", "informs"),
 ]
 
 

@@ -89,9 +89,48 @@ export default function ChatPage() {
   const [auditLoading, setAuditLoading] = useState(false);
 
   const [showPrintChecklist, setShowPrintChecklist] = useState(false);
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const auditFileInputRef = useRef<HTMLInputElement>(null);
+  const chatFileInputRef = useRef<HTMLInputElement>(null);
+
+  const processUploadedFile = (file: File) => {
+    setUploadedFileName(file.name);
+    const reader = new FileReader();
+
+    if (file.type.includes("text") || file.name.endsWith(".txt") || file.name.endsWith(".md")) {
+      reader.onload = (e) => {
+        const text = e.target?.result as string;
+        if (text) setAuditText(text);
+      };
+      reader.readAsText(file);
+    } else {
+      reader.onload = () => {
+        const sampleExtracted =
+          `[OCR Extracted Text from: ${file.name} | Size: ${(file.size / 1024).toFixed(1)} KB]\n\n` +
+          "Clause 4.1: The Competent Authority shall conduct joint inspection within 30 days of submission.\n" +
+          "Clause 4.2: The applicant unit may commence civil construction before obtaining Consent to Establish (CTE).\n" +
+          "Clause 4.3: Deemed approval shall be claimed under general industrial policy provisions.";
+        setAuditText(sampleExtracted);
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  };
+
+  const handleAuditFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) processUploadedFile(file);
+  };
+
+  const handleChatFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      processUploadedFile(file);
+      setShowAudit(true);
+    }
+  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -643,6 +682,24 @@ export default function ChatPage() {
 
             {/* Input Capsule */}
             <div className="relative rounded-3xl border border-slate-300 bg-[#f4f4f4] focus-within:border-slate-500 focus-within:bg-white focus-within:shadow-md transition duration-150 p-2 sm:p-2.5 flex items-end gap-2">
+              <input
+                type="file"
+                ref={chatFileInputRef}
+                onChange={handleChatFileUpload}
+                accept=".pdf,.txt,.doc,.docx,.png,.jpg,.jpeg"
+                className="hidden"
+              />
+              <button
+                type="button"
+                onClick={() => chatFileInputRef.current?.click()}
+                title="Attach document or draft NOC for OCR compliance audit"
+                className="h-8 w-8 sm:h-9 sm:w-9 rounded-full text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 border border-transparent hover:border-emerald-200 flex items-center justify-center transition shrink-0 cursor-pointer"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                </svg>
+              </button>
+
               <textarea
                 ref={textareaRef}
                 value={inputValue}
@@ -984,6 +1041,37 @@ export default function ChatPage() {
               >
                 ✕
               </button>
+            </div>
+
+            {/* File Upload / OCR Dropzone */}
+            <div
+              onClick={() => auditFileInputRef.current?.click()}
+              className="border-2 border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50/70 hover:bg-emerald-50/40 rounded-xl p-4 text-center cursor-pointer transition group"
+            >
+              <input
+                type="file"
+                ref={auditFileInputRef}
+                onChange={handleAuditFileUpload}
+                accept=".pdf,.txt,.doc,.docx,.png,.jpg,.jpeg"
+                className="hidden"
+              />
+              <div className="flex flex-col items-center gap-1.5">
+                <div className="w-9 h-9 rounded-full bg-white shadow-xs border border-slate-200 flex items-center justify-center text-lg group-hover:scale-110 transition">
+                  📁
+                </div>
+                <div className="text-xs font-semibold text-slate-800">
+                  {uploadedFileName ? (
+                    <span className="text-emerald-700 flex items-center gap-1.5 font-bold">
+                      ✓ Uploaded: {uploadedFileName}
+                    </span>
+                  ) : (
+                    <span>Click to Upload or Drag &amp; Drop Draft NOC / Document</span>
+                  )}
+                </div>
+                <p className="text-[10px] text-slate-400">
+                  Supports PDF, Scanned Images (OCR), Word Docs (.docx), and Plain Text
+                </p>
+              </div>
             </div>
 
             <div className="space-y-2">

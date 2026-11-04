@@ -19,11 +19,11 @@ router = APIRouter(prefix="/api/v1/chat", tags=["chat"])
 
 class ChatMessage(BaseModel):
     role: str = Field(..., description="Role: 'user' or 'assistant'")
-    content: str = Field(..., max_length=4000, description="Message content")
+    content: str = Field(..., max_length=25000, description="Message content")
 
 
 class ChatRequest(BaseModel):
-    message: str = Field(..., min_length=1, max_length=2000, description="User question or statement")
+    message: str = Field(..., min_length=1, max_length=10000, description="User question or statement")
     history: List[ChatMessage] = Field(default_factory=list, description="Recent conversation turns")
     language: Optional[str] = Field("en", description="Language code: 'en' (English) or 'mr' (Marathi)")
 

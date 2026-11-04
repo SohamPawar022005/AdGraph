@@ -322,7 +322,7 @@ export default function HomePage() {
         <div className="flex items-center gap-2.5">
           <Link
             to="/compare"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white px-3.5 py-1.5 text-xs font-semibold shadow-xs transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white px-3.5 py-1.5 text-xs font-semibold shadow-xs transition-colors"
           >
             <FileText className="h-3.5 w-3.5" />
             <span>Launch Dual-Pane Gazette Diff</span>
@@ -330,51 +330,55 @@ export default function HomePage() {
 
           <button
             onClick={() => setShowPitchModal(true)}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 text-xs font-semibold border border-slate-200 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-900 px-3 py-1.5 text-xs font-semibold border border-sky-200 transition-colors"
           >
-            <Shield className="h-3.5 w-3.5 text-slate-600" />
+            <Shield className="h-3.5 w-3.5 text-sky-700" />
             <span>Jury Pitch &amp; Panel Defense</span>
           </button>
         </div>
       </div>
 
-      {/* 2. Hero Command Section: Authoritative Context & Segmented Scenarios */}
-      <div className="rounded-3xl bg-gradient-to-b from-slate-900 to-slate-850 p-6 sm:p-8 md:p-10 text-white shadow-xl border border-slate-800 space-y-6 relative overflow-hidden">
-        <div className="relative z-10 max-w-4xl space-y-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-500/20 px-3 py-1 text-xs font-semibold text-brand-300 border border-brand-500/30">
-              <Sparkles className="h-3.5 w-3.5 text-brand-400" />
+      {/* 2. Hero Command Section: Light Sky Blue Theme with High Contrast & Razor-Sharp Visibility */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-sky-50 via-sky-100/80 to-blue-50/70 p-6 sm:p-8 md:p-10 border border-sky-200/90 shadow-[0_4px_24px_rgba(56,189,248,0.12)] space-y-6">
+        {/* Subtle decorative sky mesh aura */}
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-sky-300/25 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 -mb-20 w-72 h-72 rounded-full bg-blue-200/30 blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 max-w-4xl space-y-4">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-200/90 px-3 py-1 text-xs font-bold text-sky-900 border border-sky-300 shadow-2xs">
+              <Sparkles className="h-3.5 w-3.5 text-sky-700" />
               SIH Problem Statement 26130
             </span>
-            <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300 border border-white/15">
+            <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-slate-700 border border-sky-200 shadow-2xs">
               MAITRI · MIDC · MPCB · MSEDCL · DISH
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
             Automating Industrial Approvals &amp; Gazette Change Intelligence
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-3xl">
+          <p className="text-sm sm:text-base text-slate-700 leading-relaxed max-w-3xl font-medium">
             When Maharashtra amends an Act or publishes a Gazette notification, single-window systems stall and businesses face silent compliance traps. 
-            <strong> PermitGraph</strong> converts statutory law into verified rules-as-code, traverses approval dependencies, and traces the ripple effect to active factory applications before deadlines expire.
+            <strong className="text-slate-900 font-bold"> PermitGraph</strong> converts statutory law into verified rules-as-code, traverses approval dependencies, and traces the ripple effect to active factory applications before deadlines expire.
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 pt-3">
+          <div className="flex flex-wrap items-center gap-3 pt-2">
             <Link
               to="/compare"
-              className="inline-flex items-center gap-2 rounded-xl bg-brand-600 hover:bg-brand-500 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-brand-600/30 transition-all hover:scale-[1.01]"
+              className="inline-flex items-center gap-2 rounded-xl bg-sky-600 hover:bg-sky-700 px-4 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-sky-600/25 transition-all hover:scale-[1.01]"
             >
               <span>📄</span>
               <span>Open Side-by-Side Gazette Diff</span>
-              <span className="ml-1 rounded bg-brand-700/90 px-1.5 py-0.5 text-[9px] uppercase font-bold text-brand-200">
+              <span className="ml-1 rounded bg-sky-800/80 px-1.5 py-0.5 text-[9px] uppercase font-bold text-sky-100">
                 Official 2024 Gazette
               </span>
             </Link>
 
             <Link
               to="/policy-sandbox"
-              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-md transition-all hover:scale-[1.01]"
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 px-4 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md transition-all hover:scale-[1.01]"
             >
               <Sparkles className="h-4 w-4" />
               <span>What-If Policy Sandbox</span>
@@ -382,17 +386,17 @@ export default function HomePage() {
 
             <Link
               to="/approvals-graph"
-              className="inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-slate-200 hover:text-white transition-all border border-white/15"
+              className="inline-flex items-center gap-2 rounded-xl bg-white hover:bg-sky-50 px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-800 hover:text-sky-900 transition-all border border-sky-300 shadow-xs"
             >
-              <GitBranch className="h-4 w-4" />
+              <GitBranch className="h-4 w-4 text-sky-600" />
               <span>Explore Dependency DAG</span>
             </Link>
 
             <Link
               to="/discover"
-              className="inline-flex items-center gap-2 rounded-xl bg-white/5 hover:bg-white/15 px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition-all border border-white/10"
+              className="inline-flex items-center gap-2 rounded-xl bg-white hover:bg-sky-50 px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-800 hover:text-sky-900 transition-all border border-sky-300 shadow-xs"
             >
-              <Compass className="h-4 w-4" />
+              <Compass className="h-4 w-4 text-sky-600" />
               <span>Permission Discovery Wizard</span>
             </Link>
           </div>
@@ -516,8 +520,8 @@ export default function HomePage() {
                 onClick={() => setActiveScenarioId(sc.id)}
                 className={`text-left rounded-2xl p-4 border transition-all ${
                   isSelected
-                    ? "border-brand-500 bg-brand-50/70 shadow-xs ring-1 ring-brand-500/30"
-                    : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/70"
+                    ? "border-sky-500 bg-sky-50/90 shadow-sm ring-1 ring-sky-400/40"
+                    : "border-slate-200 bg-white hover:border-sky-200 hover:bg-sky-50/40"
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -526,14 +530,14 @@ export default function HomePage() {
                   >
                     {sc.changeType.replace(/_/g, " ")}
                   </span>
-                  <span className="font-mono text-xs text-slate-400 font-semibold">
+                  <span className="font-mono text-xs text-slate-500 font-semibold">
                     {sc.section.split(" ")[0]} {sc.section.split(" ")[1]}
                   </span>
                 </div>
                 <p className="mt-2 text-xs font-bold text-slate-900 line-clamp-2 leading-snug">
                   {sc.title}
                 </p>
-                <p className="mt-1 text-[11px] text-slate-500 truncate font-mono">
+                <p className="mt-1 text-[11px] text-slate-600 truncate font-mono">
                   {sc.primaryApproval}
                 </p>
               </button>
@@ -542,16 +546,16 @@ export default function HomePage() {
         </div>
 
         {/* Active Scenario Inspector Workspace */}
-        <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 sm:p-6 space-y-6">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 pb-4">
+        <div className="rounded-2xl border border-sky-100 bg-sky-50/40 p-5 sm:p-6 space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-sky-200/60 pb-4">
             <div>
-              <span className="text-[10px] font-bold text-brand-700 uppercase tracking-widest">
+              <span className="text-[10px] font-bold text-sky-800 uppercase tracking-widest">
                 Active Scenario Trace
               </span>
               <h3 className="text-base sm:text-lg font-extrabold text-slate-900 mt-0.5">
                 {scenario.title}
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-slate-600 mt-0.5 font-medium">
                 {scenario.actName} · {scenario.section} · Published: {scenario.date}
               </p>
             </div>
@@ -748,7 +752,7 @@ export default function HomePage() {
       <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-[0_1px_4px_rgba(0,0,0,0.04)] space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-brand-50 text-brand-600">
+            <div className="p-2 rounded-xl bg-sky-100 text-sky-700">
               <Clock className="h-5 w-5" />
             </div>
             <div>
@@ -773,7 +777,7 @@ export default function HomePage() {
                 onClick={() => setSelectedRadarDistrict(d)}
                 className={`px-2.5 py-1 rounded-lg transition capitalize text-xs ${
                   selectedRadarDistrict === d
-                    ? "bg-white text-slate-900 shadow-xs"
+                    ? "bg-sky-600 text-white shadow-xs font-bold"
                     : "hover:text-slate-900"
                 }`}
               >
@@ -783,9 +787,9 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-200/80">
+        <div className="overflow-x-auto rounded-xl border border-sky-100">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 border-b border-slate-200 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+            <thead className="bg-sky-50/70 border-b border-sky-100 text-[10px] font-bold text-sky-950 uppercase tracking-wider">
               <tr>
                 <th className="py-3 px-4">Enterprise &amp; Scale</th>
                 <th className="py-3 px-4">Industrial Estate</th>

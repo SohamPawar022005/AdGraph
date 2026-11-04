@@ -62,3 +62,31 @@ def test_audit_document_compliance():
     data = response.json()
     assert data["status"] in ("AMENDMENT_REQUIRED", "NON_COMPLIANT")
     assert any(f["severity"] == "CRITICAL" for f in data["findings"])
+
+
+def test_hotel_raid_multi_turn_context():
+    t1_response = client.post(
+        '/api/v1/chat',
+        json={'message': 'tukaram munde just raided my hotel, what should i do ?'},
+    )
+    assert t1_response.status_code == 200
+    t1_data = t1_response.json()
+    t1_reply = t1_data['reply'].lower()
+    assert any(term in t1_reply for term in ['inspection', 'fssai', 'food', 'panchnama', 'officer', 'authorization'])
+    assert 'midc industrial plot allotment' not in t1_reply
+
+    t2_response = client.post(
+        '/api/v1/chat',
+        json={
+            'message': 'what should I keep ready to present him ?',
+            'history': [
+                {'role': 'user', 'content': 'tukaram munde just raided my hotel, what should i do ?'},
+                {'role': 'assistant', 'content': t1_data['reply']},
+            ],
+        },
+    )
+    assert t2_response.status_code == 200
+    t2_data = t2_response.json()
+    t2_reply = t2_data['reply'].lower()
+    assert any(term in t2_reply for term in ['fssai', 'water', 'potability', 'fire', 'panchnama', 'medical', 'trade license'])
+    assert 'midc industrial plot allotment' not in t2_reply
