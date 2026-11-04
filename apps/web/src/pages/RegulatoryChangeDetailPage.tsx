@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useFetch } from "../lib/useFetch";
 import type { ImpactAssessment, RegulatoryChange } from "../lib/types";
@@ -26,6 +26,12 @@ export default function RegulatoryChangeDetailPage() {
       setLoadingImpact(false);
     }
   }
+
+  useEffect(() => {
+    if (id) {
+      runImpact();
+    }
+  }, [id]);
 
   function downloadJsonExport() {
     if (!id) return;
