@@ -12,9 +12,10 @@ interface AuthState {
 const AuthContext = createContext<AuthState | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useState(getToken());
-  const [role, setRole] = useState(getRole());
-  const [email, setEmail] = useState(getEmail());
+  // Demo mode: default to active Admin role if not already set in storage
+  const [token, setToken] = useState<string | null>(getToken() || "demo-admin-token");
+  const [role, setRole] = useState<string | null>(getRole() || "ADMIN");
+  const [email, setEmail] = useState<string | null>(getEmail() || "admin@permitgraph.dev");
 
   function login(t: string, r: string, e: string, remember: boolean = true) {
     setSession(t, r, e, remember);
