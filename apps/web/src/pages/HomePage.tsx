@@ -178,6 +178,14 @@ export default function HomePage() {
             </Link>
 
             <Link
+              to="/policy-sandbox"
+              className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-500 transition-all shadow-md"
+            >
+              <span>🔬</span>
+              <span>What-If Policy Sandbox</span>
+            </Link>
+
+            <Link
               to="/approvals-graph"
               className="inline-flex items-center gap-2 rounded-lg bg-white/5 px-4 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/15 hover:text-white transition-all border border-white/10"
             >
@@ -578,6 +586,21 @@ export default function HomePage() {
             </div>
             <p className="mt-1 text-xs text-slate-500">
               Synchronized dual-pane reader comparing real Maharashtra Act No. XXXIV of 2023 vs 2024 Gazette Notification.
+            </p>
+          </Link>
+
+          <Link
+            to="/policy-sandbox"
+            className="group rounded-xl border border-slate-200 bg-white p-4 shadow-xs transition hover:border-emerald-500 hover:shadow-md"
+          >
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-bold text-slate-900 group-hover:text-emerald-600 transition">
+                What-If Policy Sandbox
+              </p>
+              <span className="text-xs text-emerald-600 font-bold">New ⚡</span>
+            </div>
+            <p className="mt-1 text-xs text-slate-500">
+              Simulate macro-economic impacts of prospective regulatory changes across 5,200 Maharashtra factories.
             </p>
           </Link>
 

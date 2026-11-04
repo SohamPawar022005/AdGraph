@@ -16,6 +16,7 @@ const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = 
       { to: "/approvals-graph", label: "Dependency Graph" },
       { to: "/regulatory-changes", label: "Regulatory Changes" },
       { to: "/compare", label: "Dual-Pane Gazette Diff ★" },
+      { to: "/policy-sandbox", label: "Policy Sandbox ⚡" },
     ],
   },
   {
