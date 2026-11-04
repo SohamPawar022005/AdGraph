@@ -366,11 +366,95 @@ def seed_initial_alerts_if_empty(db: Session) -> List[RegulatoryAlert]:
 
     businesses = db.query(BusinessProfile).limit(10).all()
     if not businesses:
-        return []
+        demo_businesses = [
+            BusinessProfile(
+                name="Godavari Specialty Chemicals Ltd",
+                industry="Chemicals",
+                district="Raigad",
+                location="MIDC Taloja",
+                jurisdiction="Maharashtra",
+                investment=45.0,
+                employees=120,
+                project_stage="operational",
+                land_type="industrial_estate",
+                hazardous_material=True,
+                is_synthetic=True,
+            ),
+            BusinessProfile(
+                name="Sahyadri Agro-Processing Cluster",
+                industry="Agro-Processing",
+                district="Pune",
+                location="Chakan Industrial Area",
+                jurisdiction="Maharashtra",
+                investment=20.0,
+                employees=85,
+                project_stage="expansion",
+                land_type="private_industrial",
+                hazardous_material=False,
+                is_synthetic=True,
+            ),
+            BusinessProfile(
+                name="Konkan Pharmaceuticals & Bulk Drugs",
+                industry="Pharmaceuticals",
+                district="Thane",
+                location="Tarapur MIDC",
+                jurisdiction="Maharashtra",
+                investment=65.0,
+                employees=210,
+                project_stage="operational",
+                land_type="industrial_estate",
+                hazardous_material=True,
+                is_synthetic=True,
+            ),
+            BusinessProfile(
+                name="Vidarbha Renewable Biomass Energy",
+                industry="Renewable Energy",
+                district="Nagpur",
+                location="Butibori MIDC",
+                jurisdiction="Maharashtra",
+                investment=35.0,
+                employees=60,
+                project_stage="construction",
+                land_type="industrial_estate",
+                hazardous_material=False,
+                is_synthetic=True,
+            ),
+            BusinessProfile(
+                name="Marathwada Precision Engineering",
+                industry="Engineering",
+                district="Aurangabad",
+                location="Shendra DMIC",
+                jurisdiction="Maharashtra",
+                investment=15.0,
+                employees=95,
+                project_stage="operational",
+                land_type="industrial_estate",
+                hazardous_material=False,
+                is_synthetic=True,
+            ),
+        ]
+        db.add_all(demo_businesses)
+        db.commit()
+        businesses = db.query(BusinessProfile).limit(10).all()
 
     # Get sample changes and tasks
     sample_changes = db.query(RegulatoryChange).limit(10).all()
-    first_change_id = sample_changes[0].id if sample_changes else None
+    if not sample_changes:
+        sample_change = RegulatoryChange(
+            detected_at=utcnow(),
+            change_type="MODIFIED",
+            section_label="Section 16",
+            summary="Gazette Notification updating industrial emission norms, joint inspection timelines, and deemed approvals.",
+            affected_approval_ids=["consent-to-operate", "consent-to-establish", "factory-license"],
+            confidence=0.92,
+            verification_status="VERIFIED",
+            is_synthetic=True,
+        )
+        db.add(sample_change)
+        db.commit()
+        sample_changes = [sample_change]
+
+    first_change_id = sample_changes[0].id
 
     # Get sample tasks
     tasks = db.query(ChecklistTask).all()
