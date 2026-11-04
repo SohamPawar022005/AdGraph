@@ -233,6 +233,7 @@ DEMO_USERS = [
     ("reviewer@permitgraph.dev", "REGULATORY_REVIEWER", "Regulatory Reviewer"),
     ("officer@permitgraph.dev", "OFFICER", "Officer"),
     ("business@permitgraph.dev", "BUSINESS_USER", "Business User"),
+    ("applicant@permitgraph.dev", "BUSINESS_USER", "Applicant"),
     ("developer@permitgraph.dev", "DEVELOPER", "Developer"),
     ("readonly@permitgraph.dev", "READ_ONLY", "Read Only"),
 ]

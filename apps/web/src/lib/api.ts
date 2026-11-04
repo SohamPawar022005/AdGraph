@@ -11,28 +11,47 @@ const TOKEN_KEY = "permitgraph_token";
 const ROLE_KEY = "permitgraph_role";
 const EMAIL_KEY = "permitgraph_email";
 
+function getStorage(type: "local" | "session"): Storage | null {
+  if (typeof window === "undefined") return null;
+  try {
+    return type === "local" ? window.localStorage : window.sessionStorage;
+  } catch {
+    return null;
+  }
+}
+
 export function getToken(): string | null {
-  return localStorage.getItem(TOKEN_KEY);
+  return getStorage("local")?.getItem(TOKEN_KEY) ?? getStorage("session")?.getItem(TOKEN_KEY) ?? null;
 }
 
 export function getRole(): string | null {
-  return localStorage.getItem(ROLE_KEY);
+  return getStorage("local")?.getItem(ROLE_KEY) ?? getStorage("session")?.getItem(ROLE_KEY) ?? null;
 }
 
 export function getEmail(): string | null {
-  return localStorage.getItem(EMAIL_KEY);
+  return getStorage("local")?.getItem(EMAIL_KEY) ?? getStorage("session")?.getItem(EMAIL_KEY) ?? null;
 }
 
-export function setSession(token: string, role: string, email: string) {
-  localStorage.setItem(TOKEN_KEY, token);
-  localStorage.setItem(ROLE_KEY, role);
-  localStorage.setItem(EMAIL_KEY, email);
+export function setSession(token: string, role: string, email: string, remember: boolean = true) {
+  const primary = remember ? getStorage("local") : getStorage("session");
+  const secondary = remember ? getStorage("session") : getStorage("local");
+
+  primary?.setItem(TOKEN_KEY, token);
+  primary?.setItem(ROLE_KEY, role);
+  primary?.setItem(EMAIL_KEY, email);
+
+  secondary?.removeItem(TOKEN_KEY);
+  secondary?.removeItem(ROLE_KEY);
+  secondary?.removeItem(EMAIL_KEY);
 }
 
 export function clearSession() {
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(ROLE_KEY);
-  localStorage.removeItem(EMAIL_KEY);
+  getStorage("local")?.removeItem(TOKEN_KEY);
+  getStorage("local")?.removeItem(ROLE_KEY);
+  getStorage("local")?.removeItem(EMAIL_KEY);
+  getStorage("session")?.removeItem(TOKEN_KEY);
+  getStorage("session")?.removeItem(ROLE_KEY);
+  getStorage("session")?.removeItem(EMAIL_KEY);
 }
 
 export class ApiError extends Error {

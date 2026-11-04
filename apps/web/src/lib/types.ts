@@ -35,6 +35,37 @@ export interface DiscoveryResponse {
 
 export const REVIEWER_ROLES = ["REGULATORY_REVIEWER", "ADMIN"];
 
+export type UserRole =
+  | "ADMIN"
+  | "REGULATORY_REVIEWER"
+  | "OFFICER"
+  | "BUSINESS_USER"
+  | "APPLICANT"
+  | "DEVELOPER"
+  | "READ_ONLY";
+
+export function getRoleDashboardRoute(role: string | null | undefined): string {
+  if (!role) return "/";
+  const normalized = role.toUpperCase().trim();
+  switch (normalized) {
+    case "ADMIN":
+      return "/audit";
+    case "REGULATORY_REVIEWER":
+    case "REVIEWER":
+      return "/review";
+    case "OFFICER":
+    case "COMPLIANCE_OFFICER":
+    case "COMPLIANCE OFFICER":
+      return "/alerts";
+    case "BUSINESS_USER":
+    case "APPLICANT":
+    case "BUSINESS":
+      return "/applications";
+    default:
+      return "/";
+  }
+}
+
 export interface RegulationSummary {
 
   id: string;
