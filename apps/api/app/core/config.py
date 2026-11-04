@@ -33,7 +33,7 @@ class Settings(BaseSettings):
 
     # AI Chatbot configuration (Gemini primary, Ollama fallback)
     gemini_api_key: str | None = os.environ.get("GEMINI_API_KEY")
-    gemini_model: str = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
+    gemini_model: str = os.environ.get("GEMINI_MODEL", "gemini-flash-lite-latest")
     ollama_base_url: str = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
     ollama_model: str = os.environ.get("OLLAMA_MODEL", "llama3.2:latest")
 

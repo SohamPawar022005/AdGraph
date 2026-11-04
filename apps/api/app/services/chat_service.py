@@ -146,7 +146,14 @@ def _call_gemini(api_key: str, model_name: str, system_prompt: str, user_prompt:
     from google.genai import types
 
     client = genai.Client(api_key=api_key)
-    candidate_models = [model_name, "gemini-2.5-flash", "gemini-1.5-flash"]
+    candidate_models = [
+        model_name,
+        "gemini-flash-lite-latest",
+        "gemini-3.5-flash-lite",
+        "gemini-3.1-flash-lite",
+        "gemini-flash-latest",
+        "gemini-3.8-flash",
+    ]
     last_err = None
 
     for m in candidate_models:
@@ -362,47 +369,92 @@ def stream_permitgraph_copilot(
     system_prompt = _build_system_prompt(context_str, language)
     disclaimer = DISCLAIMER_TEXT_MR if language == "mr" else DISCLAIMER_TEXT_EN
 
+    provider = "gemini" if (settings.gemini_api_key and settings.gemini_api_key.strip()) else "ollama"
+    model_name = settings.gemini_model if provider == "gemini" else settings.ollama_model
+
     # Send initial metadata chunk
     initial_meta = {
         "citations": citations[:4],
-        "provider": "ollama",
-        "model": settings.ollama_model,
+        "provider": provider,
+        "model": model_name,
     }
     yield f"data: {json.dumps({'meta': initial_meta})}\n\n"
 
-    # Attempt 1: Streaming via Ollama
-    ollama_success = False
-    endpoint = f"{settings.ollama_base_url.rstrip('/')}/api/chat"
-    messages = [{"role": "system", "content": system_prompt}]
-    for turn in history[-6:]:
-        role = "user" if turn.get("role") == "user" else "assistant"
-        messages.append({"role": role, "content": turn.get("content", "")})
-    messages.append({"role": "user", "content": message})
+    streamed_success = False
 
-    payload = {
-        "model": settings.ollama_model,
-        "messages": messages,
-        "stream": True,
-        "options": {"temperature": 0.2, "num_predict": 450},
-    }
+    # Attempt 1: Streaming via Google Gemini (Fastest: ~1-2s response)
+    if settings.gemini_api_key and settings.gemini_api_key.strip():
+        try:
+            from google import genai
+            from google.genai import types
 
-    try:
-        with httpx.stream("POST", endpoint, json=payload, timeout=httpx.Timeout(25.0, connect=2.0)) as resp:
-            if resp.status_code == 200:
-                ollama_success = True
-                for line in resp.iter_lines():
-                    if line:
-                        chunk_json = json.loads(line)
-                        token = chunk_json.get("message", {}).get("content", "")
-                        if token:
-                            yield f"data: {json.dumps({'chunk': token})}\n\n"
-                        if chunk_json.get("done", False):
-                            break
-    except Exception as e:
-        logger.info("Ollama stream not available (%s), falling back to grounded rules stream", e)
+            client = genai.Client(api_key=settings.gemini_api_key.strip())
+            candidate_models = [
+                settings.gemini_model,
+                "gemini-flash-lite-latest",
+                "gemini-3.5-flash-lite",
+                "gemini-3.1-flash-lite",
+            ]
+            for m in candidate_models:
+                try:
+                    contents = []
+                    for turn in history[-6:]:
+                        role = "user" if turn.get("role") == "user" else "model"
+                        contents.append(types.Content(role=role, parts=[types.Part.from_text(text=turn.get("content", ""))]))
+                    contents.append(types.Content(role="user", parts=[types.Part.from_text(text=message)]))
 
-    # Attempt 2: Grounded rules stream if Ollama didn't stream
-    if not ollama_success:
+                    for chunk in client.models.generate_content_stream(
+                        model=m,
+                        contents=contents,
+                        config=types.GenerateContentConfig(
+                            system_instruction=system_prompt,
+                            temperature=0.3,
+                            max_output_tokens=1000,
+                        ),
+                    ):
+                        if chunk.text:
+                            yield f"data: {json.dumps({'chunk': chunk.text})}\n\n"
+                    streamed_success = True
+                    break
+                except Exception as ex:
+                    logger.warning("Gemini stream with %s failed: %s", m, ex)
+                    continue
+        except Exception as e:
+            logger.warning("Gemini stream initialization error: %s", e)
+
+    # Attempt 2: Streaming via Ollama
+    if not streamed_success:
+        endpoint = f"{settings.ollama_base_url.rstrip('/')}/api/chat"
+        messages = [{"role": "system", "content": system_prompt}]
+        for turn in history[-6:]:
+            role = "user" if turn.get("role") == "user" else "assistant"
+            messages.append({"role": role, "content": turn.get("content", "")})
+        messages.append({"role": "user", "content": message})
+
+        payload = {
+            "model": settings.ollama_model,
+            "messages": messages,
+            "stream": True,
+            "options": {"temperature": 0.2, "num_predict": 450},
+        }
+
+        try:
+            with httpx.stream("POST", endpoint, json=payload, timeout=httpx.Timeout(25.0, connect=2.0)) as resp:
+                if resp.status_code == 200:
+                    streamed_success = True
+                    for line in resp.iter_lines():
+                        if line:
+                            chunk_json = json.loads(line)
+                            token = chunk_json.get("message", {}).get("content", "")
+                            if token:
+                                yield f"data: {json.dumps({'chunk': token})}\n\n"
+                            if chunk_json.get("done", False):
+                                break
+        except Exception as e:
+            logger.info("Ollama stream not available (%s), falling back to grounded rules stream", e)
+
+    # Attempt 3: Grounded rules stream if neither Gemini nor Ollama streamed
+    if not streamed_success:
         full_text = _generate_rule_based_fallback(message, context_str, citations, language)
         words = full_text.split(" ")
         for i, word in enumerate(words):
