@@ -822,6 +822,45 @@ def audit_document_compliance(document_text: str, document_type: str = "general"
                 "recommendation": "Enforceable under Maharashtra Revenue Recovery rules.",
             })
 
+    # Rule 5: Fire Safety Form A/B and Licensed Agency verification
+    if "fire" in text_lower or "form a" in text_lower or "form b" in text_lower:
+        if "form a" in text_lower or "form b" in text_lower or "licensed agency" in text_lower:
+            findings.append({
+                "severity": "COMPLIANT",
+                "clause": "Fire Safety Audit & Licensed Agency Mandate",
+                "finding": "Incorporates Licensed Agency certification (Form A/B) per 2023 Fire Amendment Act.",
+                "amendment_ref": "Maharashtra Fire Prevention Act Section 3(3) & 5(1A)",
+                "recommendation": "Ensure bi-annual Form B is digitally submitted on MAITRI portal every January and July.",
+            })
+        else:
+            score -= 15
+            findings.append({
+                "severity": "WARNING",
+                "clause": "Licensed Agency Certification Unspecified",
+                "finding": "Refers to fire NOC without specifying mandatory Form A/B Licensed Agency certification.",
+                "amendment_ref": "Maharashtra Act No. XVIII of 2023",
+                "recommendation": "Reference Form A structural audit by empanelled chartered fire engineer.",
+            })
+
+    # Rule 6: MPCB Consent Category and Auto-Renewal Protocol
+    if "consent" in text_lower and ("establish" in text_lower or "operate" in text_lower or "mpcb" in text_lower):
+        if "green" in text_lower and "50" in text_lower:
+            findings.append({
+                "severity": "COMPLIANT",
+                "clause": "MPCB 2024 Green Auto-Consent",
+                "finding": "Properly triggers instant automated CTE/CTO under MPCB 2024 EODB Scheme.",
+                "amendment_ref": "MPCB Order No. B-240118-FTS-0120",
+                "recommendation": "Execute electronic self-certification on MAITRI single-window.",
+            })
+        elif "ocems" in text_lower or "continuous monitoring" in text_lower:
+            findings.append({
+                "severity": "COMPLIANT",
+                "clause": "MPCB 5-Year Auto-Renewal Eligibility",
+                "finding": "Meets 24-month OCEMS telemetry standard for physical re-inspection waiver.",
+                "amendment_ref": "CPCB/MPCB Real-Time Environmental Telemetry Protocol",
+                "recommendation": "Maintain uninterrupted telemetry feed with Central Pollutant Data Server.",
+            })
+
     status = "COMPLIANT" if score >= 85 else "AMENDMENT_REQUIRED" if score >= 60 else "NON_COMPLIANT"
 
     return {
@@ -829,5 +868,5 @@ def audit_document_compliance(document_text: str, document_type: str = "general"
         "status": status,
         "findings": findings,
         "audited_at": time.strftime("%Y-%m-%d %H:%M:%S"),
-        "governing_statute": "MAITRI Act 2023 & MID Act 1961",
+        "governing_statute": "MAITRI Act 2023, MID Act 1961, MPCB Orders & Fire Safety Act 2006/2023",
     }

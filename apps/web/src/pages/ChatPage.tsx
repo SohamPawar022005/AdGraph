@@ -15,7 +15,7 @@ const SUGGESTION_CARDS_EN = [
   {
     title: "MAITRI 2024 SLA Breach",
     desc: "Draft a Deemed Approval demand notice under Section 16(3).",
-    prompt: "I submitted my joint inspection request under MAITRI 20 days ago and the authority failed to inspect within the statutory 15-day SLA. How do I claim deemed approval?",
+    prompt: "I submitted my joint inspection request under MAITRI 20 days ago for our Baramati Agro unit and the authority failed to inspect within the statutory 15-day SLA. How do I claim deemed approval?",
     icon: "⚡",
   },
   {
@@ -30,6 +30,18 @@ const SUGGESTION_CARDS_EN = [
     prompt: "MIDC requires Fire NOC before permanent water connection, but Fire Dept requires water pressure for hydrant testing. How is this statutory deadlock resolved?",
     icon: "⚖️",
   },
+  {
+    title: "MPCB 2024 Fee Slabs (Tarapur)",
+    desc: "Calculate CTE fee for ₹75 Cr Red Category unit under Schedule IV.",
+    prompt: "Calculate the exact MPCB Consent to Establish fee for a ₹75 Crore chemical manufacturing unit in Tarapur MIDC under the revised 2024 fee slabs and explain the 5-year auto-renewal criteria.",
+    icon: "📊",
+  },
+  {
+    title: "Fire Safety Shed Exemption",
+    desc: "Form 'A' self-certification for factory buildings under 15 meters.",
+    prompt: "Can our engineering factory shed (height 11m) in Pimpri-Chinchwad MIDC obtain Fire NOC without physical Chief Fire Officer inspection under the 2023 Fire Amendment Act?",
+    icon: "🔥",
+  },
 ];
 
 const SUGGESTION_CARDS_MR = [
@@ -42,7 +54,7 @@ const SUGGESTION_CARDS_MR = [
   {
     title: "१५ दिवसांत तपासणी न झाल्यास कायदेशीर हक्क",
     desc: "मैत्री कायदा कलम १६(३) अंतर्गत डीम्ड मंजुरी दावा.",
-    prompt: "मैत्री पोर्टलवर अर्ज करून २० दिवस उलटले तरी संयुक्त तपासणी झाली नाही. कलम १६ अंतर्गत डीम्ड मंजुरी कशी मिळवावी?",
+    prompt: "बारामती ॲग्रो क्लस्टरसाठी मैत्री पोर्टलवर अर्ज करून २० दिवस उलटले तरी संयुक्त तपासणी झाली नाही. कलम १६(३) अंतर्गत डीम्ड मंजुरी कशी मिळवावी?",
     icon: "⚡",
   },
   {
@@ -56,6 +68,18 @@ const SUGGESTION_CARDS_MR = [
     desc: "एमआयडीसी पाणी जोडणी आणि फायर एनओसीचा वैधानिक तिढा.",
     prompt: "फायर एनओसीसाठी पाण्याची आवश्यकता आणि पाण्यासाठी फायर एनओसीची अट हा प्रशासकीय तिढा कसा सुटतो?",
     icon: "⚖️",
+  },
+  {
+    title: "तारापूर MPCB २०२४ शुल्क गणना",
+    desc: "₹७५ कोटी रेड कॅटेगरी केमिकल प्रकल्पाचे वैधानिक शुल्क.",
+    prompt: "तारापूर एमआयडीसीमधील ₹७५ कोटी रासायनिक प्रकल्पासाठी २०२४ च्या सुधारित दरपत्रकानुसार MPCB CTE शुल्क किती असेल?",
+    icon: "📊",
+  },
+  {
+    title: "फायर एनओसी तपासणी सवलत (१५ मी.)",
+    desc: "२०२३ सुधारणेनुसार फॉर्म 'ए' चार्टर्ड इंजिनिअर स्वयं-प्रमाणीकरण.",
+    prompt: "पिंपरी-चिंचवडमधील ११ मीटर उंचीच्या फॅक्टरी शेडला २०२३ च्या अग्निशमन कायद्यानुसार प्रत्यक्ष अधिकारी तपासणीशिवाय फॉर्म 'ए' वर एनओसी मिळते का?",
+    icon: "🔥",
   },
 ];
 
@@ -112,7 +136,9 @@ export default function ChatPage() {
           `[OCR Extracted Text from: ${file.name} | Size: ${(file.size / 1024).toFixed(1)} KB]\n\n` +
           "Clause 4.1: The Competent Authority shall conduct joint inspection within 30 days of submission.\n" +
           "Clause 4.2: The applicant unit may commence civil construction before obtaining Consent to Establish (CTE).\n" +
-          "Clause 4.3: Deemed approval shall be claimed under general industrial policy provisions.";
+          "Clause 4.3: Deemed approval shall be claimed under general industrial policy provisions.\n" +
+          "Clause 4.4: Fire safety verification shall be conducted via internal departmental officers without licensed agency Form A/B audit.\n" +
+          "Clause 4.5: Late renewal fee shall be assessed under obsolete 2020 schedule without 2024 compound surcharge.";
         setAuditText(sampleExtracted);
       };
       reader.readAsArrayBuffer(file);

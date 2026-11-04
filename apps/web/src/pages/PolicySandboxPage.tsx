@@ -66,6 +66,22 @@ const POLICY_PRESETS = [
     tag: "Environmental Compliance",
     description: "Escalate penalties for illegal industrial effluent discharge into MIDC drainage from ₹1,000 to ₹1,00,000.",
   },
+  {
+    id: "mpcb_green_auto",
+    name: "🌿 Green & White Category Instant Auto-Consent",
+    section: "Water & Air Acts · MPCB EODB Order 2024",
+    days: 1,
+    tag: "Decarbonization & Fast-Track",
+    description: "Grant instant electronic Consent to Establish & Operate for Green units up to ₹50 Cr and White units without physical site inspection.",
+  },
+  {
+    id: "fire_noc_delegation",
+    name: "🔥 Factory Shed Fire Audit Self-Certification",
+    section: "Maharashtra Fire Prevention Act 2006 · Section 5(1A)",
+    days: 7,
+    tag: "Third-Party Delegation",
+    description: "Substitute physical CFO inspections with accredited Licensed Agency Form 'A' certifications for factory sheds <= 15m in MIDC estates.",
+  },
 ];
 
 export default function PolicySandboxPage() {

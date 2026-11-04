@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { MessageSquare } from "lucide-react";
 import { sendChatMessage } from "../lib/api";
 import type { ChatMessage, ChatResponse } from "../lib/types";
 import MarkdownRenderer from "./MarkdownRenderer";
@@ -126,17 +127,11 @@ export default function ChatWidget() {
         <div className="fixed bottom-6 right-6 z-50 flex items-center space-x-2">
           <button
             onClick={() => setIsOpen(true)}
-            aria-label="Open PermitGraph AI Co-Pilot"
-            className="flex items-center space-x-2.5 bg-slate-900 hover:bg-emerald-700 text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 group focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+            aria-label="Open PermitGraph Regulatory Assistant"
+            className="flex items-center space-x-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 group focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 border border-slate-700 text-xs font-semibold"
           >
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-            </span>
-            <span className="text-sm font-semibold tracking-wide flex items-center gap-1.5">
-              <span>⚡</span>
-              <span>Regulatory Co-Pilot</span>
-            </span>
+            <MessageSquare className="h-4 w-4 text-sky-400" />
+            <span>Regulatory Assistant</span>
           </button>
         </div>
       )}

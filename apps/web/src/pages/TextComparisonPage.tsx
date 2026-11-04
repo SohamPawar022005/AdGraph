@@ -1,11 +1,11 @@
-import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import LanguageSelector from "../components/LanguageSelector";
 
 interface ChangeItem {
   id: string;
   index: number;
-  type: "REPLACED" | "DELETED" | "INSERTED" | "DEADLINE_CHANGE" | "AUTHORITY_CHANGE" | "THRESHOLD_CHANGE";
+  type: "REPLACED" | "DELETED" | "INSERTED" | "DEADLINE_CHANGE" | "AUTHORITY_CHANGE" | "THRESHOLD_CHANGE" | "PENALTY_ESCALATION";
   delCount?: number;
   addCount?: number;
   clauseId: string;
@@ -284,6 +284,371 @@ const REAL_MAITRI_ACT_DATASET: DocumentComparisonDataset = {
         "MAITRI Act 2023 (Section 3)",
         "RULE-MAITRI-003 (Application Submission Mode)",
         "Digital-Only Single Window Gateway",
+      ],
+    },
+  ],
+};
+
+const REAL_MPCB_CONSENT_DATASET: DocumentComparisonDataset = {
+  id: "real-mpcb-consent-2020-2024",
+  label: "★ REAL: Maharashtra Pollution Control Board (Consent Fee Order 2020 vs 2024 EODB Scheme)",
+  category: "real",
+  titleLeft: "MPCB Revised Consent Fee Notification & Procedure [Order No. MPCB/RO(HQ)/B-200508-FTS-0012]",
+  dateLeft: "Official Notification, 8 May 2020",
+  titleRight: "MPCB Ease-of-Doing-Business Fast-Track Auto-Renewal & Fee Revision [Order No. MPCB/JD(WPC)/B-240118-FTS-0120]",
+  dateRight: "Official Gazette & Circular, 18 January 2024",
+  totalPages: 28,
+  initialPage: 8,
+  actPreamble:
+    "Statutory Orders issued under Section 25 of the Water (Prevention and Control of Pollution) Act, 1974 and Section 21 of the Air (Prevention and Control of Pollution) Act, 1981 governing Consent to Establish (CTE) and Consent to Operate (CTO) in Maharashtra.",
+  regulationHeading: "Schedule IV & Rule 12 Categorization Slabs, Auto-Consent Eligibility & Capital Investment Fees",
+  statusBadge: "✓ Real Maharashtra Statute",
+  clauses: [
+    {
+      id: "mpcb-cl-1",
+      label: "Clause 1.",
+      heading: "Categorization of Industrial Sectors - Red, Orange, Green, White",
+      textLeft:
+        "Industries shall be classified into Red, Orange, Green and White categories based on Pollution Index score. White category industries shall submit only an undertaking. Green category units shall submit detailed Consent to Establish applications requiring physical inspection by Sub-Regional Officer before issuance within 60 days.",
+      textRight:
+        "Industries shall be categorized as Red, Orange, Green, and White based on CPCB/MPCB Revised Pollution Index. White category units are permanently exempt from Consent and require only an online intimation. Green category units with Capital Investment up to ₹50 Crores shall be granted instant automated Consent to Establish and Consent to Operate upon online electronic self-certification on the MAITRI Single Window portal without physical site inspection.",
+      changeId: "mpcb-ch-1",
+      changeType: "REPLACED",
+    },
+    {
+      id: "mpcb-cl-2",
+      label: "Clause 2.",
+      heading: "Application Processing Timelines & Statutory SLA",
+      textLeft:
+        "Consent to Establish (CTE) and Consent to Operate (CTO) applications for Red category units shall be disposed of within 120 days, and for Orange category units within 90 days from the date of submission.",
+      textRight:
+        "Statutory SLA for disposal of CTE/CTO applications is compressed: Red Category applications shall be disposed of within 45 days, Orange Category applications within 30 days, and Green Category applications within 15 days (instant 24-hour auto-issuance for investments under ₹50 Cr). If no query or refusal is issued within specified SLA, deemed consent shall be triggered.",
+      changeId: "mpcb-ch-2",
+      changeType: "REPLACED",
+    },
+    {
+      id: "mpcb-cl-3",
+      label: "Clause 3.",
+      heading: "Fee Slabs on Capital Investment & Late Surcharge",
+      textLeft:
+        "Consent fees shall be levied on Capital Investment (Gross Block + Plant & Machinery): Capital Investment ₹25 Cr to ₹100 Cr shall pay ₹1,25,000 for CTE and ₹1,25,000 per term for CTO. Surcharge of 20% shall be levied on applications filed after expiry of consent.",
+      textRight:
+        "Revised Capital Investment Fee Schedule: Capital Investment ₹25 Cr to ₹100 Cr shall pay ₹1,75,000 for CTE and ₹1,75,000 per term for CTO. Micro & Small Enterprises with investment up to ₹5 Cr receive 50% statutory fee concession. Late renewal surcharge escalated to 50% compound penalty plus ₹5,000 monthly operational forfeiture.",
+      changeId: "mpcb-ch-3",
+      changeType: "REPLACED",
+    },
+    {
+      id: "mpcb-cl-4",
+      label: "Clause 4.",
+      heading: "Multi-Year Auto-Renewal for Compliant Industries",
+      textLeft:
+        "Consent to Operate shall be granted for a period of one to five years depending on industrial category. Renewal applications must be filed at least 60 days prior to expiry with complete environment audit reports.",
+      textRight:
+        "Eligible industrial units in Red and Orange categories maintaining continuous online effluent/emission monitoring (OCEMS) connectivity with MPCB servers and zero show-cause notices for past 24 months are entitled to 5-year Auto-Renewal of Consent to Operate upon payment of prescribed fees without physical departmental re-inspection.",
+      changeId: "mpcb-ch-4",
+      changeType: "REPLACED",
+    },
+    {
+      id: "mpcb-cl-5",
+      label: "Clause 5.",
+      heading: "Joint Sampling Protocol with MIDC CETP",
+      textLeft:
+        "Effluent discharge parameters shall be sampled individually by MPCB field officers at the inlet and outlet of the internal Effluent Treatment Plant (ETP).",
+      textRight:
+        "Units operating within MIDC notified chemical and engineering zones discharging into MIDC Common Effluent Treatment Plants (CETP) shall undergo coordinated quarterly inlet sampling jointly by MPCB and MIDC environmental monitoring units, with results published on MAITRI portal within 7 days.",
+      changeId: "mpcb-ch-5",
+      changeType: "REPLACED",
+    },
+  ],
+  changes: [
+    {
+      id: "mpcb-ch-1",
+      index: 1,
+      type: "REPLACED",
+      delCount: 28,
+      addCount: 46,
+      clauseId: "mpcb-cl-1",
+      delText:
+        "Green category units shall submit detailed Consent to Establish applications requiring physical inspection by Sub-Regional Officer before issuance within 60 days.",
+      addText:
+        "Green category units with Capital Investment up to ₹50 Crores shall be granted instant automated Consent to Establish and Consent to Operate upon online electronic self-certification on the MAITRI Single Window portal without physical site inspection.",
+      summary:
+        "Green Category units under ₹50 Cr investment granted instant electronic auto-consent on MAITRI portal, bypassing physical departmental inspection.",
+      impactScore: 0.96,
+      affectedRules: ["RULE-MPCB-2024-AUTO", "RULE-MPCB-GREEN-001"],
+      affectedApprovals: ["MPCB-CONSENT-TO-ESTABLISH", "MPCB-CONSENT-TO-OPERATE"],
+      evidenceTokens: ["Green category units with Capital Investment up to ₹50 Crores", "instant automated Consent", "MAITRI Single Window portal"],
+      evidencePath: [
+        "MPCB EODB Order 2024 (Clause 1)",
+        "Water Act 1974 Section 25",
+        "MAITRI State Single Window Gateway",
+      ],
+    },
+    {
+      id: "mpcb-ch-2",
+      index: 2,
+      type: "DEADLINE_CHANGE",
+      delCount: 16,
+      addCount: 38,
+      clauseId: "mpcb-cl-2",
+      delText: "Red category units shall be disposed of within 120 days, and for Orange category units within 90 days",
+      addText:
+        "Red Category applications shall be disposed of within 45 days, Orange Category applications within 30 days, and Green Category applications within 15 days (instant 24-hour auto-issuance for investments under ₹50 Cr).",
+      summary:
+        "Statutory review timelines compressed: Red category cut from 120d to 45d, Orange from 90d to 30d, and Green to 15d with deemed trigger.",
+      impactScore: 0.94,
+      affectedRules: ["RULE-MPCB-SLA-002"],
+      affectedApprovals: ["MPCB-CONSENT-TO-ESTABLISH", "MPCB-CONSENT-TO-OPERATE"],
+      evidenceTokens: ["Red Category 45 days", "Orange Category 30 days", "deemed consent shall be triggered"],
+      evidencePath: [
+        "MPCB EODB Order 2024 (Clause 2)",
+        "Air Act 1981 Section 21",
+        "MAITRI Deemed SLA Engine",
+      ],
+    },
+    {
+      id: "mpcb-ch-3",
+      index: 3,
+      type: "THRESHOLD_CHANGE",
+      delCount: 22,
+      addCount: 34,
+      clauseId: "mpcb-cl-3",
+      delText: "Capital Investment ₹25 Cr to ₹100 Cr shall pay ₹1,25,000... Surcharge of 20% shall be levied",
+      addText:
+        "Capital Investment ₹25 Cr to ₹100 Cr shall pay ₹1,75,000 for CTE and ₹1,75,000 per term for CTO. Micro & Small Enterprises receive 50% statutory fee concession. Late renewal surcharge escalated to 50% compound penalty.",
+      summary:
+        "Revised capital investment fee slabs: ₹25-100 Cr slab increased to ₹1,75,000 with 50% MSME concession and 50% compound late penalty.",
+      impactScore: 0.88,
+      affectedRules: ["RULE-MPCB-FEE-003"],
+      affectedApprovals: ["MPCB-CONSENT-FEE-RECEIPT"],
+      evidenceTokens: ["₹1,75,000 for CTE", "50% statutory fee concession", "50% compound penalty"],
+      evidencePath: [
+        "MPCB Fee Schedule IV (Clause 3)",
+        "Water & Air Cess Rules",
+        "MAITRI Consolidated Fee Gateway",
+      ],
+    },
+    {
+      id: "mpcb-ch-4",
+      index: 4,
+      type: "REPLACED",
+      delCount: 18,
+      addCount: 32,
+      clauseId: "mpcb-cl-4",
+      delText: "Renewal applications must be filed at least 60 days prior to expiry with complete environment audit reports.",
+      addText:
+        "Eligible industrial units in Red and Orange categories maintaining continuous online effluent/emission monitoring (OCEMS) connectivity with MPCB servers and zero show-cause notices for past 24 months are entitled to 5-year Auto-Renewal of Consent to Operate without physical departmental re-inspection.",
+      summary:
+        "5-Year Auto-Renewal granted to OCEMS IoT telemetry-connected units with clean 24-month audit history without physical departmental re-inspection.",
+      impactScore: 0.92,
+      affectedRules: ["RULE-MPCB-AUTO-RENEWAL-004"],
+      affectedApprovals: ["MPCB-CONSENT-TO-OPERATE"],
+      evidenceTokens: ["continuous online effluent/emission monitoring (OCEMS)", "5-year Auto-Renewal", "without physical departmental re-inspection"],
+      evidencePath: [
+        "MPCB Order 2024 (Clause 4)",
+        "CPCB Real-Time Environmental Telemetry Protocol",
+      ],
+    },
+    {
+      id: "mpcb-ch-5",
+      index: 5,
+      type: "REPLACED",
+      delCount: 14,
+      addCount: 26,
+      clauseId: "mpcb-cl-5",
+      delText: "sampled individually by MPCB field officers at the inlet and outlet of the internal Effluent Treatment Plant (ETP).",
+      addText:
+        "discharging into MIDC Common Effluent Treatment Plants (CETP) shall undergo coordinated quarterly inlet sampling jointly by MPCB and MIDC environmental monitoring units, with results published on MAITRI portal within 7 days.",
+      summary:
+        "Mandatory joint quarterly sampling by MPCB and MIDC for CETP-connected chemical & engineering units with 7-day portal reporting.",
+      impactScore: 0.85,
+      affectedRules: ["RULE-MPCB-CETP-005"],
+      affectedApprovals: ["MIDC-DRAINAGE-NOC", "CETP-MEMBERSHIP-CONSENT"],
+      evidenceTokens: ["Common Effluent Treatment Plants (CETP)", "jointly by MPCB and MIDC", "MAITRI portal within 7 days"],
+      evidencePath: [
+        "MPCB & MIDC Joint Environmental Framework 2024",
+        "MID Act Section 14(ii)(c)",
+      ],
+    },
+  ],
+};
+
+const REAL_FIRE_SAFETY_ACT_DATASET: DocumentComparisonDataset = {
+  id: "real-fire-safety-2006-2023",
+  label: "★ REAL: Maharashtra Fire Prevention & Life Safety Act, 2006 (Base Act vs 2023 Amendment)",
+  category: "real",
+  titleLeft: "The Maharashtra Fire Prevention and Life Safety Measures Act, 2006 [Maharashtra Act No. III of 2007]",
+  dateLeft: "Official Gazette, 1 February 2007",
+  titleRight: "The Maharashtra Fire Prevention and Life Safety Measures (Amendment) Act, 2023 [Maharashtra Act No. XVIII of 2023]",
+  dateRight: "Official Gazette, 28 April 2023",
+  totalPages: 38,
+  initialPage: 12,
+  actPreamble:
+    "An Act to make more effective provisions for the fire prevention and life safety measures in various types of buildings and premises in the State of Maharashtra.",
+  regulationHeading: "Section 3, 5, 8 & 25 Licensed Agency Certification, Fire NOC Exemption & Statutory Premium",
+  statusBadge: "✓ Real Maharashtra Statute",
+  clauses: [
+    {
+      id: "fire-sec-3",
+      label: "3.",
+      heading: "Licensed Agency Bi-Annual Safety Certification (Form 'A' & Form 'B')",
+      textLeft:
+        "(3) The owner or occupier shall furnish a certificate issued by a Licensed Agency regarding maintenance of fire prevention and life safety measures in good repair and efficient condition in January and July of each calendar year.",
+      textRight:
+        "(3) The owner or occupier of industrial buildings shall submit Form 'B' compliance certificate digitally on the MAITRI Single Window portal issued by an accredited Licensed Agency bi-annually. In default of submission within thirty days of due date, the Fire NOC shall stand provisionally suspended without further show-cause notice.",
+      changeId: "fire-ch-1",
+      changeType: "REPLACED",
+    },
+    {
+      id: "fire-sec-5",
+      label: "5.",
+      heading: "Departmental Pre-Commissioning Inspection Exemption for Factory Sheds < 15m",
+      textLeft:
+        "(1) The Director, Chief Fire Officer or authorized officer shall inspect the building or premises before issuing the final Fire No-Objection Certificate (NOC) and verify all hydrants, sprinklers, and riser systems physically.",
+      textRight:
+        "(1A) Provided that for low-hazard industrial premises and factory sheds with height not exceeding fifteen meters located inside approved MIDC industrial estates, physical inspection by Chief Fire Officer may be substituted by a verified structural self-certification and Form 'A' certificate from an empanelled chartered fire engineer.",
+      changeId: "fire-ch-2",
+      changeType: "REPLACED",
+    },
+    {
+      id: "fire-sec-8",
+      label: "8.",
+      heading: "Fire Protection Premium and Infrastructure Cess Slabs",
+      textLeft:
+        "There shall be levied a fee on the construction of every building in respect of which provisional fire approval is sought at the rate prescribed by the State Government, not exceeding ten rupees per square meter.",
+      textRight:
+        "A Fire Protection Premium and infrastructure development cess shall be levied on all industrial developments exceeding five hundred square meters built-up area: Low-hazard factories at ₹35 per sq.m; Moderate-hazard manufacturing at ₹60 per sq.m; High-hazard chemical units at ₹120 per sq.m. The entire fee is payable through the MAITRI centralized payment gateway.",
+      changeId: "fire-ch-3",
+      changeType: "REPLACED",
+    },
+    {
+      id: "fire-sec-25",
+      label: "25.",
+      heading: "Penalties for Safety Violations and Supply Disconnection",
+      textLeft:
+        "Whoever contravenes any provision of this Act shall be punishable with imprisonment for a term which may extend to three months or with fine which may extend to fifty thousand rupees or with both.",
+      textRight:
+        "Whoever fails to maintain required fire prevention measures or submits fraudulent Form A/B certificates shall be punishable with imprisonment for a term not less than six months which may extend to three years and with fine which shall not be less than one lakh rupees and may extend to ten lakh rupees, and in case of industrial units, immediate disconnection of water and electricity supply.",
+      changeId: "fire-ch-4",
+      changeType: "REPLACED",
+    },
+    {
+      id: "fire-sec-32",
+      label: "32.",
+      heading: "Statutory 21-Day Deemed Provisional Fire NOC SLA",
+      textLeft:
+        "The Chief Fire Officer shall dispose of application for provisional fire approval as per standard administrative guidelines within forty-five days.",
+      textRight:
+        "The Chief Fire Officer shall scrutinize building architectural drawings and issue Provisional Fire NOC or formulate consolidated queries within twenty-one working days. If no query or refusal is communicated within twenty-one days, Provisional Fire NOC shall be deemed granted by operation of law under Section 4(3) of the MAITRI Act, 2023.",
+      changeId: "fire-ch-5",
+      changeType: "REPLACED",
+    },
+  ],
+  changes: [
+    {
+      id: "fire-ch-1",
+      index: 1,
+      type: "REPLACED",
+      delCount: 22,
+      addCount: 38,
+      clauseId: "fire-sec-3",
+      delText: "furnish a certificate issued by a Licensed Agency regarding maintenance of fire prevention... in January and July",
+      addText:
+        "submit Form 'B' compliance certificate digitally on the MAITRI Single Window portal... In default of submission within thirty days of due date, the Fire NOC shall stand provisionally suspended",
+      summary:
+        "Mandatory digital submission of Form B bi-annual fire safety certificate on MAITRI portal with automatic NOC suspension upon 30-day default.",
+      impactScore: 0.91,
+      affectedRules: ["RULE-FIRE-FORM-B", "RULE-FIRE-003"],
+      affectedApprovals: ["FIRE-SAFETY-AUDIT-FORM-B", "FIRE-NO-OBJECTION-CERTIFICATE"],
+      evidenceTokens: ["Form 'B' compliance certificate", "MAITRI Single Window portal", "provisionally suspended"],
+      evidencePath: [
+        "Maharashtra Fire Prevention Act 2006 Section 3(3)",
+        "Amendment Act XVIII of 2023",
+        "MAITRI Fire Compliance Portal",
+      ],
+    },
+    {
+      id: "fire-ch-2",
+      index: 2,
+      type: "REPLACED",
+      delCount: 26,
+      addCount: 36,
+      clauseId: "fire-sec-5",
+      delText: "Chief Fire Officer or authorized officer shall inspect the building or premises before issuing the final Fire No-Objection Certificate (NOC)",
+      addText:
+        "for low-hazard industrial premises and factory sheds with height not exceeding fifteen meters located inside approved MIDC industrial estates, physical inspection by Chief Fire Officer may be substituted by a verified structural self-certification and Form 'A' certificate",
+      summary:
+        "Departmental pre-commissioning inspection substituted by empanelled chartered fire engineer Form A certification for factory sheds <= 15m in MIDC estates.",
+      impactScore: 0.95,
+      affectedRules: ["RULE-FIRE-SHED-EXEMPTION-005"],
+      affectedApprovals: ["FIRE-NO-OBJECTION-CERTIFICATE"],
+      evidenceTokens: ["factory sheds with height not exceeding fifteen meters", "substituted by a verified structural self-certification and Form 'A' certificate", "approved MIDC industrial estates"],
+      evidencePath: [
+        "Maharashtra Fire Prevention Amendment Act 2023 (Section 5(1A))",
+        "MIDC Development Control Regulations",
+      ],
+    },
+    {
+      id: "fire-ch-3",
+      index: 3,
+      type: "THRESHOLD_CHANGE",
+      delCount: 16,
+      addCount: 35,
+      clauseId: "fire-sec-8",
+      delText: "fee on the construction of every building... not exceeding ten rupees per square meter.",
+      addText:
+        "Fire Protection Premium and infrastructure development cess: Low-hazard factories at ₹35 per sq.m; Moderate-hazard manufacturing at ₹60 per sq.m; High-hazard chemical units at ₹120 per sq.m. Payable through MAITRI centralized payment gateway.",
+      summary:
+        "Hazard-tiered Fire Protection Premium: ₹35/sq.m for low hazard, ₹60/sq.m for moderate hazard, and ₹120/sq.m for high hazard chemical units.",
+      impactScore: 0.87,
+      affectedRules: ["RULE-FIRE-PREMIUM-008"],
+      affectedApprovals: ["FIRE-PREMIUM-RECEIPT"],
+      evidenceTokens: ["Low-hazard factories at ₹35 per sq.m", "Moderate-hazard manufacturing at ₹60 per sq.m", "High-hazard chemical units at ₹120 per sq.m"],
+      evidencePath: [
+        "Maharashtra Fire Prevention Rules 2023 (Section 8)",
+        "MAITRI Centralized Fee Gateway",
+      ],
+    },
+    {
+      id: "fire-ch-4",
+      index: 4,
+      type: "PENALTY_ESCALATION",
+      delCount: 18,
+      addCount: 36,
+      clauseId: "fire-sec-25",
+      delText: "imprisonment for a term which may extend to three months or with fine which may extend to fifty thousand rupees",
+      addText:
+        "imprisonment for a term not less than six months which may extend to three years and with fine which shall not be less than one lakh rupees and may extend to ten lakh rupees, and in case of industrial units, immediate disconnection of water and electricity supply.",
+      summary:
+        "Ten-fold criminal fine increase up to ₹10 Lakhs, mandatory 6-month imprisonment, and immediate power/water disconnection for life safety violations.",
+      impactScore: 0.93,
+      affectedRules: ["RULE-FIRE-PENALTY-025"],
+      affectedApprovals: ["FIRE-NO-OBJECTION-CERTIFICATE", "MIDC-WATER-CONNECTION", "MSEDCL-INDUSTRIAL-POWER"],
+      evidenceTokens: ["one lakh rupees and may extend to ten lakh rupees", "immediate disconnection of water and electricity supply", "six months which may extend to three years"],
+      evidencePath: [
+        "Maharashtra Fire Prevention Act (Section 25)",
+        "Judiciary Criminal Enforcement Provisions",
+      ],
+    },
+    {
+      id: "fire-ch-5",
+      index: 5,
+      type: "DEADLINE_CHANGE",
+      delCount: 14,
+      addCount: 30,
+      clauseId: "fire-sec-32",
+      delText: "Chief Fire Officer shall dispose of application for provisional fire approval... within forty-five days.",
+      addText:
+        "Chief Fire Officer shall scrutinize building architectural drawings and issue Provisional Fire NOC or formulate consolidated queries within twenty-one working days. If no query or refusal is communicated within twenty-one days, Provisional Fire NOC shall be deemed granted.",
+      summary:
+        "Strict 21-day SLA for Provisional Fire NOC with automatic deemed approval under MAITRI Section 4(3) framework.",
+      impactScore: 0.94,
+      affectedRules: ["RULE-FIRE-SLA-032"],
+      affectedApprovals: ["FIRE-NO-OBJECTION-CERTIFICATE"],
+      evidenceTokens: ["within twenty-one working days", "deemed granted by operation of law", "MAITRI Act, 2023"],
+      evidencePath: [
+        "Maharashtra Fire Prevention Amendment 2023 (Section 32)",
+        "MAITRI Act 2023 Section 4(3)",
       ],
     },
   ],
@@ -611,11 +976,37 @@ const BENCHMARK_MIFID_DATASET: DocumentComparisonDataset = {
   ],
 };
 
-const ALL_DATASETS = [REAL_MAITRI_ACT_DATASET, REAL_MID_ACT_DATASET, BENCHMARK_MIFID_DATASET];
+const ALL_DATASETS = [
+  REAL_MAITRI_ACT_DATASET,
+  REAL_MID_ACT_DATASET,
+  REAL_MPCB_CONSENT_DATASET,
+  REAL_FIRE_SAFETY_ACT_DATASET,
+  BENCHMARK_MIFID_DATASET,
+];
 
 export default function TextComparisonPage() {
-  const [selectedDatasetId, setSelectedDatasetId] = useState<string>("real-maitri-2023-2024");
-  const [activeChangeId, setActiveChangeId] = useState<string | null>("real-ch-6");
+  const [searchParams] = useSearchParams();
+  const datasetParam = searchParams.get("dataset");
+  const clauseParam = searchParams.get("clause");
+
+  const initialDatasetId =
+    datasetParam && ALL_DATASETS.some((d) => d.id === datasetParam)
+      ? datasetParam
+      : "real-maitri-2023-2024";
+
+  const [selectedDatasetId, setSelectedDatasetId] = useState<string>(initialDatasetId);
+  const activeDataset = ALL_DATASETS.find((x) => x.id === selectedDatasetId) || ALL_DATASETS[0];
+
+  const [activeChangeId, setActiveChangeId] = useState<string | null>(() => {
+    if (clauseParam) {
+      const match = activeDataset.changes.find(
+        (c) => c.clauseId === clauseParam || c.id === clauseParam
+      );
+      if (match) return match.id;
+    }
+    return activeDataset.changes[0]?.id || "real-ch-1";
+  });
+
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const [detailsExpanded, setDetailsExpanded] = useState<boolean>(true);
   const [typeFilter, setTypeFilter] = useState<string>("ALL");
@@ -625,8 +1016,23 @@ export default function TextComparisonPage() {
   const [zoomLevel, setZoomLevel] = useState<number>(100);
   const [viewMode, setViewMode] = useState<string>("Fit Width");
 
-  const activeDataset = ALL_DATASETS.find((x) => x.id === selectedDatasetId) || ALL_DATASETS[0];
   const [currentPage, setCurrentPage] = useState<number>(activeDataset.initialPage);
+
+  useEffect(() => {
+    if (datasetParam && ALL_DATASETS.some((d) => d.id === datasetParam)) {
+      setSelectedDatasetId(datasetParam);
+      const d = ALL_DATASETS.find((x) => x.id === datasetParam) || ALL_DATASETS[0];
+      setCurrentPage(d.initialPage);
+      if (clauseParam) {
+        const match = d.changes.find((c) => c.clauseId === clauseParam || c.id === clauseParam);
+        if (match) {
+          setActiveChangeId(match.id);
+          return;
+        }
+      }
+      setActiveChangeId(d.changes[0]?.id || null);
+    }
+  }, [datasetParam, clauseParam]);
 
   const scrollLeftRef = useRef<HTMLDivElement>(null);
   const scrollRightRef = useRef<HTMLDivElement>(null);

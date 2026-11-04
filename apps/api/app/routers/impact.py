@@ -41,6 +41,18 @@ def simulate_policy_impact(payload: PolicySimulationRequest, db: Session = Depen
         citation = "The Maharashtra Industrial Development Act, 1961 [Section 46 as amended 2012]"
         days_saved_per_unit = 0
         backlog_reduction = 12.0
+    elif policy_type == "mpcb_green_auto":
+        target_approvals = ["consent-to-establish", "consent-to-operate"]
+        title = "Green/White Category Instant Auto-Consent Scheme (MPCB 2024 Order)"
+        citation = "Water Act 1974 Sec 25 & Air Act 1981 Sec 21 read with MPCB EODB Order No. B-240118-FTS-0120"
+        days_saved_per_unit = max(45 - payload.target_timeline_days, 15)
+        backlog_reduction = 52.0
+    elif policy_type == "fire_noc_delegation":
+        target_approvals = ["fire-noc", "fire-safety-audit-form-b"]
+        title = "Industrial Sheds Licensed Agency Fire Audit Substitution (Section 5(1A))"
+        citation = "The Maharashtra Fire Prevention and Life Safety Measures Act, 2006 [Section 5(1A) as amended 2023]"
+        days_saved_per_unit = max(30 - payload.target_timeline_days, 8)
+        backlog_reduction = 41.0
     else:  # fee_waiver
         target_approvals = ["single-window-application", "joint-inspection-scheduling"]
         title = "MSME & Women-Led Enterprise 100% Processing Fee Concession (Section 19)"
