@@ -65,7 +65,7 @@ docker compose --profile seed run --rm seed
 ### Manual / local development
 
 ```bash
-# Python packages + API
+# Python packages + API dependencies
 for pkg in shared rules-engine graph-engine change-detection impact-analysis \
            document-engine regulatory-parser workflow-engine; do
   pip install -e "packages/$pkg"
@@ -73,20 +73,44 @@ done
 pip install -r apps/api/requirements.txt -r apps/api/requirements-dev.txt
 pip install -e cli
 
-python scripts/seed_real_corpus.py              # real + candidate regulatory corpus, demo users
-python scripts/demo_apply_reviewer_approvals.py # promotes a documented subset to VERIFIED (simulated reviewer)
-python scripts/load_synthetic_dataset.py        # ~5k synthetic businesses/applications/documents
-
-cd apps/api && uvicorn app.main:app --reload --port 8000
+# Seed database: real + candidate corpus, demo users, and initial regulatory alerts
+python scripts/seed_real_corpus.py
+python scripts/demo_apply_reviewer_approvals.py # promotes a documented subset to VERIFIED
+python scripts/load_synthetic_dataset.py        # ~5k synthetic businesses/applications (optional)
 ```
 
+#### Run Backend API (FastAPI)
+* **Linux / macOS**:
+  ```bash
+  cd apps/api && python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+  ```
+* **Windows PowerShell (from repo root)**:
+  ```powershell
+  python -m uvicorn app.main:app --app-dir apps/api --host 127.0.0.1 --port 8000 --reload
+  ```
+* API available at `http://127.0.0.1:8000` (interactive OpenAPI docs at `/docs`).
+
+#### Run Frontend Web UI (Vite + React)
 ```bash
-# Web UI (separate terminal)
+# In a separate terminal
 cd apps/web && npm install && npm run dev
 ```
+* Web application available at `http://localhost:5173`.
+* Proxies `/api`, `/health`, `/ready` to backend port `8000` via `vite.config.ts`.
 
+#### Demo Credentials & Roles
+
+| Role | Email | Dev Password | Dashboard / Access Level |
+|---|---|---|---|
+| **Admin** | `admin@permitgraph.dev` | `permitgraph-dev-only` | System configuration, user administration & review queue |
+| **Reviewer** | `reviewer@permitgraph.dev` | `permitgraph-dev-only` | Human verification gate, review candidate rules & changes |
+| **Compliance Officer** | `officer@permitgraph.dev` | `permitgraph-dev-only` | Regulatory alerts dashboard, inspection schedules & audit log |
+| **Applicant / Business** | `applicant@permitgraph.dev` | `permitgraph-dev-only` | Permission discovery, smart checklists & applications |
+
+> **Security Note:** Demo accounts and passwords are for development/evaluation only. **Never reuse these in a production deployment** — see [`SECURITY.md`](SECURITY.md).
+
+#### CLI (separate terminal)
 ```bash
-# CLI (separate terminal)
 permitgraph status
 permitgraph auth login --email reviewer@permitgraph.dev --password permitgraph-dev-only
 permitgraph discover --industry food_processing --district Pune --employees 80 \
@@ -95,16 +119,11 @@ permitgraph discover --industry food_processing --district Pune --employees 80 \
 
 See [`cli/README.md`](cli/README.md) for the full CLI command tree.
 
-> Demo accounts (dev-only, see `scripts/seed_real_corpus.py`): `admin@`,
-> `reviewer@`, `officer@`, `business@`, `developer@`, `readonly@permitgraph.dev`,
-> password `permitgraph-dev-only` for all. **Never reuse these in a real
-> deployment** — see [`SECURITY.md`](SECURITY.md).
-
 ## Repository layout
 
 ```
 apps/api        FastAPI service: routers, models, services (the public API)
-apps/web        React + TypeScript + Vite + Tailwind UI (19 pages)
+apps/web        React + TypeScript + Vite + Tailwind UI (22 pages)
 packages/*      8 installable Python packages, each with its own unit tests:
                   shared, rules-engine, graph-engine, change-detection,
                   impact-analysis, document-engine, regulatory-parser, workflow-engine
