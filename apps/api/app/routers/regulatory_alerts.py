@@ -149,6 +149,7 @@ def list_alerts(
     offset: int = 0,
     db: Session = Depends(get_db),
 ):
+    regulatory_alerts_service.seed_initial_alerts_if_empty(db)
     query = db.query(RegulatoryAlert)
     if not include_dismissed:
         query = query.filter(RegulatoryAlert.is_dismissed.is_(False))

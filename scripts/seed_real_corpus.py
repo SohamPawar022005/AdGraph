@@ -26,6 +26,7 @@ from app.db import Base, SessionLocal, engine  # noqa: E402
 from app.models.approvals import Approval, ApprovalDependency  # noqa: E402
 from app.models.regulatory import Regulation, RegulationVersion, Rule, RuleVersion, Section, SourceDocument  # noqa: E402
 from app.models.users import User  # noqa: E402
+from app.models.subscriptions import RegulatoryAlert  # noqa: E402
 from rules_engine import load_rules_dir  # noqa: E402
 
 DATA_DIR = REPO_ROOT / "data"
@@ -263,6 +264,8 @@ def main():
         seed_candidate_rules(db)
         seed_synthetic_approval_catalogue(db)
         seed_users(db)
+        from app.services.regulatory_alerts_service import seed_initial_alerts_if_empty
+        seed_initial_alerts_if_empty(db)
         print("Seed complete.")
         print(f"  Source documents: {db.query(SourceDocument).count()}")
         print(f"  Regulations: {db.query(Regulation).count()}")
@@ -270,6 +273,7 @@ def main():
         print(f"  Rules: {db.query(Rule).count()} (all CANDIDATE until reviewed)")
         print(f"  Approvals: {db.query(Approval).count()}")
         print(f"  Approval dependencies: {db.query(ApprovalDependency).count()}")
+        print(f"  Regulatory alerts: {db.query(RegulatoryAlert).count()}")
         print(f"  Demo users: {db.query(User).count()} "
               f"(dev-only password: '{DEMO_PASSWORD}' -- NEVER use in production)")
     finally:
