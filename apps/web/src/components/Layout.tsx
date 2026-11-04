@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuth, REVIEWER_ROLES } from "../context/AuthContext";
+import PresentationTourBar from "./PresentationTourBar";
+import ChatWidget from "./ChatWidget";
 
 const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = [
   {
@@ -45,14 +47,15 @@ export default function Layout() {
 
   if (isComparePage) {
     return (
-      <div className="w-screen h-screen overflow-hidden bg-[#e5e7eb]">
+      <div className="w-screen h-screen overflow-hidden bg-[#e5e7eb] relative">
         <Outlet />
+        <PresentationTourBar />
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen bg-slate-50 relative">
       {/* Collapsible App Navigation Sidebar */}
       <aside
         className={`flex flex-col border-r border-slate-200 bg-white transition-all duration-200 shrink-0 z-30 ${
@@ -144,18 +147,18 @@ export default function Layout() {
 
       {/* Main Content Viewport */}
       <main className="flex-1 overflow-hidden flex flex-col">
-        {isComparePage ? (
-          <div className="flex-1 w-full h-full overflow-hidden">
+        <div className="flex-1 overflow-y-auto">
+          <div className="mx-auto max-w-6xl px-6 py-8">
             <Outlet />
           </div>
-        ) : (
-          <div className="flex-1 overflow-y-auto">
-            <div className="mx-auto max-w-6xl px-6 py-8">
-              <Outlet />
-            </div>
-          </div>
-        )}
+        </div>
       </main>
+
+      {/* Floating Presentation Tour Controller */}
+      <PresentationTourBar />
+
+      {/* Floating AI Regulatory Co-Pilot */}
+      <ChatWidget />
     </div>
   );
 }
