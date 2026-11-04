@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import LanguageSelector from "../components/LanguageSelector";
 
 interface ChangeItem {
   id: string;
@@ -738,10 +739,11 @@ export default function TextComparisonPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <span className="text-[11px] text-neutral-400 hidden lg:inline">
             Authoritative Gazette Mirror & Approval Dependency Graph
           </span>
+          <LanguageSelector compact />
           <Link
             to="/regulatory-changes"
             className="text-[11px] font-semibold text-neutral-300 hover:text-white transition flex items-center gap-1.5 bg-neutral-800 px-3 py-1 rounded border border-neutral-700 hover:border-neutral-500"

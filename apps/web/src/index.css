@@ -29,43 +29,30 @@ body {
   text-transform: uppercase;
 }
 
-
-/* Google Translate styling rules: hide top toolbar, banner frames, and tooltips */
-.goog-te-banner-frame.skiptranslate,
+/* Suppress all Google Translate banners, tooltips, and positioning artifacts */
 .goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
 iframe.goog-te-banner-frame,
-.goog-te-menu-frame {
-  display: none !important;
-  visibility: hidden !important;
-}
-
-body {
-  top: 0px !important;
-  position: static !important;
-}
-
-body > .skiptranslate {
-  display: none !important;
-}
-
+.goog-te-menu-frame,
+#goog-gt-tt,
 .goog-tooltip,
-.goog-tooltip:hover {
-  display: none !important;
-}
-
-.goog-text-highlight {
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
-
-#google_translate_element {
-  display: none !important;
-}
-
-/* Hide modern Google Translate hover tooltips and attribution pills */
+.goog-tooltip:hover,
+.goog-text-highlight,
+body > .skiptranslate,
+body > iframe.skiptranslate,
+#google_translate_element,
 .VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
 .VIpgJd-ZVi9od-aZ2wEe-OiiCO,
 .VIpgJd-ZVi9od-ORHb-OiiCO {
   display: none !important;
   visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  pointer-events: none !important;
+}
+
+html, body {
+  top: 0px !important;
+  position: static !important;
 }

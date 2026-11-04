@@ -49,10 +49,7 @@ export default function Layout() {
 
   if (isComparePage || isChatPage) {
     return (
-      <div className="w-screen h-screen overflow-hidden bg-white relative">
-        <div className="absolute top-3 right-4 z-50">
-          <LanguageSelector compact />
-        </div>
+      <div className="w-screen h-screen overflow-hidden bg-white">
         <Outlet />
       </div>
     );
@@ -89,6 +86,11 @@ export default function Layout() {
           >
             {sidebarCollapsed ? "→" : "←"}
           </button>
+        </div>
+
+        {/* Language Selector integrated cleanly inside Sidebar */}
+        <div className="border-b border-slate-100 p-2.5">
+          <LanguageSelector compact={sidebarCollapsed} fullWidth={!sidebarCollapsed} />
         </div>
 
         <nav className="flex-1 space-y-4 overflow-y-auto px-2 py-3">
@@ -150,28 +152,9 @@ export default function Layout() {
       </aside>
 
       {/* Main Content Viewport */}
-      <main className="flex-1 overflow-hidden flex flex-col">
-        {/* Top Header with Portal Context & Language Switcher Dropdown */}
-        <header className="h-13 border-b border-slate-200 bg-white px-6 flex items-center justify-between shrink-0 z-20">
-          <div className="flex items-center space-x-2 text-xs text-slate-500 font-medium">
-            <span className="text-brand-700 font-semibold tracking-tight">Maharashtra Regulatory Intelligence</span>
-            <span className="text-slate-300">|</span>
-            <span className="text-slate-600 capitalize">
-              {location.pathname === "/"
-                ? "Home"
-                : location.pathname.slice(1).replace(/-/g, " ")}
-            </span>
-          </div>
-
-          <div className="flex items-center space-x-3">
-            <LanguageSelector />
-          </div>
-        </header>
-
-        <div className="flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-6xl px-6 py-8">
-            <Outlet />
-          </div>
+      <main className="flex-1 overflow-y-auto">
+        <div className="mx-auto max-w-6xl px-6 py-8">
+          <Outlet />
         </div>
       </main>
 

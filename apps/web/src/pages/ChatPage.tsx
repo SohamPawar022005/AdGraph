@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { sendChatMessage, calculateStatutoryFees, auditDocumentCompliance } from "../lib/api";
 import type { ChatMessage, ChatResponse, FeeCalculationResponse, DocumentAuditResponse } from "../lib/types";
 import MarkdownRenderer from "../components/MarkdownRenderer";
+import LanguageSelector from "../components/LanguageSelector";
 
 const SUGGESTION_CARDS_EN = [
   {
@@ -218,13 +219,16 @@ export default function ChatPage() {
             </span>
             <span className="font-bold text-slate-900 tracking-tight">PermitGraph</span>
           </Link>
-          <Link
-            to="/"
-            title="Return to Dashboard"
-            className="rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700 text-xs transition"
-          >
-            ← Exit
-          </Link>
+          <div className="flex items-center gap-1.5">
+            <LanguageSelector compact />
+            <Link
+              to="/"
+              title="Return to Dashboard"
+              className="rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700 text-xs transition"
+            >
+              ← Exit
+            </Link>
+          </div>
         </div>
 
         {/* Action Buttons */}

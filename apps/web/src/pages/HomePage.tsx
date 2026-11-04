@@ -135,7 +135,7 @@ const SCENARIOS: SimulationScenario[] = [
       },
     ],
     impactScore: 0.92,
-    compareClauseId: "sec-46",
+    compareClauseId: "mid-sec-46",
   },
   {
     id: "maitri-sec-4",
@@ -453,9 +453,9 @@ export default function HomePage() {
               <FileCode2 className="h-4 w-4" />
             </span>
           </div>
-          <p className="mt-2 text-2xl font-extrabold text-slate-900 tracking-tight">42 Verified Rules</p>
+          <p className="mt-2 text-2xl font-extrabold text-slate-900 tracking-tight">20 Rules-as-Code</p>
           <p className="mt-0.5 text-[11px] text-slate-500 font-medium">
-            Mapped across 6 State Authorities
+            43 Statutory Sections across 6 Authorities
           </p>
           <div className="mt-3 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
             <div className="h-full bg-brand-600 rounded-full w-4/5" />
@@ -472,9 +472,9 @@ export default function HomePage() {
               <Zap className="h-4 w-4" />
             </span>
           </div>
-          <p className="mt-2 text-2xl font-extrabold text-brand-700 tracking-tight">29 Traced Changes</p>
+          <p className="mt-2 text-2xl font-extrabold text-brand-700 tracking-tight">153 Traced Changes</p>
           <p className="mt-0.5 text-[11px] text-slate-500 font-medium">
-            SLAs, penalty escalations, deemed approvals
+            29 Real Gazette Diffs in Dual-Pane
           </p>
           <div className="mt-3 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
             <div className="h-full bg-amber-500 rounded-full w-3/4" />
