@@ -758,7 +758,7 @@ export default function TextComparisonPage() {
             <span>Text comparison - Date 1 vs Date 2</span>
             {activeDataset.category === "real" && (
               <span className="rounded bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 text-[10px] font-bold">
-                100% REAL STATUTE
+                OFFICIAL STATUTORY TEXT
               </span>
             )}
           </h2>

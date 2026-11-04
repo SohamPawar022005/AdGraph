@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useAuth, REVIEWER_ROLES } from "../context/AuthContext";
-import PresentationTourBar from "./PresentationTourBar";
 import ChatWidget from "./ChatWidget";
 
 const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = [
@@ -19,6 +18,7 @@ const NAV_GROUPS: { label: string; items: { to: string; label: string }[] }[] = 
       { to: "/regulatory-changes", label: "Regulatory Changes" },
       { to: "/compare", label: "Dual-Pane Gazette Diff ★" },
       { to: "/policy-sandbox", label: "Policy Sandbox ⚡" },
+      { to: "/chat", label: "Regulatory Co-Pilot 🤖" },
     ],
   },
   {
@@ -43,13 +43,13 @@ export default function Layout() {
   const canReview = role && REVIEWER_ROLES.includes(role);
   const location = useLocation();
   const isComparePage = location.pathname.startsWith("/compare");
+  const isChatPage = location.pathname.startsWith("/chat");
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
 
-  if (isComparePage) {
+  if (isComparePage || isChatPage) {
     return (
-      <div className="w-screen h-screen overflow-hidden bg-[#e5e7eb] relative">
+      <div className="w-screen h-screen overflow-hidden bg-white relative">
         <Outlet />
-        <PresentationTourBar />
       </div>
     );
   }
@@ -153,9 +153,6 @@ export default function Layout() {
           </div>
         </div>
       </main>
-
-      {/* Floating Presentation Tour Controller */}
-      <PresentationTourBar />
 
       {/* Floating AI Regulatory Co-Pilot */}
       <ChatWidget />

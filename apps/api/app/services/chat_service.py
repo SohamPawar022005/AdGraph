@@ -237,11 +237,11 @@ def ask_permitgraph_copilot(
     model_used = "permitgraph-rules-engine"
 
     # Try 1: Gemini
-    if settings.gemini_api_key:
+    if settings.gemini_api_key and settings.gemini_api_key.strip():
         try:
             logger.info("Attempting Gemini API generation with model %s", settings.gemini_model)
             reply_text = _call_gemini(
-                api_key=settings.gemini_api_key,
+                api_key=settings.gemini_api_key.strip(),
                 model_name=settings.gemini_model,
                 system_prompt=system_prompt,
                 user_prompt=message,

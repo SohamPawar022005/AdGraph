@@ -7,7 +7,10 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=(".env", "apps/api/.env", "../../.env"),
+        extra="ignore",
+    )
 
     app_name: str = "PermitGraph API"
     environment: str = os.environ.get("PERMITGRAPH_ENV", "development")
@@ -30,7 +33,7 @@ class Settings(BaseSettings):
 
     # AI Chatbot configuration (Gemini primary, Ollama fallback)
     gemini_api_key: str | None = os.environ.get("GEMINI_API_KEY")
-    gemini_model: str = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+    gemini_model: str = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
     ollama_base_url: str = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
     ollama_model: str = os.environ.get("OLLAMA_MODEL", "llama3.2:latest")
 

@@ -165,7 +165,7 @@ export default function HomePage() {
               <span className="text-base">📄</span>
               <span>Launch Live Dual-Pane Gazette Diff</span>
               <span className="ml-1 rounded bg-brand-700/80 px-1.5 py-0.5 text-[10px] uppercase font-bold text-brand-200">
-                Real 2024 Gazette
+                Official 2024 Gazette
               </span>
             </Link>
 
@@ -211,7 +211,7 @@ export default function HomePage() {
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Statutory Acts</span>
             <span className="text-lg">🏛️</span>
           </div>
-          <p className="mt-1 text-2xl font-bold text-slate-900">3 Real Acts</p>
+          <p className="mt-1 text-2xl font-bold text-slate-900">3 State Acts</p>
           <p className="mt-0.5 text-[11px] text-slate-500">MAITRI 2023, MID Act 1961, Khadi Act 1960</p>
         </div>
 
@@ -238,8 +238,8 @@ export default function HomePage() {
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Verification Gate</span>
             <span className="text-lg">🛡️</span>
           </div>
-          <p className="mt-1 text-2xl font-bold text-emerald-600">Zero Hallucination</p>
-          <p className="mt-0.5 text-[11px] text-slate-500">Human-in-the-loop review state machine</p>
+          <p className="mt-1 text-2xl font-bold text-emerald-600">Human-in-the-Loop</p>
+          <p className="mt-0.5 text-[11px] text-slate-500">Quarantined candidate rules with officer sign-off</p>
         </div>
       </div>
 
@@ -395,7 +395,7 @@ export default function HomePage() {
 
           <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-200">
             <span className="text-xs text-slate-500">
-              Provenance Check: Every dependency links back to Official Maharashtra Gazette citations. Zero legal hallucination.
+              Provenance Grounding: Every rule &amp; dependency links back to Official Maharashtra Gazette citations with verifiable statutory references.
             </span>
             <div className="flex items-center gap-3">
               <Link
@@ -717,10 +717,38 @@ export default function HomePage() {
               </div>
 
               <div className="rounded-lg bg-slate-50 p-3 border border-slate-200 space-y-1">
-                <span className="font-bold text-brand-700 uppercase tracking-wide text-[10px]">Minute 4: Governance & Architecture</span>
+                <span className="font-bold text-brand-700 uppercase tracking-wide text-[10px]">Minute 4: Governance &amp; Deterministic Architecture</span>
                 <p>
-                  "Crucially, we do NOT allow unverified AI hallucinations to give legal advice. Every AI extraction is quarantined in a human review queue until an authorized compliance officer signs off. We export clean JSON APIs and audit trails, making this ready to plug directly into the MAITRI portal today."
+                  "Crucially, our core reasoning engine is deterministic, not generative. We enforce a Human-in-the-Loop governance model: automated AI extractions are quarantined as candidate drafts and require an authorized compliance officer's verification before entering active rules. Runtime dependency resolution, SLA countdowns, and impact calculations run purely on deterministic graph algorithms (DAG traversal) with cryptographic audit logs—making this legally defensible and ready for direct integration into the MAITRI portal."
                 </p>
+              </div>
+
+              {/* Panel Defense Strategy */}
+              <div className="rounded-lg bg-amber-50/70 p-3.5 border border-amber-200 space-y-2">
+                <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-900 uppercase tracking-wide">
+                  <span>🛡️</span>
+                  <span>Panel Defense Guide: How to Defend Against Tricky Questions</span>
+                </div>
+                <div className="space-y-2 text-[11px] text-amber-950">
+                  <div>
+                    <p className="font-bold text-amber-900">Q: "Does your AI hallucinate or give wrong legal advice?"</p>
+                    <p className="mt-0.5 text-slate-700">
+                      <strong>Answer:</strong> "Generative models can occasionally produce false extractions, which is precisely why our architecture separates <em>extraction</em> from <em>execution</em>. AI extractions are quarantined in a review queue as unverified candidates. No rule ever enters the active dependency graph until a verified compliance officer approves it. The live engine executes deterministic code backed by exact Gazette citations."
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-bold text-amber-900">Q: "Why not just use an LLM or RAG chatbot for the whole system?"</p>
+                    <p className="mt-0.5 text-slate-700">
+                      <strong>Answer:</strong> "Regulatory compliance cannot rely on probabilistic inference. If an SLA is 15 days or a penalty is ₹1,00,000, that requires mathematical determinism and topological DAG ordering, not probabilistic token generation. We use AI strictly as an ingestion accelerator, while the compliance engine is a formal Directed Acyclic Graph."
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-bold text-amber-900">Q: "How do you prove provenance?"</p>
+                    <p className="mt-0.5 text-slate-700">
+                      <strong>Answer:</strong> "Every rule and dependency edge stores explicit metadata linking to the specific Gazette publication number, gazette issue date, and section number. We provide side-by-side synchronized diffs so any officer can visually cross-reference the source law."
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 

@@ -22,6 +22,7 @@ import DocumentsPage from "./pages/DocumentsPage";
 import AuditLogPage from "./pages/AuditLogPage";
 import ReviewQueuePage from "./pages/ReviewQueuePage";
 import PolicySandboxPage from "./pages/PolicySandboxPage";
+import ChatPage from "./pages/ChatPage";
 
 export default function App() {
   return (
@@ -48,6 +49,7 @@ export default function App() {
             <Route path="/compare" element={<TextComparisonPage />} />
             <Route path="/policy-sandbox" element={<PolicySandboxPage />} />
             <Route path="/sandbox" element={<PolicySandboxPage />} />
+            <Route path="/chat" element={<ChatPage />} />
             <Route path="/documents" element={<DocumentsPage />} />
             <Route path="/audit" element={<AuditLogPage />} />
             <Route path="/review" element={<ReviewQueuePage />} />
